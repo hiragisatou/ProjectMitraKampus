@@ -1,10 +1,5 @@
-@extends('master')
+@extends('auth.main')
 @section('title', 'Login Page')
-@section('css')
-	<link rel="stylesheet" href="{{ asset('dist/css/libs.min.css') }}">
-	<link rel="stylesheet" href="{{ asset('dist/css/hope-ui.min.css') }}">
-	<link rel="stylesheet" href="{{ asset('dist/css/custom.min.css') }}">
-@endsection
 @section('content')
 	<div id="loading">
 		<div class="loader simple-loader">
@@ -50,33 +45,48 @@
 									</a>
 									<h2 class="mb-2 text-center">Sign In</h2>
 									<p class="text-center">Login to stay connected.</p>
-									<form>
+									<form method="POST" action="{{ route('loginHandler') }}">
+                                        @csrf
 										<div class="row">
 											<div class="col-lg-12">
 												<div class="form-group">
 													<label for="email" class="form-label">Email</label>
-													<input type="email" class="form-control" id="email" aria-describedby="email" placeholder=" ">
+													<input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+													@error('email')
+														<span class="invalid-feedback" role="alert">
+															<strong>{{ $message }}</strong>
+														</span>
+													@enderror
 												</div>
 											</div>
 											<div class="col-lg-12">
 												<div class="form-group">
 													<label for="password" class="form-label">Password</label>
-													<input type="password" class="form-control" id="password" aria-describedby="password" placeholder=" ">
+													<input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+													@error('password')
+														<span class="invalid-feedback" role="alert">
+															<strong>{{ $message }}</strong>
+														</span>
+													@enderror
 												</div>
 											</div>
 											<div class="col-lg-12 d-flex justify-content-between">
 												<div class="form-check mb-3">
-													<input type="checkbox" class="form-check-input" id="customCheck1">
+													<input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 													<label class="form-check-label" for="customCheck1">Remember Me</label>
 												</div>
-												<a href="recoverpw.html">Forgot Password?</a>
+												@if (Route::has('password.request'))
+													<a href="{{ route('password.request') }}">
+														{{ __('Forgot Your Password?') }}
+													</a>
+												@endif
 											</div>
 										</div>
 										<div class="d-flex justify-content-center">
 											<button type="submit" class="btn btn-primary">Sign In</button>
 										</div>
 										<p class="mt-3 text-center">
-											Don’t have an account? <a href="sign-up.html" class="text-underline">Click here to sign up.</a>
+											Don’t have an account? <a href="{{ route('register') }}" class="text-underline">Click here to sign up.</a>
 										</p>
 									</form>
 								</div>
@@ -100,7 +110,4 @@
 			</div>
 		</section>
 	</div>
-
-	<script src="{{ asset('dist/js/libs.min.js') }}"></script>
-	<script src="{{ asset('dist/js/hope-ui.js') }}"></script>
 @endsection

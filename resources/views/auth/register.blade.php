@@ -1,10 +1,5 @@
-@extends('master')
+@extends('auth.main')
 @section('title', 'Register Page')
-@section('css')
-	<link rel="stylesheet" href="{{ asset('dist/css/libs.min.css') }}">
-	<link rel="stylesheet" href="{{ asset('dist/css/hope-ui.min.css') }}">
-	<link rel="stylesheet" href="{{ asset('dist/css/custom.min.css') }}">
-@endsection
 @section('content')
 	<!-- loader Start -->
 	<div id="loading">
@@ -55,36 +50,48 @@
 									</a>
 									<h2 class="mb-2 text-center">Sign Up</h2>
 									<p class="text-center">Create your Hope UI account.</p>
-									<form>
+									<form method="POST" action="{{ route('registerHandler') }}">
+                                        @csrf
 										<div class="row">
 											<div class="col-lg-12">
 												<div class="form-group">
-													<label for="full-name" class="form-label">Nama</label>
-													<input type="text" class="form-control" name="nama" placeholder=" ">
+													<label for="name" class="form-label">Nama</label>
+													<input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+													@error('name')
+														<span class="invalid-feedback" role="alert">
+															<strong>{{ $message }}</strong>
+														</span>
+													@enderror
 												</div>
 											</div>
-											<div class="col-lg-6">
+											<div class="col-lg-12">
 												<div class="form-group">
 													<label for="email" class="form-label">Email</label>
-													<input type="email" class="form-control" name="email" placeholder=" ">
-												</div>
-											</div>
-											<div class="col-lg-6">
-												<div class="form-group">
-													<label for="phone" class="form-label">Phone No.</label>
-													<input type="text" class="form-control" name="phone" placeholder=" ">
+													<input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+
+													@error('email')
+														<span class="invalid-feedback" role="alert">
+															<strong>{{ $message }}</strong>
+														</span>
+													@enderror
 												</div>
 											</div>
 											<div class="col-lg-6">
 												<div class="form-group">
 													<label for="password" class="form-label">Password</label>
-													<input type="password" class="form-control" name="password" placeholder=" ">
+													<input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+
+													@error('password')
+														<span class="invalid-feedback" role="alert">
+															<strong>{{ $message }}</strong>
+														</span>
+													@enderror
 												</div>
 											</div>
 											<div class="col-lg-6">
 												<div class="form-group">
 													<label for="confirm-password" class="form-label">Confirm Password</label>
-													<input type="password" class="form-control" name="confirm-password" placeholder=" ">
+													<input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
 												</div>
 											</div>
 											<div class="col-lg-12 d-flex justify-content-center">
@@ -119,7 +126,4 @@
 			</div>
 		</section>
 	</div>
-
-	<script src="{{ asset('dist/js/libs.min.js') }}"></script>
-	<script src="{{ asset('dist/js/hope-ui.js') }}"></script>
 @endsection

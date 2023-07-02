@@ -1,10 +1,5 @@
-@extends('master')
+@extends('auth.main')
 @section('title', 'Verifying Email')
-@section('css')
-	<link rel="stylesheet" href="{{ asset('dist/css/libs.min.css') }}">
-	<link rel="stylesheet" href="{{ asset('dist/css/hope-ui.min.css') }}">
-	<link rel="stylesheet" href="{{ asset('dist/css/custom.min.css') }}">
-@endsection
 @section('content')
 	<!-- loader Start -->
 	<div id="loading">
@@ -52,12 +47,24 @@
 							</a>
 							<img src="../../assets/images/auth/mail.png" class="img-fluid" width="80" alt="">
 							<h2 class="mt-3 mb-0">Success !</h2>
-							<p class="cnf-mail mb-1">A email has been send to youremail@domain.com. Please check for an
-								email from company and click
-								on the included link to reset your password.</p>
+							<p class="cnf-mail mb-1">Link verifikasi email telah dikirimkan ke email anda. Silahkan lihat email anda dan klik link verfikasi email.</p>
 							<div class="d-inline-block w-100">
-								<a href="../../dashboard/index.html" class="btn btn-primary mt-3">Back to Home</a>
+								<form method="POST" action="{{ route('verification.send') }}">
+									@csrf
+									<button class="btn btn-primary mt-3">Kirim ulang verifikasi email!</button>
+								</form>
 							</div>
+							@if (session('message'))
+								<div class="alert alert-success" role="alert">
+									{{ __('Link baru verifikasi berhasil dikirim!') }}
+								</div>
+							@endif
+							<form action="{{ route('logoutHandler') }}" method="post">
+								@csrf
+								<button type="submit" class="btn btn-danger">
+									Logout
+								</button>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -67,7 +74,4 @@
 			</div>
 		</section>
 	</div>
-
-	<script src="{{ asset('dist/js/libs.min.js') }}"></script>
-	<script src="{{ asset('dist/js/hope-ui.js') }}"></script>
 @endsection

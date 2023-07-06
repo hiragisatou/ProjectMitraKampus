@@ -3,6 +3,7 @@
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AutentikasiController;
 use App\Http\Controllers\MailVerificationController;
 
@@ -32,6 +33,7 @@ Route::controller(AutentikasiController::class)->group(function () {
     Route::post('/auth/register', 'registerHandler')->name('registerHandler');
     Route::post('/auth/login', 'loginHandler')->name('loginHandler');
     Route::post('/auth/logout', 'logoutHandler')->name('logoutHandler');
+    Route::post('/auth/profile', 'profileHandler')->name('profileHandler');
     Route::post('/forgot-password', 'resetPasswordLink')->middleware('guest')->name('password.email');
     Route::post('/reset-password', 'resetPasswordHandler')->middleware('guest')->name('password.update');
 });
@@ -43,5 +45,10 @@ Route::controller(MailVerificationController::class)->group(function () {
 });
 
 Route::controller(HomeController::class)->group(function () {
-    Route::get('/home', 'index');
+    Route::get('/home', 'index')->name('home');
+});
+
+Route::controller(DashboardController::class)->group(function () {
+    Route::get('/admin/dashboard', 'viewDashboard')->name('dashboard');
+    Route::get('/admin/pengajuan', 'viewPengajuan')->name('PengajuanMoU');
 });

@@ -9,7 +9,7 @@
 	</button>
 	<div class="collapse navbar-collapse" id="navbarCollapse">
 		<div class="navbar-nav mx-auto bg-light rounded pe-4 py-3 py-lg-0">
-			<a href="index.html" class="nav-item nav-link active">Home</a>
+			<a href="{{ route('home') }}" class="nav-item nav-link active">Home</a>
 			<a href="about.html" class="nav-item nav-link">About Us</a>
 			<a href="service.html" class="nav-item nav-link">Our Services</a>
 			<div class="nav-item dropdown">

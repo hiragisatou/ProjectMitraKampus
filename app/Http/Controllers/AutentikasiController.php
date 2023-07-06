@@ -29,7 +29,7 @@ class AutentikasiController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect()->intended('home');
+            return redirect()->intended('dashboard');
         }
 
         return back()->withErrors([
@@ -75,12 +75,17 @@ class AutentikasiController extends Controller
 
         Auth::attempt(['email' => $data['email'], 'password' => $data['password']]);
 
-        return redirect(route('verification.notice'));
+        return redirect(route('profilMitra'));
     }
 
     public function profileMitra()
     {
         return view('auth.profileMitra');
+    }
+
+    public function profileHandler()
+    {
+        return redirect(route('verification.notice'));
     }
 
     public function resetPassword()

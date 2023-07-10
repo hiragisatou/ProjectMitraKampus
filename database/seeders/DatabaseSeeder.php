@@ -3,6 +3,10 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Sektor;
+use App\Models\Kriteria;
+use App\Models\JenisMitra;
+use App\Models\SifatMitra;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,5 +22,21 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        //sektor seeders
+        Sektor::create(['sektor' => 'Perdagangan Besar dan Eceran']);
+        Sektor::create(['sektor' => 'Reparasi dan Perawatan Mobil dan Sepeda Motor']);
+
+        SifatMitra::create(['kategori' => 'Nasional']);
+        SifatMitra::create(['kategori' => 'Internasional']);
+
+        JenisMitra::create(['jenis' => 'Pemerintahan']);
+        JenisMitra::create(['jenis' => 'Dudi']);
+        JenisMitra::create(['jenis' => 'Sekolah']);
+        JenisMitra::create(['jenis' => 'Perguruan Tinggi']);
+        JenisMitra::create(['jenis' => 'Organisasi']);
+
+        Kriteria::create(['kriteria' => 'Perusahaan Swasta']);
+        Kriteria::create(['kriteria' => 'Perusahaan Negeri']);
     }
 }

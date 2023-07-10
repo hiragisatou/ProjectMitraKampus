@@ -25,8 +25,8 @@ Route::get('/', function () {
 
 Route::controller(AutentikasiController::class)->group(function () {
     Route::get('/register', 'registerPage')->name('register');
-    Route::get('/login', 'index')->name('login');
-    Route::get('/profile', 'profileMitra')->name('profilMitra');
+    Route::get('/login', 'index')->middleware('guest')->name('login');
+    Route::get('/profile', 'profileMitra')->middleware('auth')->name('profilMitra');
     Route::get('/forgot-password', 'resetPassword')->middleware('guest')->name('password.request');
     Route::get('/reset-password/{token}', 'formReset')->middleware('guest')->name('password.reset');
 

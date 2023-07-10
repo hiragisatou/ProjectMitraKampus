@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('mitra', function (Blueprint $table) {
             $table->id();
-            $table->string('kode');
+            $table->string('nama');
             $table->foreignId('kriteriaMitra_id');
             $table->string('nomorIndukBerusaha');
             $table->foreignId('sektorIndustri_id');
             $table->foreignId('sifat_id');
             $table->foreignId('jenis_id');
+            $table->foreignId('kategori_id');
+            $table->foreignId('user_id');
             $table->string('klasifikasi');
             $table->string('jumlahPegawai');
             $table->string('alamat');

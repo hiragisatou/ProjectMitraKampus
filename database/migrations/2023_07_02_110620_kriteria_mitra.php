@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kriteriaMitra', function (Blueprint $table) {
+        Schema::create('kriteria_mitra', function (Blueprint $table) {
             $table->id();
             $table->string('kriteria');
             $table->timestamps();
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kriteriaMitra');
+        Schema::dropIfExists('kriteria_mitra');
     }
 };

@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Sektor;
+use App\Models\Kriteria;
+use App\Models\JenisMitra;
+use App\Models\SifatMitra;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +33,7 @@ class AutentikasiController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect()->intended('dashboard');
+            return redirect()->intended(route('dashboard'));
         }
 
         return back()->withErrors([
@@ -80,11 +84,17 @@ class AutentikasiController extends Controller
 
     public function profileMitra()
     {
-        return view('auth.profileMitra');
+        return view('auth.profileMitra', [
+            'sektor' => Sektor::all()->toArray(),
+            'jenis' => JenisMitra::all()->toArray(),
+            'kriteria' => Kriteria::all()->toArray(),
+            'sifat' => SifatMitra::all()->toArray()
+        ]);
     }
 
-    public function profileHandler()
+    public function profileHandler(Request $request)
     {
+        dd($request);
         return redirect(route('verification.notice'));
     }
 

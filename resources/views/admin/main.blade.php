@@ -8,20 +8,24 @@
 	<title>@yield('title')</title>
 
 	<!-- ========== All CSS files linkup ========= -->
-    <script src="https://kit.fontawesome.com/6787aab0d7.js" crossorigin="anonymous"></script>
+	<script src="https://kit.fontawesome.com/6787aab0d7.js" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="{{ asset('dist/css/bootstrap.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('dist/css/select2.min.css') }}" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+	<link rel="stylesheet" href="{{ asset('dist/css/select2.min.css') }}" />
+	<link rel="stylesheet" href="{{ asset('dist/css/admin-page/select2-bootstrap-5-theme.min.css') }}" />
 	<link rel="stylesheet" href="{{ asset('dist/css/admin-page/lineicons.css') }}" />
 	<link rel="stylesheet" href="{{ asset('dist/css/admin-page/materialdesignicons.min.css') }}" />
 	<link rel="stylesheet" href="{{ asset('dist/css/admin-page/fullcalendar.css') }}" />
 	<link rel="stylesheet" href="{{ asset('dist/css/admin-page/main.css') }}" />
+	<link rel="stylesheet" href="{{ asset('dist/css/sweetalert2.min.css') }}">
 </head>
 
 <body>
 	@include('admin.layouts.sidebar')
 	<main class="main-wrapper">
 		@include('admin.layouts.header')
+		@if (session()->has('success'))
+			<input type="hidden" value="" id="notification-toast">
+		@endif
 		<section class="section">
 			<div class="container-fluid">
 				<!-- ========== title-wrapper start ========== -->
@@ -59,9 +63,10 @@
 	</main>
 
 	<!-- ========= All Javascript files linkup ======== -->
-    <script src="{{ asset('dist/js/jquery-3.4.1.min.js') }}"></script>
+	<script src="{{ asset('dist/js/jquery-3.4.1.min.js') }}"></script>
 	<script src="{{ asset('dist/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('dist/js/select2.min.js') }}"></script>
+	<script src="{{ asset('dist/js/select2.min.js') }}"></script>
+	<script src="{{ asset('dist/js/sweetalert2.all.min.js') }}"></script>
 	<script src="{{ asset('dist/js/admin-page/Chart.min.js') }}"></script>
 	<script src="{{ asset('dist/js/admin-page/dynamic-pie-chart.js') }}"></script>
 	<script src="{{ asset('dist/js/admin-page/moment.min.js') }}"></script>
@@ -70,7 +75,7 @@
 	<script src="{{ asset('dist/js/admin-page/world-merc.js') }}"></script>
 	<script src="{{ asset('dist/js/admin-page/polyfill.js') }}"></script>
 	<script src="{{ asset('dist/js/admin-page/main.js') }}"></script>
-    <script src="{{ asset('dist/js/admin-page/admin.js') }}"></script>
+	<script src="{{ asset('dist/js/admin-page/admin.js') }}"></script>
 </body>
 
 </html>

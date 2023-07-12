@@ -12,7 +12,7 @@ class SifatMitra extends Model
     protected $fillable = ['kategori'];
 
 
-    public function mitra(): HasMany
+    public function mitra()
     {
         return $this->hasMany(Mitra::class, 'sifat_id');
     }

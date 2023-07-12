@@ -15,8 +15,8 @@
 						<input type="text" class="form-control" id="nama" name="nama" placeholder="">
 					</div>
 					<div class="mb-3">
-						<label for="NIP" class="form-label">Nomor Induk Berusaha</label>
-						<input type="number" class="form-control" id="NIP" name="nip" placeholder="">
+						<label for="NIB" class="form-label">Nomor Induk Berusaha</label>
+						<input type="number" class="form-control" id="NIB" name="nib" placeholder="">
 					</div>
 					<div class="mb-3">
 						<label for="kriteria" class="form-label">Kriteria Mitra</label>

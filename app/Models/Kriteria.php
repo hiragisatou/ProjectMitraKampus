@@ -12,7 +12,7 @@ class Kriteria extends Model
     protected $fillable = ['kriteria'];
 
 
-    public function mitra(): HasMany
+    public function mitra()
     {
         return $this->hasMany(Mitra::class, 'kriteriaMitra_id');
     }

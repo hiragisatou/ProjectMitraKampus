@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Sektor;
 use App\Models\Kriteria;
 use App\Models\JenisMitra;
+use App\Models\Mitra;
 use App\Models\SifatMitra;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -27,7 +28,7 @@ class AutentikasiController extends Controller
     public function loginHandler(Request $request)
     {
         $credentials = $request->validate([
-            'email' => ['required', 'email'],
+            'email' => ['required', 'email', 'exists:users,email'],
             'password' => ['required'],
         ]);
         if (Auth::attempt($credentials)) {
@@ -37,7 +38,7 @@ class AutentikasiController extends Controller
         }
 
         return back()->withErrors([
-            'email' => 'Email yang anda masukkan tidak terdaftar.',
+            'email' => 'Email atau password salah!',
         ])->onlyInput('email');
     }
 
@@ -74,12 +75,13 @@ class AutentikasiController extends Controller
         $user->email = $data['email'];
         $user->password = bcrypt($data['password']);
         $user->save();
+        if($user->save()){
+            event(new Registered($user));
 
-        event(new Registered($user));
+            Auth::attempt(['email' => $data['email'], 'password' => $data['password']]);
 
-        Auth::attempt(['email' => $data['email'], 'password' => $data['password']]);
-
-        return redirect(route('profilMitra'));
+            return redirect(route('profilMitra'));
+        }
     }
 
     public function profileMitra()
@@ -94,7 +96,35 @@ class AutentikasiController extends Controller
 
     public function profileHandler(Request $request)
     {
-        dd($request);
+        if (Auth::check()) {
+            Mitra::updateOrCreate(['user_id' => auth()->user()->id],[
+                'nama' => $request->nama,
+                'kriteriaMitra_id' => $request->kriteria,
+                'nomorIndukBerusaha' => $request->nib,
+                'sektorIndustri_id' => $request->sektor,
+                'sifat_id' => $request->sifat,
+                'jenis_id' => $request->jenis,
+                'user_id' => auth()->user()->id,
+                'klasifikasi' => $request->klasifikasi,
+                'jumlahPegawai' => $request['jumlah_pegawai'],
+                'alamat' => $request->alamat,
+                'provinsi' => $request->provinsi,
+                'kabupaten' => $request->kabupaten,
+                'kecamatan' => $request->kecamatan,
+                'urlWeb' => $request->url,
+                'email' => $request->email,
+                'noTelp' => $request->notelp,
+                'linkedin' => $request->linkedin,
+                'instagram' => $request->instagram,
+                'facebook' => $request->facebook,
+                'twitter' => $request->twitter,
+                'tiktok' => $request->tiktok,
+                'youtube' => $request->youtube,
+            ]);
+        } else {
+            return redirect(route('login'));
+        }
+
         return redirect(route('verification.notice'));
     }
 

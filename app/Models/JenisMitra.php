@@ -11,7 +11,7 @@ class JenisMitra extends Model
     protected $table = 'jenis_mitra';
     protected $fillable = ['jenis'];
 
-    public function mitra(): HasMany
+    public function mitra()
     {
         return $this->hasMany(Mitra::class, 'jenis_id');
     }

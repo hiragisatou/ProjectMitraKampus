@@ -20,6 +20,7 @@ return new class extends Migration
             $table->dateTime('tgl_berakhir');
             $table->foreignId('prodi_id');
             $table->text('keterangan');
+            $table->binary('file_mou');
             $table->timestamps();
         });
     }

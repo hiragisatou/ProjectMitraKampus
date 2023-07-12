@@ -12,7 +12,7 @@ class Sektor extends Model
     protected $fillable = ['sektor'];
 
 
-    public function mitra(): HasMany
+    public function mitra()
     {
         return $this->hasMany(Mitra::class, 'sektorIndustri_id');
     }

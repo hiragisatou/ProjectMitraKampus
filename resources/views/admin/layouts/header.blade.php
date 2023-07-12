@@ -138,7 +138,7 @@
 						</button>
 						<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profile">
 							<li>
-								<a href="{{ route('profilMitra') }}">
+								<a href="{{ route('editProfile') }}">
 									<i class="lni lni-user"></i> View Profile
 								</a>
 							</li>

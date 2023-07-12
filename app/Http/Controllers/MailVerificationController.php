@@ -15,7 +15,7 @@ class MailVerificationController extends Controller
     public function verifyConfirm(EmailVerificationRequest $request)
     {
         $request->fulfill();
-        return redirect('/home');
+        return redirect(route('dashboard'));
     }
 
     public function verifySend(Request $request)

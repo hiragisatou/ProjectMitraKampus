@@ -7,23 +7,29 @@ use Illuminate\Database\Eloquent\Model;
 
 class Mitra extends Model
 {
-    use HasFactory;
-    protected $table = 'mitra';
+	use HasFactory;
+	protected $table = 'mitra';
+	protected $guarded = ['id'];
 
-    public function jenisMitra(): belongsTo
+	public function jenisMitra()
+	{
+		return $this->belongsTo(jenisMtra::class, 'jenis_id');
+
+	}
+	public function sifatMitra()
+	{
+		return $this->belongsTo(SifatMitra::class, 'sifat_id');
+	}
+	public function sektor()
+	{
+		return $this->belongsTo(Sektor::class, 'sektorIndustri_id');
+	}
+	public function kriteria()
+	{
+		return $this->belongsTo(Kriteria::class, 'kriteriaMitra_id');
+	}
+	public function user()
     {
-        return $this->belongsTo(jenisMtra::class, 'jenis_id');
-    }
-    public function sifatMitra(): belongsTo
-    {
-        return $this->belongsTo(SifatMitra::class, 'sifat_id');
-    }
-    public function sektor(): belongsTo
-    {
-        return $this->belongsTo(Sektor::class, 'sektorIndustri_id');
-    }
-    public function kriteria(): belongsTo
-    {
-        return $this->belongsTo(Kriteria::class, 'kriteriaMitra_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

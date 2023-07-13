@@ -54,5 +54,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/pengajuan', 'viewPengajuan')->name('PengajuanMoU');
         Route::get('/admin/profile', 'viewEditProfile')->name('editProfile');
         Route::post('/admin/profile/handler', 'editProfile')->name('editProfileHandler');
+        Route::post('/pengajuanMoU', 'pengajuanMoU')->name('pengajuanMoUHandler');
     });
 });

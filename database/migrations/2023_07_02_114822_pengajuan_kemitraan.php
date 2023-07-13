@@ -13,14 +13,15 @@ return new class extends Migration
     {
         Schema::create('pengajuanKemitraan', function (Blueprint $table) {
             $table->id();
+            $table->string('judul');
             $table->foreignId('mitra_id');
             $table->string('jenisKemitraan');
             $table->string('ruangLingkup');
             $table->dateTime('tgl_mulai');
-            $table->dateTime('tgl_berakhir');
+            $table->dateTime('tgl_berakhir')->nullable();
             $table->foreignId('prodi_id');
             $table->text('keterangan');
-            $table->binary('file_mou');
+            $table->string('file_mou');
             $table->timestamps();
         });
     }

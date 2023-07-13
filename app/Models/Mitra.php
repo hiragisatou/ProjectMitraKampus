@@ -32,4 +32,8 @@ class Mitra extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+    public function pengajuanMitra()
+    {
+        return $this->hasMany(PengajuanMitra::class, 'mitra_id');
+    }
 }

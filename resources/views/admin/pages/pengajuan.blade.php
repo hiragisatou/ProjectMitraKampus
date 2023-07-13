@@ -2,15 +2,22 @@
 @section('title', 'Pengajuan Kemitraan')
 @section('judul', 'Pengajuan Kemitraan')
 @section('content')
+<div class="d-flex justify-content-end">
+    <a href="{{ asset('dist/TEMPLATE-DRAFT-PERJANJIAN-KERJA-SAMA-FAKULTAS.doc') }}" class="btn btn-primary">
+        <span class="me-2"><i class="lni lni-download"></i></span>
+        Download Template MoU
+    </a>
+</div>
 	<div class="container-fluid">
-		<form action="" method="post" enctype="multipart/form-data">
+		<form action="{{ route('pengajuanMoUHandler') }}" method="post" enctype="multipart/form-data">
+            @csrf
 			<div class="mb-3">
 				<label class="form-label">Judul Kemitraan</label>
-				<input type="text" class="form-control" placeholder="">
+				<input type="text" class="form-control" name="judul" required>
 			</div>
 			<div class="mb-3">
 				<label class="form-label">Jenis Kemitraan</label>
-				<select class="form-select" aria-label="Default select example">
+				<select class="form-select" name="jenis" required>
 					<option selected>Open this select menu</option>
 					<option value="1">One</option>
 					<option value="2">Two</option>
@@ -19,7 +26,7 @@
 			</div>
 			<div class="mb-3">
 				<label class="form-label">Ruang Lingkup</label>
-				<select class="ruang-lingkup-mitra" name="states[]" multiple="multiple">
+				<select class="ruang-lingkup-mitra" name="lingkup[]" multiple="multiple" required>
 					<option value="AL">Alabama</option>
 					...
 					<option value="WY">Wyoming</option>
@@ -29,24 +36,29 @@
 				</select>
 			</div>
             <div class="mb-3">
-				<label class="form-label">Program Study</label>
-				<select class="form-select" aria-label="Default select example">
-					<option selected>Open this select menu</option>
+				<label class="form-label">Program Studi</label>
+				<select class="form-select" name="p_studi" required>
+					<option>-- Pilih Program Studi --</option>
 					<option value="1">One</option>
 					<option value="2">Two</option>
 					<option value="3">Three</option>
 				</select>
+            </div>
             <div class="mb-3">
 				<label class="form-label">Tanggal Mulai</label>
-				<input type="date" class="form-control" placeholder="">
+				<input type="date" class="form-control" name="tgl_mulai" required>
 			</div>
             <div class="mb-3">
 				<label class="form-label">Tanggal Selesai</label>
-				<input type="date" class="form-control" placeholder="" disabled>
+				<input type="date" class="form-control" name="tgl_selesai" disabled>
 			</div>
             <div class="mb-3">
 				<label class="form-label">Keterangan</label>
-				<input type="date" class="form-control" placeholder="">
+				<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="keterangan" required></textarea>
+			</div>
+            <div class="mb-3">
+				<label class="form-label">Upload MoU</label>
+				<input class="form-control" type="file" id="formFile" name="mou" accept=".pdf" required>
 			</div>
             <hr/>
             <div class="d-flex justify-content-end">

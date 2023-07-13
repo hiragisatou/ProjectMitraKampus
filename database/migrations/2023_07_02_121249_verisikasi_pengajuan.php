@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('admin_id');
             $table->string('status');
             $table->text('keterangan');
+            $table->binary('valid_mou');
             $table->timestamps();
         });
     }

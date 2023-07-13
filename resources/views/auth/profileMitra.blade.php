@@ -12,15 +12,15 @@
 					@csrf
 					<div class="mb-3">
 						<label for="nama" class="form-label">Nama Mitra</label>
-						<input type="text" class="form-control" id="nama" name="nama" placeholder="">
+						<input type="text" class="form-control" id="nama" name="nama" placeholder="" required>
 					</div>
 					<div class="mb-3">
 						<label for="NIB" class="form-label">Nomor Induk Berusaha</label>
-						<input type="number" class="form-control" id="NIB" name="nib" placeholder="">
+						<input type="number" class="form-control" id="NIB" name="nib" placeholder="" required>
 					</div>
 					<div class="mb-3">
 						<label for="kriteria" class="form-label">Kriteria Mitra</label>
-						<select class="form-select" name="kriteria" id="kriteria">
+						<select class="form-select" name="kriteria" id="kriteria" required>
 							<option selected>-- Pilih Kriteria Mitra --</option>
 							@foreach ($kriteria as $x)
 								<option value="{{ $x['id'] }}">{{ $x['kriteria'] }}</option>
@@ -29,7 +29,7 @@
 					</div>
 					<div class="mb-3">
 						<label class="form-label">Sektor Industri</label>
-						<select class="form-select" name="sektor">
+						<select class="form-select" name="sektor" required>
 							<option selected>-- Pilih Sektor Industri --</option>
                             @foreach ($sektor as $x)
                             <option value="{{ $x['id'] }}">{{ $x['sektor'] }}</option>
@@ -38,7 +38,7 @@
 					</div>
 					<div class="mb-3">
 						<label class="form-label">Sifat Mitra</label>
-						<select class="form-select" name="sifat">
+						<select class="form-select" name="sifat" required>
 							<option selected>-- Pilih Sifat Mitra --</option>
 							@foreach ($sifat as $x)
                             <option value="{{ $x['id'] }}">{{ $x['kategori'] }}</option>
@@ -47,7 +47,7 @@
 					</div>
 					<div class="mb-3">
 						<label class="form-label">Jenis Mitra</label>
-						<select class="form-select" name="jenis">
+						<select class="form-select" name="jenis" required>
 							<option selected>-- Pilih Jenis Mitra --</option>
 							@foreach ($jenis as $x)
 								<option value="{{ $x['id'] }}">{{ $x['jenis'] }}</option>
@@ -56,7 +56,7 @@
 					</div>
 					<div class="mb-3">
 						<label class="form-label">Klasifikasi</label>
-						<select class="form-select" name="klasifikasi">
+						<select class="form-select" name="klasifikasi" required>
 							<option selected>-- Pilih Klasifikasi Mitra --</option>
 							<option value="1">Besar</option>
 							<option value="2">Menengah</option>
@@ -65,23 +65,23 @@
 					</div>
 					<div class="mb-3">
 						<label for="jumlah_pegawai" class="form-label">Jumlah Pegawai</label>
-						<input type="number" class="form-control" id="jumlah_pegawai" name="jumlah_pegawai" placeholder="">
+						<input type="number" class="form-control" id="jumlah_pegawai" name="jumlah_pegawai" placeholder="" required>
 					</div>
 					<div class="mb-3">
 						<label for="alamat" class="form-label">Alamat</label>
-						<input type="text" class="form-control" id="alamat" name="alamat" placeholder="">
+						<input type="text" class="form-control" id="alamat" name="alamat" placeholder="" required>
 					</div>
 					<div class="mb-3">
 						<label for="provinsi" class="form-label">Provinsi</label>
-						<input type="text" class="form-control" id="provinsi" name="provinsi" placeholder="">
+						<input type="text" class="form-control" id="provinsi" name="provinsi" placeholder="" required>
 					</div>
 					<div class="mb-3">
 						<label for="kabupaten" class="form-label">Kabupaten</label>
-						<input type="text" class="form-control" id="kabupaten" name="kabupaten" placeholder="">
+						<input type="text" class="form-control" id="kabupaten" name="kabupaten" placeholder="" required>
 					</div>
 					<div class="mb-3">
 						<label for="kecamatan" class="form-label">Kecamatan</label>
-						<input type="text" class="form-control" id="kecamatan" name="kecamatan" placeholder="">
+						<input type="text" class="form-control" id="kecamatan" name="kecamatan" placeholder="" required>
 					</div>
 					<div class="mb-3">
 						<label for="url" class="form-label">Url Web</label>
@@ -89,7 +89,7 @@
 					</div>
 					<div class="mb-3">
 						<label for="email" class="form-label">Email</label>
-						<input type="text" class="form-control" id="email" name="email" placeholder="">
+						<input type="text" class="form-control" id="email" name="email" placeholder="" required>
 					</div>
 					<div class="mb-3">
 						<label for="notelp" class="form-label">Nomor Telepon</label>

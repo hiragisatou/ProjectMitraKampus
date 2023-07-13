@@ -74,6 +74,7 @@
 			<div class="mb-3">
 				<label for="kabupaten" class="form-label">Kabupaten</label>
 				<input type="text" class="form-control" id="kabupaten" name="kabupaten" placeholder="" value="{{ $mitra['kabupaten'] }}" required>
+
 			</div>
 			<div class="mb-3">
 				<label for="kecamatan" class="form-label">Kecamatan</label>

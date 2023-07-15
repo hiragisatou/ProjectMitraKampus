@@ -154,10 +154,10 @@
 								<a href="#0"> <i class="lni lni-cog"></i> Settings </a>
 							</li>
 							<li>
-                                <form action="{{ route('logoutHandler') }}" method="post" class="">
-                                    @csrf
-                                    <button type="submit" class="bg-transparent border-0"><i class="lni lni-exit"></i>Logout</button>
-                                </form>
+								<form action="{{ route('logoutHandler') }}" method="post" class="m-0">
+									@csrf
+									<button type="submit" class=" bg-transparent border-0 m-0"><i class="lni lni-exit"></i>Logout</button>
+								</form>
 							</li>
 						</ul>
 					</div>

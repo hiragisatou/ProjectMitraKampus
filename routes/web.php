@@ -52,8 +52,11 @@ Route::middleware(['auth'])->group(function () {
     Route::controller(DashboardController::class)->group(function () {
         Route::get('/admin/dashboard', 'viewDashboard')->name('dashboard');
         Route::get('/admin/pengajuan', 'viewPengajuan')->name('PengajuanMoU');
+        Route::get('/admin/pengajuan/{pengajuan}', 'detailPengajuan');
         Route::get('/admin/profile', 'viewEditProfile')->name('editProfile');
+        Route::get('/admin/listpengajuan', 'listPengajuan')->name('viewListPengajuan');
         Route::post('/admin/profile/handler', 'editProfile')->name('editProfileHandler');
         Route::post('/pengajuanMoU', 'pengajuanMoU')->name('pengajuanMoUHandler');
+        Route::delete('/pengajuan/{pengajuan}', 'deletePengajuan');
     });
 });

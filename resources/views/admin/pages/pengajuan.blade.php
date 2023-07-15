@@ -39,9 +39,9 @@
 				<label class="form-label">Program Studi</label>
 				<select class="form-select" name="p_studi" required>
 					<option>-- Pilih Program Studi --</option>
-					<option value="1">One</option>
-					<option value="2">Two</option>
-					<option value="3">Three</option>
+					@foreach ($prodi as $x)
+                        <option value="{{ $x['id'] }}">{{ $x['prodi'] }}</option>
+                    @endforeach
 				</select>
             </div>
             <div class="mb-3">

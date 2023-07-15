@@ -15,4 +15,9 @@ class PengajuanMitra extends Model
     {
         return $this->belongsTo(Mitra::class, 'mitra_id');
     }
+
+    public function prodi()
+    {
+        return $this->belongsTo(Prodi::class, 'prodi_id');
+    }
 }

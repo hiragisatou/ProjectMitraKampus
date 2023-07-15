@@ -7,9 +7,11 @@ use App\Models\Mitra;
 use App\Models\Sektor;
 use App\Models\Kriteria;
 use App\Models\JenisMitra;
-use App\Models\PengajuanMitra;
 use App\Models\SifatMitra;
 use Illuminate\Http\Request;
+use App\Models\PengajuanMitra;
+use App\Models\Prodi;
+use Illuminate\Support\Facades\Storage;
 
 class DashboardController extends Controller
 {
@@ -20,7 +22,7 @@ class DashboardController extends Controller
 
     public function viewPengajuan()
     {
-        return view('admin.pages.pengajuan');
+        return view('admin.pages.pengajuan', ['prodi' => Prodi::all()->toArray()]);
     }
 
     public function viewEditProfile()
@@ -65,6 +67,12 @@ class DashboardController extends Controller
     }
 
     public function pengajuanMoU(Request $request) {
+        if (count(PengajuanMitra::all()) == 0) {
+            $id = 1;
+        } else {
+            $id = PengajuanMitra::all()->last()->id + 1;
+        }
+
         $data = $request->validate([
             'mou' => ['file', 'max:2560', 'required'],
             'judul' => ['required'],
@@ -74,7 +82,7 @@ class DashboardController extends Controller
             'tgl_mulai' => ['required'],
             'keterangan' => ['required']
         ]);
-        $data['mou'] = $request->file('mou')->storeAs('pengajuanMoU', auth()->user()->mitra->id . '_MOU_' . $data['judul'] . '_' . auth()->user()->mitra->nama . '.pdf');
+        $data['mou'] = $request->file('mou')->storeAs('pengajuanMoU', $id . '_MOU_' . $data['judul'] . '_' . auth()->user()->mitra->nama . '.pdf');
 
         PengajuanMitra::create([
             'judul' => $data['judul'],
@@ -86,5 +94,23 @@ class DashboardController extends Controller
             'keterangan' => $data['keterangan'],
             'file_mou' => $data['mou']
         ]);
+
+        return redirect(route('viewListPengajuan'));
+    }
+
+    public function listPengajuan()  {
+        $data = PengajuanMitra::whereHas('mitra', fn ($query) => $query->where('user_id', auth()->user()->id))->get();
+        return view('admin.pages.list_pengajuan', ['data' => $data->toArray()]);
+    }
+
+    public function detailPengajuan(PengajuanMitra $pengajuan) {
+        return view('admin.pages.detail_pengajuan', ['data' => $pengajuan->load(['mitra', 'prodi'])->toArray()]);
+    }
+
+    public function deletePengajuan(PengajuanMitra $pengajuan) {
+        Storage::delete($pengajuan->file_mou);
+        $pengajuan->delete();
+
+        return redirect(route('viewListPengajuan'));
     }
 }

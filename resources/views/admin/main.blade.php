@@ -17,8 +17,12 @@
 	<link rel="stylesheet" href="{{ asset('dist/css/admin-page/fullcalendar.css') }}" />
 	<link rel="stylesheet" href="{{ asset('dist/css/admin-page/main.css') }}" />
 	<link rel="stylesheet" href="{{ asset('dist/css/sweetalert2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('dist/css/datatables.min.css') }}" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css">
 
     <script src="{{ asset('dist/js/jquery-3.4.1.min.js') }}"></script>
+    <script src="{{ asset('dist/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('dist/js/datatables.min.js') }}"></script>
 	<script src="{{ asset('dist/js/select2.min.js') }}"></script>
 
 </head>
@@ -67,7 +71,7 @@
 	</main>
 
 	<!-- ========= All Javascript files linkup ======== -->
-    <script src="{{ asset('dist/js/bootstrap.bundle.min.js') }}"></script>
+
 	<script src="{{ asset('dist/js/sweetalert2.all.min.js') }}"></script>
 	<script src="{{ asset('dist/js/admin-page/Chart.min.js') }}"></script>
 	<script src="{{ asset('dist/js/admin-page/dynamic-pie-chart.js') }}"></script>

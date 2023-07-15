@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use App\Models\Sektor;
 use App\Models\Kriteria;
 use App\Models\JenisMitra;
+use App\Models\Prodi;
 use App\Models\SifatMitra;
 use Illuminate\Database\Seeder;
 
@@ -38,5 +39,8 @@ class DatabaseSeeder extends Seeder
 
         Kriteria::create(['kriteria' => 'Perusahaan Swasta']);
         Kriteria::create(['kriteria' => 'Perusahaan Negeri']);
+
+        Prodi::create(['prodi' => 'Akuntansi', 'jurusan_id' => 1]);
+        Prodi::create(['prodi' => 'Politik', 'jurusan_id' => 1]);
     }
 }

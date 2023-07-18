@@ -27,6 +27,7 @@ Route::controller(AutentikasiController::class)->group(function () {
     Route::get('/register', 'registerPage')->name('register');
     Route::get('/login', 'index')->middleware('guest')->name('login');
     Route::get('/profile', 'profileMitra')->middleware('auth')->name('profilMitra');
+    Route::get('/updateakun', 'update')->middleware('auth')->name('updateAkun');
     Route::get('/forgot-password', 'resetPassword')->middleware('guest')->name('password.request');
     Route::get('/reset-password/{token}', 'formReset')->middleware('guest')->name('password.reset');
 
@@ -34,6 +35,7 @@ Route::controller(AutentikasiController::class)->group(function () {
     Route::post('/auth/login', 'loginHandler')->name('loginHandler');
     Route::post('/auth/logout', 'logoutHandler')->name('logoutHandler');
     Route::post('/auth/profile', 'profileHandler')->name('profileHandler');
+    Route::post('/update', 'updateHandler')->middleware('auth')->name('updateAkunHandler');
     Route::post('/forgot-password', 'resetPasswordLink')->middleware('guest')->name('password.email');
     Route::post('/reset-password', 'resetPasswordHandler')->middleware('guest')->name('password.update');
 });

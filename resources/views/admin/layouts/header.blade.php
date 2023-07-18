@@ -151,7 +151,7 @@
 								<a href="#0"> <i class="lni lni-inbox"></i> Messages </a>
 							</li>
 							<li>
-								<a href="#0"> <i class="lni lni-cog"></i> Settings </a>
+								<a href="{{ route('updateAkun') }}"> <i class="lni lni-cog"></i> Settings </a>
 							</li>
 							<li>
 								<form action="{{ route('logoutHandler') }}" method="post" class="m-0">

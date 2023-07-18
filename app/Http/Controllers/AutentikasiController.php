@@ -75,7 +75,7 @@ class AutentikasiController extends Controller
         $user->email = $data['email'];
         $user->password = bcrypt($data['password']);
         $user->save();
-        if($user->save()){
+        if ($user->save()) {
             event(new Registered($user));
 
             Auth::attempt(['email' => $data['email'], 'password' => $data['password']]);
@@ -97,7 +97,7 @@ class AutentikasiController extends Controller
     public function profileHandler(Request $request)
     {
         if (Auth::check()) {
-            Mitra::updateOrCreate(['user_id' => auth()->user()->id],[
+            Mitra::updateOrCreate(['user_id' => auth()->user()->id], [
                 'nama' => $request->nama,
                 'kriteriaMitra_id' => $request->kriteria,
                 'nomorIndukBerusaha' => $request->nib,
@@ -175,5 +175,34 @@ class AutentikasiController extends Controller
         return $status === Password::PASSWORD_RESET
             ? redirect()->route('login')->with('status', __($status))
             : back()->withErrors(['email' => [__($status)]]);
+    }
+
+    public function update()
+    {
+        return view('admin.pages.setting', ['data' => auth()->user()]);
+    }
+
+    public function updateHandler(Request $request)
+    {
+        $user = User::find(auth()->user()->id);
+        if (Hash::check($request->password, $user->password)) {
+            if ($request->newPassword != null) {
+                $data = $request->validate([
+                    'name' => ['required'],
+                    'newPassword' => ['required', 'min:8'],
+                    'confirmPassword' => ['required', 'same:newPassword']
+                ]);
+                $user->password = bcrypt($data['newPassword']);
+            } else {
+                $data = $request->validate([
+                    'name' => ['required']
+                ]);
+            }
+            $user->name = $data['name'];
+            $user->save();
+            return redirect(route('dashboard'))->with('success', 'Data akun berhasil di update!');
+        } else {
+            return back()->with('error', 'Password tidak sesuai.');
+        }
     }
 }

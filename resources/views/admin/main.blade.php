@@ -24,7 +24,6 @@
 	<script src="{{ asset('dist/js/bootstrap.bundle.min.js') }}"></script>
 	<script src="{{ asset('dist/js/datatables.min.js') }}"></script>
 	<script src="{{ asset('dist/js/select2.min.js') }}"></script>
-
 </head>
 
 <body>

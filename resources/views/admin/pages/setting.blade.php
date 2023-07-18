@@ -80,6 +80,8 @@
 				if (this.value == "") {
 					$('#new-password').attr('disabled', true);
 					$('#confirm-password').attr('disabled', true);
+                    $('#new-password').val('');
+					$('#confirm-password').val('');
 					$('#new-password').attr('required', false);
 					$('#confirm-password').attr('required', false);
 					this.value = "on";

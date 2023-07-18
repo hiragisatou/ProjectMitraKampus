@@ -10,6 +10,11 @@
                 </div>
             </div>
             <div class="card-body">
+                @if (session()->has('status'))
+                <div class="alert alert-success">
+                    <span>{{ session('status') }}</span>
+                </div>
+                @endif
                 <form action="{{ route('loginHandler') }}" method="post">
                     @csrf
                     <div class="form-floating mb-3">

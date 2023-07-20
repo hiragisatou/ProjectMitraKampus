@@ -5360,3 +5360,7 @@ only screen and (min-width: 768px) and (max-width: 991px),
 .fw-900 {
     font-weight: 900;
 }
+
+.ikon {
+    fill: currentColor;
+}

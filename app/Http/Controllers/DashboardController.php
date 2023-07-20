@@ -100,7 +100,7 @@ class DashboardController extends Controller
 
     public function listPengajuan()  {
         if (auth()->user()->role == 'mitra') {
-            $data = PengajuanMitra::with(['prodi'])->whereHas('mitra', fn ($query) => $query->where('user_id', auth()->user()->id))->get();
+            $data = PengajuanMitra::with(['mitra', 'prodi'])->whereHas('mitra', fn ($query) => $query->where('user_id', auth()->user()->id))->get();
         } else {
             $data = PengajuanMitra::with(['mitra', 'prodi'])->get();
         }

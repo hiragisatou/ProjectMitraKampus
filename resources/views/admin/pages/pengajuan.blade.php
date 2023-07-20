@@ -63,7 +63,7 @@
             <hr/>
             <div class="d-flex justify-content-end">
                 <button type="submit" class="btn btn-primary me-3 w-25">Ajukan</button>
-                <a href="" class="btn btn-secondary w-25">Batal</a>
+                <a href="{{ url()->previous() }}" class="btn btn-secondary w-25">Batal</a>
             </div>
 		</form>
 	</div>

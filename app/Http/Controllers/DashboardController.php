@@ -99,7 +99,11 @@ class DashboardController extends Controller
     }
 
     public function listPengajuan()  {
-        $data = PengajuanMitra::whereHas('mitra', fn ($query) => $query->where('user_id', auth()->user()->id))->get();
+        if (auth()->user()->role == 'mitra') {
+            $data = PengajuanMitra::with(['prodi'])->whereHas('mitra', fn ($query) => $query->where('user_id', auth()->user()->id))->get();
+        } else {
+            $data = PengajuanMitra::with(['mitra', 'prodi'])->get();
+        }
         return view('admin.pages.list_pengajuan', ['data' => $data->toArray()]);
     }
 

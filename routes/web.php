@@ -48,6 +48,8 @@ Route::controller(MailVerificationController::class)->group(function () {
 
 Route::controller(HomeController::class)->group(function () {
     Route::get('/home', 'index')->name('home');
+    Route::get('/about', 'about')->name('aboutUs');
+    Route::get('/contact', 'contact')->name('contactUs');
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -59,6 +61,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/listpengajuan', 'listPengajuan')->name('viewListPengajuan');
         Route::post('/admin/profile/handler', 'editProfile')->name('editProfileHandler');
         Route::post('/pengajuanMoU', 'pengajuanMoU')->name('pengajuanMoUHandler');
-        Route::delete('/pengajuan/{pengajuan}', 'deletePengajuan');
+        Route::delete('/pengajuan/{pengajuan}', 'deletePengajuan')->name('deletePengajuan');
     });
 });

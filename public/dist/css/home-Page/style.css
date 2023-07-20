@@ -177,7 +177,7 @@
         position: relative;
         min-height: 450px;
     }
-    
+
     #header-carousel .carousel-item img {
         position: absolute;
         width: 100%;
@@ -187,7 +187,6 @@
 }
 
 .page-header {
-    background: url(../img/carousel-1.jpg) center center no-repeat;
     background-size: cover;
 }
 

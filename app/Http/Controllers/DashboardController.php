@@ -11,6 +11,7 @@ use App\Models\SifatMitra;
 use Illuminate\Http\Request;
 use App\Models\PengajuanMitra;
 use App\Models\Prodi;
+use App\Models\VerifyPengajuan;
 use Illuminate\Support\Facades\Storage;
 
 class DashboardController extends Controller
@@ -88,9 +89,9 @@ class DashboardController extends Controller
             'judul' => $data['judul'],
             'mitra_id' => auth()->user()->mitra->id,
             'jenisKemitraan' => $data['jenis'],
-            'ruangLingkup' => collect($data['lingkup'])->implode('-'),
+            'ruangLingkup' => collect($data['lingkup'])->implode('+'),
             'tgl_mulai' => $data['tgl_mulai'],
-            'prodi_id' => 1,
+            'prodi_id' => $data['p_studi'],
             'keterangan' => $data['keterangan'],
             'file_mou' => $data['mou']
         ]);
@@ -108,7 +109,9 @@ class DashboardController extends Controller
     }
 
     public function detailPengajuan(PengajuanMitra $pengajuan) {
-        return view('admin.pages.detail_pengajuan', ['data' => $pengajuan->load(['mitra', 'prodi'])->toArray()]);
+        $data = $pengajuan->load(['mitra', 'prodi', 'verifyPengajuan']);
+        $data['ruangLingkup'] = array(explode('+', $pengajuan->ruangLingkup));
+        return view('admin.pages.detail_pengajuan', ['data' => $data->toArray()]);
     }
 
     public function deletePengajuan(PengajuanMitra $pengajuan) {
@@ -116,5 +119,35 @@ class DashboardController extends Controller
         $pengajuan->delete();
 
         return redirect(route('viewListPengajuan'));
+    }
+
+    public function verifyMoU(Request $request) {
+
+        if (count(VerifyPengajuan::all()) == 0) {
+            $id = 1;
+        } else {
+            $id = VerifyPengajuan::all()->last()->id + 1;
+        }
+
+        $data = $request->validate([
+            'id_pengajuan' => ['required'],
+            'tgl_akhir' => ['required'],
+        ]);
+
+        $pengajuan = PengajuanMitra::find($data['id_pengajuan']);
+        $pengajuan->tgl_berakhir = $data['tgl_akhir'];
+        $pengajuan->save();
+
+        $data['valid_mou'] = $request->file('file_verify')->storeAs('VerifyMoU', $id . '_Valid MoU_' . $pengajuan->judul . '_' . $pengajuan->mitra->nama . '.pdf');
+
+        VerifyPengajuan::create([
+            'pengajuanKemitraan_id' => $data['id_pengajuan'],
+            'admin_id' => auth()->user()->id,
+            'status' => 'Verify',
+            'keterangan' => '',
+            'valid_mou' => $data['valid_mou']
+        ]);
+
+        return redirect()->back();
     }
 }

@@ -48,4 +48,9 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     {
         return $this->hasOne(Mitra::class, 'user_id');
     }
+
+    public function verifyPengajuan()
+    {
+        return $this->hasMany(VerifyPengajuan::class, 'admin_id');
+    }
 }

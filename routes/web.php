@@ -61,6 +61,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/listpengajuan', 'listPengajuan')->name('viewListPengajuan');
         Route::post('/admin/profile/handler', 'editProfile')->name('editProfileHandler');
         Route::post('/pengajuanMoU', 'pengajuanMoU')->name('pengajuanMoUHandler');
+        Route::post('/verifyMoU', 'verifyMoU')->name('VerifyMoU');
+        Route::post('/tolakMoU', 'tolakMoU')->name('tolakMoU');
         Route::delete('/pengajuan/{pengajuan}', 'deletePengajuan')->name('deletePengajuan');
     });
 });

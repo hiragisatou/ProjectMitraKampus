@@ -20,4 +20,9 @@ class PengajuanMitra extends Model
     {
         return $this->belongsTo(Prodi::class, 'prodi_id');
     }
+
+    public function verifyPengajuan()
+    {
+        return $this->hasOne(VerifyPengajuan::class, 'pengajuanKemitraan_id');
+    }
 }

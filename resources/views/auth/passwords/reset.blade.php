@@ -17,7 +17,6 @@
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control-plaintext @error('email') is-invalid @enderror" name="email" value="{{ request()->email ?? old('email') }}" required autocomplete="email" readonly>
-
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

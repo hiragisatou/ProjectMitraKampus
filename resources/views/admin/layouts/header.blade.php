@@ -127,7 +127,7 @@
 						<button class="dropdown-toggle bg-transparent border-0" type="button" id="profile" data-bs-toggle="dropdown" aria-expanded="false">
 							<div class="profile-info">
 								<div class="info">
-									<h6>John Doe</h6>
+									<h6>{{ auth()->user()->name }}</h6>
 									<div class="image">
 										<img src="assets/images/profile/profile-image.png" alt="" />
 										<span class="status"></span>

@@ -101,16 +101,16 @@ class DashboardController extends Controller
 
     public function listPengajuan()  {
         if (auth()->user()->role == 'mitra') {
-            $data = PengajuanMitra::with(['mitra', 'prodi'])->whereHas('mitra', fn ($query) => $query->where('user_id', auth()->user()->id))->get();
+            $data = PengajuanMitra::with(['mitra', 'prodi', 'verifyPengajuan'])->whereHas('mitra', fn ($query) => $query->where('user_id', auth()->user()->id))->get();
         } else {
-            $data = PengajuanMitra::with(['mitra', 'prodi'])->get();
+            $data = PengajuanMitra::with(['mitra', 'prodi', 'verifyPengajuan'])->get();
         }
         return view('admin.pages.list_pengajuan', ['data' => $data->toArray()]);
     }
 
     public function detailPengajuan(PengajuanMitra $pengajuan) {
         $data = $pengajuan->load(['mitra', 'prodi', 'verifyPengajuan']);
-        $data['ruangLingkup'] = array(explode('+', $pengajuan->ruangLingkup));
+        $data['ruangLingkup'] = explode('+', $pengajuan->ruangLingkup);
         return view('admin.pages.detail_pengajuan', ['data' => $data->toArray()]);
     }
 
@@ -143,7 +143,7 @@ class DashboardController extends Controller
         VerifyPengajuan::create([
             'pengajuanKemitraan_id' => $data['id_pengajuan'],
             'admin_id' => auth()->user()->id,
-            'status' => 'Verify',
+            'status' => 'Disetujui',
             'keterangan' => '',
             'valid_mou' => $data['valid_mou']
         ]);

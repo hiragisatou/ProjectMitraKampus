@@ -51,7 +51,6 @@
 				searching: false,
 			});
 			$('#header-search').on('keyup', function() {
-				console.log(this.value);
 				myTable.search(this.value).draw();
 			});
 		});

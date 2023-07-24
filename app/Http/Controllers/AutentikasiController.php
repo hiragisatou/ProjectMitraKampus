@@ -26,11 +26,16 @@ class AutentikasiController extends Controller
         return view('auth.login');
     }
 
+    public function indexAdmin()
+    {
+        return view('auth.admin_login');
+    }
+
     // Api Login
     public function loginHandler(Request $request)
     {
         $credentials = $request->validate([
-            'email' => ['required', 'email', 'exists:users,email'],
+            'email' => ['required', 'exists:users,email'],
             'password' => ['required'],
         ]);
         if (Auth::attempt($credentials)) {

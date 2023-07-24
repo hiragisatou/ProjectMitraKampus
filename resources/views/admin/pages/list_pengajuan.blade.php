@@ -7,9 +7,8 @@
 			<thead>
 				<tr>
 					<th>No</th>
+					<th>Nama Mitra</th>
 					<th>Judul</th>
-					<th>Jenis Kemitraan</th>
-					<th>Prodi</th>
 					<th>Tanggal</th>
 					<th>Status</th>
 					<th>Aksi</th>
@@ -19,9 +18,8 @@
 				@foreach ($data as $x)
 					<tr>
 						<td>{{ $loop->iteration }}</td>
+						<td>{{ $x['mitra']['nama'] }}</td>
 						<td>{{ $x['judul'] }}</td>
-						<td>{{ $x['jenisKemitraan'] }}</td>
-						<td>{{ $x['prodi']['prodi'] }}</td>
 						<td>{{ date_format(date_create($x['tgl_mulai']), 'd-m-Y') }} {{ $x['tgl_berakhir'] == null ? '' : ' s/d ' . date_format(date_create($x['tgl_berakhir']), 'd-m-Y') }}</td>
 						<td>
 							@if ($x['verify_pengajuan'] != null)
@@ -49,7 +47,13 @@
 
 	<script>
 		$(document).ready(function() {
-			var myTable = $('#list_pengajuan').DataTable({});
+			var myTable = $('#list_pengajuan').DataTable({
+				searching: false,
+			});
+			$('#header-search').on('keyup', function() {
+				console.log(this.value);
+				myTable.search(this.value).draw();
+			});
 		});
 	</script>
 @endsection

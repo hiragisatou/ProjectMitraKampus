@@ -26,6 +26,7 @@ Route::get('/', function () {
 Route::controller(AutentikasiController::class)->group(function () {
     Route::get('/register', 'registerPage')->middleware('guest')->name('register');
     Route::get('/login', 'index')->middleware('guest')->name('login');
+    Route::get('/loginAdmin', 'indexAdmin')->middleware('guest')->name('loginAdmin');
     Route::get('/profile', 'profileMitra')->middleware('auth')->name('profilMitra');
     Route::get('/updateakun', 'update')->middleware('auth')->name('updateAkun');
     Route::get('/forgot-password', 'resetPassword')->middleware('guest')->name('password.request');

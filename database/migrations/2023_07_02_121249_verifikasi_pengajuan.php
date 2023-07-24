@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('admin_id');
             $table->string('status');
             $table->text('keterangan')->nullable();
-            $table->string('valid_mou');
+            $table->string('valid_mou')->nullable();
             $table->timestamps();
         });
     }

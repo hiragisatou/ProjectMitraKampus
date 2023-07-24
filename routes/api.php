@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AutentikasiController;
 use App\Models\Kabupaten;
 use App\Models\Kecamatan;
+use App\Models\Mitra;
 
 /*
 |--------------------------------------------------------------------------

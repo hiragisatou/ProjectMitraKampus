@@ -11,10 +11,16 @@ $(document).ready(function () {
 		}
 	})
 
-	if ($('#notification-toast').length > 0) {
+	if ($('#notification-toast-success').length > 0) {
 		Toast.fire({
 			icon: 'success',
-			title: $('#notification-toast').val()
+			title: $('#notification-toast-success').val()
+		})
+	}
+    if ($('#notification-toast-error').length > 0) {
+		Toast.fire({
+			icon: 'error',
+			title: $('#notification-toast-error').val()
 		})
 	}
 

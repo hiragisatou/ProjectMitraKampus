@@ -11,7 +11,7 @@
 					</div>
 					<div class="header-search d-none d-md-flex">
 						<form action="#">
-							<input type="text" placeholder="Search..." />
+							<input type="text" placeholder="Search..." id="header-search" />
 							<button><i class="lni lni-search-alt"></i></button>
 						</form>
 					</div>
@@ -19,7 +19,7 @@
 			</div>
 			<div class="col-lg-7 col-md-7 col-6">
 				<div class="header-right">
-					<!-- notification start -->
+					{{-- <!-- notification start -->
 					<div class="notification-box ml-15 d-none d-md-flex">
 						<button class="dropdown-toggle" type="button" id="notification" data-bs-toggle="dropdown" aria-expanded="false">
 							<i class="lni lni-alarm"></i>
@@ -121,7 +121,7 @@
 							<i class="lni lni-funnel"></i>
 						</button>
 					</div>
-					<!-- filter end -->
+					<!-- filter end --> --}}
 					<!-- profile start -->
 					<div class="profile-box ml-15">
 						<button class="dropdown-toggle bg-transparent border-0" type="button" id="profile" data-bs-toggle="dropdown" aria-expanded="false">

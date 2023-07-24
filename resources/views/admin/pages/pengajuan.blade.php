@@ -49,10 +49,6 @@
 				<input type="date" class="form-control" name="tgl_mulai" required>
 			</div>
             <div class="mb-3">
-				<label class="form-label">Tanggal Selesai</label>
-				<input type="date" class="form-control" name="tgl_selesai" disabled>
-			</div>
-            <div class="mb-3">
 				<label class="form-label">Keterangan</label>
 				<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="keterangan" required></textarea>
 			</div>

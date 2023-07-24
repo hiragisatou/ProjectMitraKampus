@@ -8,6 +8,7 @@ use App\Models\Kriteria;
 use App\Models\JenisMitra;
 use App\Models\Prodi;
 use App\Models\SifatMitra;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -23,6 +24,9 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        User::create(['name' => 'Administrator', 'email' => 'administrator', 'password' => bcrypt('1234qwer'), 'role' => 'admin']);
+        User::create(['name' => 'Admin Prodi', 'email' => 'programstudi', 'password' => bcrypt('1234qwer'), 'role' => 'prodi']);
 
         //sektor seeders
         Sektor::create(['sektor' => 'Perdagangan Besar dan Eceran']);

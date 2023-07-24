@@ -10,8 +10,8 @@
 					<th>Nama</th>
 					<th>Kriteria</th>
 					<th>Kota</th>
-                    <th>Provinsi</th>
-                    <th>Aksi</th>
+					<th>Provinsi</th>
+					<th>Aksi</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -21,12 +21,12 @@
 						<td>{{ $x['nama'] }}</td>
 						<td>{{ $x['kriteria']['kriteria'] }}</td>
 						<td>{{ $x['kabupaten']['nama'] }}</td>
-                        <td>{{ $x['provinsi']['nama'] }}</td>
-                        <td>
-                            <a href="{{ route('detailMitra', ['mitra' => $x['id']]) }}" class="btn btn-outline-dark">
+						<td>{{ $x['provinsi']['nama'] }}</td>
+						<td>
+							<a href="{{ route('detailMitra', ['mitra' => $x['id']]) }}" class="btn btn-outline-dark">
 								<span><i class="lni lni-magnifier"></i></span>
 							</a>
-                        </td>
+						</td>
 					</tr>
 				@endforeach
 			</tbody>
@@ -36,6 +36,12 @@
 	<script>
 		$(document).ready(function() {
 			var myTable = $('#list_mitra').DataTable({
+                searching : false,
+            });
+
+			$('#header-search').on('keyup', function() {
+				console.log(this.value);
+				myTable.search(this.value).draw();
 			});
 		});
 	</script>

@@ -121,13 +121,19 @@ class DashboardController extends Controller
     }
 
     public function deletePengajuan(PengajuanMitra $pengajuan) {
-        Storage::delete($pengajuan->file_mou);
-        $pengajuan->delete();
+        if (count(PengajuanMitra::where('id', $pengajuan->id)->has('verifyPengajuan')->get()) > 0) {
+            return redirect(route('viewListPengajuan'))->with('error', 'Data sudah diverifikasi');
+        }
+        else {
+            Storage::delete($pengajuan->file_mou);
+            $pengajuan->delete();
+        }
 
-        return redirect(route('viewListPengajuan'));
+        return redirect(route('viewListPengajuan'))->with('success', 'Data pengajuan berhasil dihapus!');
     }
 
     public function verifyMoU(Request $request) {
+        $this->authorize('admin');
 
         if (count(VerifyPengajuan::all()) == 0) {
             $id = 1;
@@ -157,11 +163,30 @@ class DashboardController extends Controller
         return redirect()->back();
     }
 
+    public function tolakMoU(Request $request) {
+        $this->authorize('admin');
+        $data = $request->validate([
+            'id_pengajuan' => 'required',
+            'keterangan' => 'required'
+        ]);
+
+        VerifyPengajuan::create([
+            'pengajuanKemitraan_id' => $data['id_pengajuan'],
+            'admin_id' => auth()->user()->id,
+            'status' => 'Ditolak',
+            'keterangan' => $data['keterangan'],
+        ]);
+
+        return redirect()->back();
+    }
+
     public function listMitra() {
+        $this->authorize('admin');
         return view('admin.pages.list_mitra', ['data' => Mitra::with(['kabupaten', 'provinsi', 'kriteria'])->get()->toArray()]);
     }
 
     function detailMitra(Mitra $mitra) {
+        $this->authorize('admin');
         $data['Nama Mitra'] = $mitra->nama;
         $data['Nomor Induk Berusaha'] = $mitra->nomorIndukBerusaha;
         $data['Sektor Industri'] = $mitra->sektor->sektor;

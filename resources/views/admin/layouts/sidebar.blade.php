@@ -22,7 +22,7 @@
 				</ul>
 			</li>
 			<li class="nav-item">
-				<a href="invoice.html">
+				<a href="{{ route('viewListMitra') }}">
                     <span class="icon">
                         <i class="lni lni-database"></i>
                     </span>

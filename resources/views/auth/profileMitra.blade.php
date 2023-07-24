@@ -31,9 +31,9 @@
 						<label class="form-label">Sektor Industri</label>
 						<select class="form-select" name="sektor" required>
 							<option selected>-- Pilih Sektor Industri --</option>
-                            @foreach ($sektor as $x)
-                            <option value="{{ $x['id'] }}">{{ $x['sektor'] }}</option>
-                            @endforeach
+							@foreach ($sektor as $x)
+								<option value="{{ $x['id'] }}">{{ $x['sektor'] }}</option>
+							@endforeach
 						</select>
 					</div>
 					<div class="mb-3">
@@ -41,8 +41,8 @@
 						<select class="form-select" name="sifat" required>
 							<option selected>-- Pilih Sifat Mitra --</option>
 							@foreach ($sifat as $x)
-                            <option value="{{ $x['id'] }}">{{ $x['kategori'] }}</option>
-                            @endforeach
+								<option value="{{ $x['id'] }}">{{ $x['kategori'] }}</option>
+							@endforeach
 						</select>
 					</div>
 					<div class="mb-3">
@@ -73,15 +73,20 @@
 					</div>
 					<div class="mb-3">
 						<label for="provinsi" class="form-label">Provinsi</label>
-						<input type="text" class="form-control" id="provinsi" name="provinsi" placeholder="" required>
+						<select name="provinsi" id="provinsi" class="form-select" required>
+							<option value="">-- Pilih Provinsi --</option>
+							@foreach ($provinsi as $x)
+								<option value="{{ $x['id'] }}">{{ $x['nama'] }}</option>
+							@endforeach
+						</select>
 					</div>
 					<div class="mb-3">
 						<label for="kabupaten" class="form-label">Kabupaten</label>
-						<input type="text" class="form-control" id="kabupaten" name="kabupaten" placeholder="" required>
+						<select name="kabupaten" id="kabupaten" class="form-select" disabled></select>
 					</div>
 					<div class="mb-3">
 						<label for="kecamatan" class="form-label">Kecamatan</label>
-						<input type="text" class="form-control" id="kecamatan" name="kecamatan" placeholder="" required>
+						<select name="kecamatan" id="kecamatan" class="form-select" disabled></select>
 					</div>
 					<div class="mb-3">
 						<label for="url" class="form-label">Url Web</label>
@@ -130,4 +135,42 @@
 			</form>
 		</div>
 	</div>
+	<script>
+		$(document).ready(function() {
+			$('#provinsi').change(function(e) {
+                if (this.value == '') {
+                    $("#kabupaten").children().remove().end();
+                        $("#kabupaten").attr('disabled', 'true');
+                }
+                else {
+                    $.getJSON("{{ route('api_kabupaten') }}", {'id' : this.value},
+                        function (data, textStatus, jqXHR) {
+                            $("#kabupaten").children().remove().end();
+                            $("#kabupaten").removeAttr('disabled');
+                            $("#kabupaten").attr('required', 'true');
+                            $("#kabupaten").append(new Option("-- Pilih Kabupaten --", ""));
+                            data.forEach(element => {
+                                $("#kabupaten").append(new Option(element['nama'], element['id']));
+                            });
+                            $("#kecamatan").children().remove().end();
+                            $("#kecamatan").attr('disabled', 'true');
+                        }
+                    );
+                }
+			});
+            $('#kabupaten').change(function(e) {
+                $.getJSON("{{ route('api_kecamatan') }}", {'id' : this.value},
+                    function (data, textStatus, jqXHR) {
+                        $("#kecamatan").children().remove().end();
+                        $("#kecamatan").removeAttr('disabled');
+                        $("#kecamatan").attr('required', 'true');
+                        $("#kecamatan").append(new Option("-- Pilih kecamatan --", ""));
+                        data.forEach(element => {
+                            $("#kecamatan").append(new Option(element['nama'], element['id']));
+                        });
+                    }
+                );
+			});
+		});
+	</script>
 @endsection

@@ -3,9 +3,9 @@
 @section('judul', 'Detail Pengajuan Kemitraan')
 @section('content')
 	@if ($data['verify_pengajuan'] != null)
-		@if ($data['verify_pengajuan']['status'] == 'Verify')
+		@if ($data['verify_pengajuan']['status'] == 'Verify' || $data['verify_pengajuan']['status'] == 'Disetujui')
 			<div class="alert alert-success">
-				Telah diverifikasi
+				Telah Disetujui
 			</div>
 		@endif
 		@if ($data['verify_pengajuan']['status'] == 'Tolak')
@@ -49,7 +49,7 @@
 				<tr>
 					<td>Tanggal</td>
 					<td>:</td>
-					<td>{{ $data['tgl_mulai'] }}</td>
+					<td>{{ date_format(date_create($data['tgl_mulai']), 'd-m-Y') }}</td>
 				</tr>
 				<tr>
 					<td>Program Studi yang Melakukan Kemitraan / Kerja Sama</td>

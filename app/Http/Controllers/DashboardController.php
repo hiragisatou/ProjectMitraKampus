@@ -29,7 +29,7 @@ class DashboardController extends Controller
     public function viewEditProfile()
     {
         return view('admin.pages.profile', [
-            'mitra' => auth()->user()->mitra->toArray(),
+            'mitra' => auth()->user()->mitra->load(['provinsi', 'kabupaten', 'kecamatan'])->toArray(),
             'sektor' => Sektor::all()->toArray(),
             'jenis' => JenisMitra::all()->toArray(),
             'kriteria' => Kriteria::all()->toArray(),
@@ -149,5 +149,9 @@ class DashboardController extends Controller
         ]);
 
         return redirect()->back();
+    }
+
+    public function listMitra() {
+        return view('admin.pages.list_mitra', ['data' => Mitra::with(['user', 'pengajuanMitra'])->get()->toArray()]);
     }
 }

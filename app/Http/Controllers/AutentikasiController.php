@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\DataResource;
 use App\Models\User;
 use App\Models\Sektor;
 use App\Models\Kriteria;
 use App\Models\JenisMitra;
 use App\Models\Mitra;
+use App\Models\Provinsi;
 use App\Models\SifatMitra;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -90,7 +92,8 @@ class AutentikasiController extends Controller
             'sektor' => Sektor::all()->toArray(),
             'jenis' => JenisMitra::all()->toArray(),
             'kriteria' => Kriteria::all()->toArray(),
-            'sifat' => SifatMitra::all()->toArray()
+            'sifat' => SifatMitra::all()->toArray(),
+            'provinsi' => Provinsi::all()->toArray()
         ]);
     }
 
@@ -108,9 +111,9 @@ class AutentikasiController extends Controller
                 'klasifikasi' => $request->klasifikasi,
                 'jumlahPegawai' => $request['jumlah_pegawai'],
                 'alamat' => $request->alamat,
-                'provinsi' => $request->provinsi,
-                'kabupaten' => $request->kabupaten,
-                'kecamatan' => $request->kecamatan,
+                'provinsi_id' => $request->provinsi,
+                'kabupaten_id' => $request->kabupaten,
+                'kecamatan_id' => $request->kecamatan,
                 'urlWeb' => $request->url,
                 'email' => $request->email,
                 'noTelp' => $request->notelp,

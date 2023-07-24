@@ -22,7 +22,7 @@
 						<td>{{ $x['judul'] }}</td>
 						<td>{{ $x['jenisKemitraan'] }}</td>
 						<td>{{ $x['prodi']['prodi'] }}</td>
-						<td>{{ date_format(date_create($x['tgl_mulai']), 'd/m/Y') }} {{ $x['tgl_mulai'] == null ? '' : ' - ' . date_format(date_create($x['tgl_berakhir']), 'd/m/Y') }}</td>
+						<td>{{ date_format(date_create($x['tgl_mulai']), 'd-m-Y') }} {{ $x['tgl_berakhir'] == null ? '' : ' s/d ' . date_format(date_create($x['tgl_berakhir']), 'd-m-Y') }}</td>
 						<td>
 							@if ($x['verify_pengajuan'] != null)
 								<span class="badge {{ $x['verify_pengajuan']['status'] == 'Verify' || $x['verify_pengajuan']['status'] == 'Disetujui' ? 'text-bg-success' : 'text-bg-danger' }}">{{ $x['verify_pengajuan']['status'] }}</span>

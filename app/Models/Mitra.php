@@ -36,4 +36,16 @@ class Mitra extends Model
     {
         return $this->hasMany(PengajuanMitra::class, 'mitra_id');
     }
+    public function provinsi()
+    {
+        return $this->belongsTo(Provinsi::class, 'provinsi_id');
+    }
+    public function kabupaten()
+    {
+        return $this->belongsTo(Kabupaten::class, 'kabupaten_id');
+    }
+    public function kecamatan()
+    {
+        return $this->belongsTo(Kecamatan::class, 'kecamatan_id');
+    }
 }

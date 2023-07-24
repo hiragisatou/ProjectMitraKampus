@@ -42,5 +42,9 @@ class DatabaseSeeder extends Seeder
 
         Prodi::create(['prodi' => 'Akuntansi', 'jurusan_id' => 1]);
         Prodi::create(['prodi' => 'Politik', 'jurusan_id' => 1]);
+
+        $this->call([
+            AlamatSeeder::class,
+        ]);
     }
 }

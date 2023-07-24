@@ -24,7 +24,7 @@ Route::get('/', function () {
 
 
 Route::controller(AutentikasiController::class)->group(function () {
-    Route::get('/register', 'registerPage')->name('register');
+    Route::get('/register', 'registerPage')->middleware('guest')->name('register');
     Route::get('/login', 'index')->middleware('guest')->name('login');
     Route::get('/profile', 'profileMitra')->middleware('auth')->name('profilMitra');
     Route::get('/updateakun', 'update')->middleware('auth')->name('updateAkun');
@@ -54,11 +54,12 @@ Route::controller(HomeController::class)->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::controller(DashboardController::class)->group(function () {
-        Route::get('/admin/dashboard', 'viewDashboard')->name('dashboard');
-        Route::get('/admin/pengajuan', 'viewPengajuan')->name('PengajuanMoU');
-        Route::get('/admin/pengajuan/{pengajuan}', 'detailPengajuan')->name('detailPengajuan');
+        Route::get('/dashboard', 'viewDashboard')->name('dashboard');
+        Route::get('/pengajuan', 'viewPengajuan')->name('PengajuanMoU');
+        Route::get('/pengajuan/{pengajuan}', 'detailPengajuan')->name('detailPengajuan');
         Route::get('/admin/profile', 'viewEditProfile')->name('editProfile');
-        Route::get('/admin/listpengajuan', 'listPengajuan')->name('viewListPengajuan');
+        Route::get('/listpengajuan', 'listPengajuan')->name('viewListPengajuan');
+        Route::get('/listmitra', 'listMitra')->name('viewListMitra');
         Route::post('/admin/profile/handler', 'editProfile')->name('editProfileHandler');
         Route::post('/pengajuanMoU', 'pengajuanMoU')->name('pengajuanMoUHandler');
         Route::post('/verifyMoU', 'verifyMoU')->name('VerifyMoU');

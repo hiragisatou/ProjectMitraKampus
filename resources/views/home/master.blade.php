@@ -22,6 +22,9 @@
 
 	<link rel="stylesheet" href="{{ asset('dist/css/bootstrap.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('dist/css/home-page/style.css') }}">
+
+    <script src="{{ asset('dist/js/jquery-3.4.1.min.js') }}"></script>
+	<script src="{{ asset('dist/js/bootstrap.bundle.min.js') }}"></script>
 </head>
 
 <body>
@@ -44,8 +47,6 @@
 	@endif
 
 	<!-- JavaScript Libraries -->
-	<script src="{{ asset('dist/js/jquery-3.4.1.min.js') }}"></script>
-	<script src="{{ asset('dist/js/bootstrap.bundle.min.js') }}"></script>
 	<script src="{{ asset('dist/js/home-page/wow.min.js') }}"></script>
 	<script src="{{ asset('dist/js/home-page/easing.min.js') }}"></script>
 	<script src="{{ asset('dist/js/home-page/waypoints.min.js') }}"></script>

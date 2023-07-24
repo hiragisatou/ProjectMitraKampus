@@ -2,10 +2,11 @@
 @section('title', 'Edit Profile')
 @section('judul', 'Edit Profile')
 @section('content')
+@dd($mitra)
 	{{-- <div class="container-fluid"> --}}
-		<form method="POST" action="{{ route('editProfileHandler') }}">
-			@csrf
-            <div class="row row-cols-2 mb-4">
+	<form method="POST" action="{{ route('editProfileHandler') }}">
+		@csrf
+		<div class="row row-cols-2 mb-4">
 			<div class="mb-3">
 				<label for="nama" class="form-label">Nama Mitra</label>
 				<input type="text" class="form-control" id="nama" name="nama" placeholder="" value="{{ $mitra['nama'] }}" required>
@@ -92,36 +93,50 @@
 				<label for="notelp" class="form-label">Nomor Telepon</label>
 				<input type="text" class="form-control" id="notelp" name="notelp" placeholder="" value="{{ $mitra['noTelp'] }}" required>
 			</div>
-        </div>
-			<div class="row">
-				<div class="mb-3 col-lg-6">
-					<label for="linkedin" class="form-label">Linkedin</label>
-					<input type="text" class="form-control" id="linkedin" name="linkedin" placeholder="" value="{{ $mitra['linkedin'] }}">
-				</div>
-				<div class="mb-3 col-lg-6">
-					<label for="instagram" class="form-label">Instagram</label>
-					<input type="text" class="form-control" id="instagram" name="instagram" placeholder="" value="{{ $mitra['instagram'] }}">
-				</div>
-				<div class="mb-3 col-lg-6">
-					<label for="facebook" class="form-label">Facebook</label>
-					<input type="text" class="form-control" id="facebook" name="facebook" placeholder="" value="{{ $mitra['facebook'] }}">
-				</div>
-				<div class="mb-3 col-lg-6">
-					<label for="twitter" class="form-label">Twitter</label>
-					<input type="text" class="form-control" id="twitter" name="twitter" placeholder="" value="{{ $mitra['twitter'] }}">
-				</div>
-				<div class="mb-3 col-lg-6">
-					<label for="tiktok" class="form-label">Tiktok</label>
-					<input type="text" class="form-control" id="tiktok" name="tiktok" placeholder="" value="{{ $mitra['tiktok'] }}">
-				</div>
-				<div class="mb-3 col-lg-6">
-					<label for="youtube" class="form-label">Youtube</label>
-					<input type="text" class="form-control" id="youtube" name="youtube" placeholder="" value="{{ $mitra['youtube'] }}">
-				</div>
+		</div>
+		<div class="row">
+			<div class="mb-3 col-lg-6">
+				<label for="linkedin" class="form-label">Linkedin</label>
+				<input type="text" class="form-control" id="linkedin" name="linkedin" placeholder="" value="{{ $mitra['linkedin'] }}">
 			</div>
-			<div class="d-flex justify-content-end">
-				<button type="submit" class="btn btn-primary w-25">Simpan</button>
+			<div class="mb-3 col-lg-6">
+				<label for="instagram" class="form-label">Instagram</label>
+				<input type="text" class="form-control" id="instagram" name="instagram" placeholder="" value="{{ $mitra['instagram'] }}">
 			</div>
-		</form>
+			<div class="mb-3 col-lg-6">
+				<label for="facebook" class="form-label">Facebook</label>
+				<input type="text" class="form-control" id="facebook" name="facebook" placeholder="" value="{{ $mitra['facebook'] }}">
+			</div>
+			<div class="mb-3 col-lg-6">
+				<label for="twitter" class="form-label">Twitter</label>
+				<input type="text" class="form-control" id="twitter" name="twitter" placeholder="" value="{{ $mitra['twitter'] }}">
+			</div>
+			<div class="mb-3 col-lg-6">
+				<label for="tiktok" class="form-label">Tiktok</label>
+				<input type="text" class="form-control" id="tiktok" name="tiktok" placeholder="" value="{{ $mitra['tiktok'] }}">
+			</div>
+			<div class="mb-3 col-lg-6">
+				<label for="youtube" class="form-label">Youtube</label>
+				<input type="text" class="form-control" id="youtube" name="youtube" placeholder="" value="{{ $mitra['youtube'] }}">
+			</div>
+		</div>
+		<div class="d-flex justify-content-end">
+			<button type="submit" class="btn btn-primary w-25">Simpan</button>
+		</div>
+	</form>
 	{{-- </div> --}}
+	<script>
+		$.ajax({
+			url: "http://localhost:8000/api/alamatProvinsi",
+			type: 'get',
+			dataType: 'json',
+			async: false,
+			success: function(response) {
+
+			},
+			error: function(response) {
+				console.log(response);
+			}
+		});
+	</script>
 @endsection

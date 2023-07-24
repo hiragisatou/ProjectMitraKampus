@@ -7,10 +7,13 @@ use App\Models\Mitra;
 use App\Models\Sektor;
 use App\Models\Kriteria;
 use App\Models\JenisMitra;
+use App\Models\Kabupaten;
+use App\Models\Kecamatan;
 use App\Models\SifatMitra;
 use Illuminate\Http\Request;
 use App\Models\PengajuanMitra;
 use App\Models\Prodi;
+use App\Models\Provinsi;
 use App\Models\VerifyPengajuan;
 use Illuminate\Support\Facades\Storage;
 
@@ -29,11 +32,14 @@ class DashboardController extends Controller
     public function viewEditProfile()
     {
         return view('admin.pages.profile', [
-            'mitra' => auth()->user()->mitra->load(['provinsi', 'kabupaten', 'kecamatan'])->toArray(),
+            'mitra' => auth()->user()->mitra->toArray(),
             'sektor' => Sektor::all()->toArray(),
             'jenis' => JenisMitra::all()->toArray(),
             'kriteria' => Kriteria::all()->toArray(),
-            'sifat' => SifatMitra::all()->toArray()
+            'sifat' => SifatMitra::all()->toArray(),
+            'provinsi' => Provinsi::all()->toArray(),
+            'kabupaten' => Kabupaten::where('provinsi_id', auth()->user()->mitra->provinsi_id)->get()->toArray(),
+            'kecamatan' => Kecamatan::where('kabupaten_id', auth()->user()->mitra->kabupaten_id)->get()->toArray()
         ]);
     }
 
@@ -152,6 +158,10 @@ class DashboardController extends Controller
     }
 
     public function listMitra() {
-        return view('admin.pages.list_mitra', ['data' => Mitra::with(['user', 'pengajuanMitra'])->get()->toArray()]);
+        return view('admin.pages.list_mitra', ['data' => Mitra::with(['kabupaten', 'provinsi', 'kriteria'])->get()->toArray()]);
+    }
+
+    function detailMitra(Mitra $mitra) {
+        return view('admin.pages.detail_mitra', ['data' => $mitra->load(['kriteria', 'sifatMitra', 'sektor', 'jenisMitra', 'kabupaten', 'provinsi', 'kecamatan'])->toArray()]);
     }
 }

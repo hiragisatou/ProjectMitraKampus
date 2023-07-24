@@ -7,9 +7,11 @@
 			<thead>
 				<tr>
 					<th>No</th>
-					<th>Nama Mitra</th>
-					<th>Jumlah Kerjasama</th>
-					<th>Nama User</th>
+					<th>Nama</th>
+					<th>Kriteria</th>
+					<th>Kota</th>
+                    <th>Provinsi</th>
+                    <th>Aksi</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -17,8 +19,14 @@
 					<tr>
 						<td>{{ $loop->iteration }}</td>
 						<td>{{ $x['nama'] }}</td>
-						<td>{{ count($x['pengajuan_mitra']) }}</td>
-						<td>{{ $x['user']['name'] }}</td>
+						<td>{{ $x['kriteria']['kriteria'] }}</td>
+						<td>{{ $x['kabupaten']['nama'] }}</td>
+                        <td>{{ $x['provinsi']['nama'] }}</td>
+                        <td>
+                            <a href="{{ route('detailMitra', ['mitra' => $x['id']]) }}" class="btn btn-outline-dark">
+								<span><i class="lni lni-magnifier"></i></span>
+							</a>
+                        </td>
 					</tr>
 				@endforeach
 			</tbody>

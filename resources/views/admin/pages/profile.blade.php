@@ -2,7 +2,6 @@
 @section('title', 'Edit Profile')
 @section('judul', 'Edit Profile')
 @section('content')
-@dd($mitra)
 	{{-- <div class="container-fluid"> --}}
 	<form method="POST" action="{{ route('editProfileHandler') }}">
 		@csrf
@@ -70,16 +69,28 @@
 			</div>
 			<div class="mb-3">
 				<label for="provinsi" class="form-label">Provinsi</label>
-				<input type="text" class="form-control" id="provinsi" name="provinsi" placeholder="" value="{{ $mitra['provinsi'] }}" required>
+				<select name="provinsi" id="provinsi" class="form-select" required>
+					<option value="">-- Pilih Provinsi --</option>
+					@foreach ($provinsi as $x)
+						<option value="{{ $x['id'] }}" {{ $x['id'] == $mitra['provinsi_id'] ? 'selected' : '' }}>{{ $x['nama'] }}</option>
+					@endforeach
+				</select>
 			</div>
 			<div class="mb-3">
 				<label for="kabupaten" class="form-label">Kabupaten</label>
-				<input type="text" class="form-control" id="kabupaten" name="kabupaten" placeholder="" value="{{ $mitra['kabupaten'] }}" required>
-
+				<select name="kabupaten" id="kabupaten" class="form-select">
+					@foreach ($kabupaten as $x)
+						<option value="{{ $x['id'] }}" {{ $x['id'] == $mitra['kabupaten_id'] ? 'selected' : '' }}>{{ $x['nama'] }}</option>
+					@endforeach
+				</select>
 			</div>
 			<div class="mb-3">
 				<label for="kecamatan" class="form-label">Kecamatan</label>
-				<input type="text" class="form-control" id="kecamatan" name="kecamatan" placeholder="" value="{{ $mitra['kecamatan'] }}" required>
+				<select name="kecamatan" id="kecamatan" class="form-select">
+					@foreach ($kecamatan as $x)
+						<option value="{{ $x['id'] }}" {{ $x['id'] == $mitra['kecamatan_id'] ? 'selected' : '' }}>{{ $x['nama'] }}</option>
+					@endforeach
+				</select>
 			</div>
 			<div class="mb-3">
 				<label for="url" class="form-label">Url Web</label>
@@ -126,17 +137,44 @@
 	</form>
 	{{-- </div> --}}
 	<script>
-		$.ajax({
-			url: "http://localhost:8000/api/alamatProvinsi",
-			type: 'get',
-			dataType: 'json',
-			async: false,
-			success: function(response) {
-
-			},
-			error: function(response) {
-				console.log(response);
-			}
+		$(document).ready(function() {
+			$('#provinsi').change(function(e) {
+				if (this.value == '') {
+					$("#kabupaten").children().remove().end();
+					$("#kabupaten").attr('disabled', 'true');
+				} else {
+					$.getJSON("{{ route('api_kabupaten') }}", {
+							'id': this.value
+						},
+						function(data, textStatus, jqXHR) {
+							$("#kabupaten").children().remove().end();
+							$("#kabupaten").removeAttr('disabled');
+							$("#kabupaten").attr('required', 'true');
+							$("#kabupaten").append(new Option("-- Pilih Kabupaten --", ""));
+							data.forEach(element => {
+								$("#kabupaten").append(new Option(element['nama'], element['id']));
+							});
+							$("#kecamatan").children().remove().end();
+							$("#kecamatan").attr('disabled', 'true');
+						}
+					);
+				}
+			});
+			$('#kabupaten').change(function(e) {
+				$.getJSON("{{ route('api_kecamatan') }}", {
+						'id': this.value
+					},
+					function(data, textStatus, jqXHR) {
+						$("#kecamatan").children().remove().end();
+						$("#kecamatan").removeAttr('disabled');
+						$("#kecamatan").attr('required', 'true');
+						$("#kecamatan").append(new Option("-- Pilih kecamatan --", ""));
+						data.forEach(element => {
+							$("#kecamatan").append(new Option(element['nama'], element['id']));
+						});
+					}
+				);
+			});
 		});
 	</script>
 @endsection

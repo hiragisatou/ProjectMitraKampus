@@ -13,7 +13,7 @@ class Mitra extends Model
 
 	public function jenisMitra()
 	{
-		return $this->belongsTo(jenisMtra::class, 'jenis_id');
+		return $this->belongsTo(jenisMitra::class, 'jenis_id');
 
 	}
 	public function sifatMitra()

@@ -60,6 +60,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/profile', 'viewEditProfile')->name('editProfile');
         Route::get('/listpengajuan', 'listPengajuan')->name('viewListPengajuan');
         Route::get('/listmitra', 'listMitra')->name('viewListMitra');
+        Route::get('/detailMitra/{mitra}', 'DetailMitra')->name('detailMitra');
         Route::post('/admin/profile/handler', 'editProfile')->name('editProfileHandler');
         Route::post('/pengajuanMoU', 'pengajuanMoU')->name('pengajuanMoUHandler');
         Route::post('/verifyMoU', 'verifyMoU')->name('VerifyMoU');

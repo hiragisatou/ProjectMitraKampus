@@ -58,9 +58,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/pengajuan', 'viewPengajuan')->name('PengajuanMoU');
         Route::get('/pengajuan/{pengajuan}', 'detailPengajuan')->name('detailPengajuan');
         Route::get('/admin/profile', 'viewEditProfile')->name('editProfile');
-        Route::get('/listpengajuan', 'listPengajuan')->name('viewListPengajuan');
-        Route::get('/listmitra', 'listMitra')->name('viewListMitra');
-        Route::get('/detailMitra/{mitra}', 'DetailMitra')->name('detailMitra');
+        Route::get('/list-pengajuan', 'listPengajuan')->name('viewListPengajuan');
+        Route::get('/list-mitra', 'listMitra')->name('viewListMitra');
+        Route::get('/detail-mitra/{mitra}', 'DetailMitra')->name('detailMitra');
         Route::post('/admin/profile/handler', 'editProfile')->name('editProfileHandler');
         Route::post('/pengajuanMoU', 'pengajuanMoU')->name('pengajuanMoUHandler');
         Route::post('/verifyMoU', 'verifyMoU')->name('VerifyMoU');

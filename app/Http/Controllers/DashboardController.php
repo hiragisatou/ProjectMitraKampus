@@ -162,6 +162,25 @@ class DashboardController extends Controller
     }
 
     function detailMitra(Mitra $mitra) {
-        return view('admin.pages.detail_mitra', ['data' => $mitra->load(['kriteria', 'sifatMitra', 'sektor', 'jenisMitra', 'kabupaten', 'provinsi', 'kecamatan'])->toArray()]);
+        $data['Nama Mitra'] = $mitra->nama;
+        $data['Nomor Induk Berusaha'] = $mitra->nomorIndukBerusaha;
+        $data['Sektor Industri'] = $mitra->sektor->sektor;
+        $data['Sifat Mitra'] = $mitra->sifatMitra->kategori;
+        $data['Jenis Mitra'] = $mitra->jenisMitra->jenis;
+        $data['Klasifikasi'] = $mitra->klasifikasi;
+        $data['Jumlah Pegawai'] = $mitra->jumlahPegawai;
+        $data['Provinsi'] = $mitra->provinsi->nama;
+        $data['Kota/Kabupaten'] = $mitra->kabupaten->nama;
+        $data['kecamatan'] = $mitra->kecamatan->nama;
+        $data['Alamat Website Perusahaan'] = $mitra->urlWeb;
+        $data['Email'] = $mitra->email;
+        $data['No. Telepon'] = $mitra->noTelp;
+        $data['Linkedin'] = $mitra->linkedin;
+        $data['Instagram'] = $mitra->instagram;
+        $data['Facebook'] = $mitra->facebook;
+        $data['Twitter'] = $mitra->twitter;
+        $data['Tiktok'] = $mitra->tiktok;
+        $data['Youtube'] = $mitra->youtube;
+        return view('admin.pages.detail_mitra', ['data' => $data]);
     }
 }

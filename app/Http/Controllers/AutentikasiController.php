@@ -45,8 +45,8 @@ class AutentikasiController extends Controller
         }
 
         return back()->withErrors([
-            'email' => 'Email atau password salah!',
-        ])->onlyInput('email');
+            'loginError' => 'Email atau password salah!',
+        ]);
     }
 
     // Api Logout

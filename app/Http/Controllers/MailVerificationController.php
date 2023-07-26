@@ -21,6 +21,6 @@ class MailVerificationController extends Controller
     public function verifySend(Request $request)
     {
         $request->user()->sendEmailVerificationNotification();
-        return back()->with('message', 'Verification link sent!');
+        return back()->with('message', 'Link verifikasi telah dikirim, Silahkan cek email anda!');
     }
 }

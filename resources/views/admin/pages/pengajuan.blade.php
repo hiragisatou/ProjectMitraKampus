@@ -26,7 +26,7 @@
 			</div>
 			<div class="mb-3">
 				<label class="form-label">Ruang Lingkup</label>
-				<select class="ruang-lingkup-mitra" name="lingkup[]" multiple="multiple" required>
+				<select class="form-select" id="ruang-lingkup-mitra" name="lingkup[]" multiple="multiple" required>
 					<option value="AL">Alabama</option>
 					...
 					<option value="WY">Wyoming</option>
@@ -63,4 +63,10 @@
             </div>
 		</form>
 	</div>
+
+    <script>
+        $('#ruang-lingkup-mitra').select2({
+		width: '100%',
+	});
+    </script>
 @endsection

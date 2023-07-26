@@ -18,10 +18,6 @@ use App\Http\Controllers\MailVerificationController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 
 Route::controller(AutentikasiController::class)->group(function () {
     Route::get('/register', 'registerPage')->middleware('guest')->name('register');
@@ -48,9 +44,10 @@ Route::controller(MailVerificationController::class)->group(function () {
 });
 
 Route::controller(HomeController::class)->group(function () {
-    Route::get('/home', 'index')->name('home');
+    Route::get('/', 'index')->name('home');
     Route::get('/about', 'about')->name('aboutUs');
     Route::get('/contact', 'contact')->name('contactUs');
+    Route::get('/faq', 'faq')->name('FAQ');
 });
 
 Route::middleware(['auth'])->group(function () {

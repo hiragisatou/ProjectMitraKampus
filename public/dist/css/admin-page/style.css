@@ -1,0 +1,14 @@
+.d-flex-middle {
+    display: flex;
+    align-items: center;
+}
+
+.select-w-10 {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    width: 10%
+}
+
+.icon-fa-svg{
+    fill: currentColor;
+}

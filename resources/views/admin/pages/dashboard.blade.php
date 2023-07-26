@@ -2,5 +2,5 @@
 @section('title', 'Dashboard')
 @section('judul', 'Dashboard')
 @section('content')
-Hi
+	Hi
 @endsection

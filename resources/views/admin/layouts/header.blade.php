@@ -1,170 +1,60 @@
-<!-- ========== header start ========== -->
-<header class="header">
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-lg-5 col-md-5 col-6">
-				<div class="header-left d-flex align-items-center">
-					<div class="menu-toggle-btn mr-20">
-						<button id="menu-toggle" class="main-btn primary-btn btn-hover">
-							<i class="lni lni-chevron-left me-2"></i> Menu
-						</button>
-					</div>
-					<div class="header-search d-none d-md-flex">
-						<form action="#">
-							<input type="text" placeholder="Search..." id="header-search" />
-							<button><i class="lni lni-search-alt"></i></button>
-						</form>
-					</div>
+<!-- Navbar -->
+<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl position-sticky blur shadow-blur mt-4 left-auto top-1 z-index-sticky" id="navbarBlur" navbar-scroll="true">
+	<div class="container-fluid py-1 px-3">
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+				<li class="breadcrumb-item text-sm">
+					@if (route('dashboard') == url()->current())
+					@else
+						<a class="opacity-5 text-dark" href="{{ route('dashboard') }}">Dashboard</a>
+					@endif
+				</li>
+				<li class="breadcrumb-item text-sm text-dark active" aria-current="page">
+					@if (route('viewListPengajuan') == url()->current())
+						Daftar Pengajuan
+					@elseif (route('viewListMitra') == url()->current())
+						Daftar Mitra
+					@elseif (route('PengajuanMoU') == url()->current())
+						Pengajuan MoU
+					@endif
+				</li>
+			</ol>
+			<h6 class="font-weight-bolder mb-0">@yield('title')</h6>
+		</nav>
+		<div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+			<div class="ms-md-auto pe-md-3 d-flex align-items-center">
+				<div class="input-group">
+					<span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
+					<input type="search" class="form-control" placeholder="Type here..." id="header-search">
 				</div>
 			</div>
-			<div class="col-lg-7 col-md-7 col-6">
-				<div class="header-right">
-					{{-- <!-- notification start -->
-					<div class="notification-box ml-15 d-none d-md-flex">
-						<button class="dropdown-toggle" type="button" id="notification" data-bs-toggle="dropdown" aria-expanded="false">
-							<i class="lni lni-alarm"></i>
-							<span>2</span>
-						</button>
-						<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notification">
-							<li>
-								<a href="#0">
-									<div class="image">
-										<img src="assets/images/lead/lead-6.png" alt="" />
-									</div>
-									<div class="content">
-										<h6>
-											John Doe
-											<span class="text-regular">
-												comment on a product.
-											</span>
-										</h6>
-										<p>
-											Lorem ipsum dolor sit amet, consect etur adipiscing
-											elit Vivamus tortor.
-										</p>
-										<span>10 mins ago</span>
-									</div>
-								</a>
-							</li>
-							<li>
-								<a href="#0">
-									<div class="image">
-										<img src="assets/images/lead/lead-1.png" alt="" />
-									</div>
-									<div class="content">
-										<h6>
-											Jonathon
-											<span class="text-regular">
-												like on a product.
-											</span>
-										</h6>
-										<p>
-											Lorem ipsum dolor sit amet, consect etur adipiscing
-											elit Vivamus tortor.
-										</p>
-										<span>10 mins ago</span>
-									</div>
-								</a>
-							</li>
-						</ul>
-					</div>
-					<!-- notification end -->
-					<!-- message start -->
-					<div class="header-message-box ml-15 d-none d-md-flex">
-						<button class="dropdown-toggle" type="button" id="message" data-bs-toggle="dropdown" aria-expanded="false">
-							<i class="lni lni-envelope"></i>
-							<span>3</span>
-						</button>
-						<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="message">
-							<li>
-								<a href="#0">
-									<div class="image">
-										<img src="assets/images/lead/lead-5.png" alt="" />
-									</div>
-									<div class="content">
-										<h6>Jacob Jones</h6>
-										<p>Hey!I can across your profile and ...</p>
-										<span>10 mins ago</span>
-									</div>
-								</a>
-							</li>
-							<li>
-								<a href="#0">
-									<div class="image">
-										<img src="assets/images/lead/lead-3.png" alt="" />
-									</div>
-									<div class="content">
-										<h6>John Doe</h6>
-										<p>Would you mind please checking out</p>
-										<span>12 mins ago</span>
-									</div>
-								</a>
-							</li>
-							<li>
-								<a href="#0">
-									<div class="image">
-										<img src="assets/images/lead/lead-2.png" alt="" />
-									</div>
-									<div class="content">
-										<h6>Anee Lee</h6>
-										<p>Hey! are you available for freelance?</p>
-										<span>1h ago</span>
-									</div>
-								</a>
-							</li>
-						</ul>
-					</div>
-					<!-- message end -->
-					<!-- filter start -->
-					<div class="filter-box ml-15 d-none d-md-flex">
-						<button class="" type="button" id="filter">
-							<i class="lni lni-funnel"></i>
-						</button>
-					</div>
-					<!-- filter end --> --}}
-					<!-- profile start -->
-					<div class="profile-box ml-15">
-						<button class="dropdown-toggle bg-transparent border-0" type="button" id="profile" data-bs-toggle="dropdown" aria-expanded="false">
-							<div class="profile-info">
-								<div class="info">
-									<h6>{{ auth()->user()->name }}</h6>
-									<div class="image">
-										<img src="assets/images/profile/profile-image.png" alt="" />
-										<span class="status"></span>
-									</div>
-								</div>
-							</div>
-							<i class="lni lni-chevron-down"></i>
-						</button>
-						<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profile">
-							<li>
-								<a href="{{ route('editProfile') }}">
-									<i class="lni lni-user"></i> View Profile
-								</a>
-							</li>
-							<li>
-								<a href="#0">
-									<i class="lni lni-alarm"></i> Notifications
-								</a>
-							</li>
-							<li>
-								<a href="#0"> <i class="lni lni-inbox"></i> Messages </a>
-							</li>
-							<li>
-								<a href="{{ route('updateAkun') }}"> <i class="lni lni-cog"></i> Settings </a>
-							</li>
-							<li>
-								<form action="{{ route('logoutHandler') }}" method="post" class="m-0">
-									@csrf
-									<button type="submit" class=" bg-transparent border-0 m-0"><i class="lni lni-exit"></i>Logout</button>
-								</form>
-							</li>
-						</ul>
-					</div>
-					<!-- profile end -->
-				</div>
-			</div>
+			<ul class="navbar-nav justify-content-end">
+				<li class="nav-item d-flex align-items-center me-2">
+					<a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
+						<span class="d-sm-inline d-none">{{ auth()->user()->name }}</span>
+					</a>
+				</li>
+				<li class="nav-item dropdown pe-2 d-flex align-items-center">
+					<a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+						<img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+					</a>
+					<ul class="dropdown-menu dropdown-menu-end text-small" style="" aria-labelledby="dropdownMenuButton">
+                        <li><a class="dropdown-item" href="{{ route('home') }}">Home</a></li>
+                        <li><a class="dropdown-item" href="{{ route('editProfile') }}">Profile</a></li>
+                        <li><a class="dropdown-item" href="{{ route('updateAkun') }}">Pengaturan Akun</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <form action="{{ route('logoutHandler') }}" class="p-0 m-0" method="post">
+                                @csrf
+                                <button type="submit" class="dropdown-item">Keluar</button>
+                            </form>
+                        </li>
+                    </ul>
+				</li>
+			</ul>
 		</div>
 	</div>
-</header>
-<!-- ========== header end ========== -->
+</nav>
+<!-- End Navbar -->

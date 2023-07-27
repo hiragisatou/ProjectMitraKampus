@@ -34,10 +34,29 @@ class AutentikasiController extends Controller
     // Api Login
     public function loginHandler(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'exists:users,email'],
-            'password' => ['required'],
-        ]);
+        if (collect(User::all())->contains('email', $request->email)) {
+            $user = collect(User::where('email', $request->email)->get()->first());
+            if ($user->role == 'admin' || $user->role == 'prodi') {
+                $credentials = $request->validate([
+                    'email' => ['required', 'exists:users,email'],
+                    'password' => ['required'],
+                ]);
+            }
+            else {
+                $credentials = $request->validate([
+                    'email' => ['required', 'exists:users,email', 'email'],
+                    'password' => ['required'],
+                ]);
+            }
+        } else {
+            $credentials = $request->validate([
+                'email' => ['required', 'exists:users,email', 'email'],
+                'password' => ['required'],
+            ]);
+            return back()->with([
+                'loginError' => 'Email yang anda masukkan belum terdaftar!',
+            ]);
+        }
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 

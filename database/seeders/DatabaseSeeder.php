@@ -25,8 +25,9 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        User::create(['name' => 'Administrator', 'email' => 'administrator', 'password' => bcrypt('1234qwer'), 'role' => 'admin']);
-        User::create(['name' => 'Admin Prodi', 'email' => 'programstudi', 'password' => bcrypt('1234qwer'), 'role' => 'prodi']);
+        User::create(['name' => 'Administrator', 'email' => 'admin', 'password' => bcrypt('1234qwer'), 'role' => 'admin']);
+        User::create(['name' => 'Admin Prodi', 'email' => 'prodiakuntansi', 'password' => bcrypt('1234qwer'), 'role' => 'prodi']);
+        User::create(['name' => 'Admin Prodi', 'email' => 'prodiapolitik', 'password' => bcrypt('1234qwer'), 'role' => 'prodi']);
 
         //sektor seeders
         Sektor::create(['sektor' => 'Perdagangan Besar dan Eceran']);

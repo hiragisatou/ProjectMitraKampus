@@ -1,88 +1,63 @@
 @extends('home.master')
-@section('title', 'Login Page')
+@section('title', 'Login')
 @section('content')
-	<main class="form-signin w-100 m-auto">
-		<form action="{{ route('loginHandler') }}" method="post">
-			<img class="mb-4 align-center" src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
-			<h1 class="h3 fw-normal text-center">Silahkan Masuk</h1>
-			@if (session()->has('status'))
-				<div class="alert alert-success">
-					<span>{{ session('status') }}</span>
-				</div>
-			@endif
-			@if (session()->has('loginError'))
-				<div class="alert alert-danger mt-3">
-					<span>{{ session('status') }}</span>
-				</div>
-			@endif
-			<div class="form-floating">
-				@csrf
-				<input type="email" class="form-control @error('email') is-invalid  @enderror" id="floatingInput" placeholder="name@example.com" name="email">
-				<label for="floatingInput">Email</label>
-				@error('email')
-					<div class="invalid-feedback">
-						{{ $message }}
-					</div>
-				@enderror
-			</div>
-			<div class="form-floating">
-				<input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password">
-				<label for="floatingPassword">Password</label>
-			</div>
 
-			<div class="d-flex justify-content-end mb-3">
-				<a href="{{ route('password.request') }}">
-					Lupa Password ?
-				</a>
+	<main class="main-content  mt-0">
+		<section>
+			<div class="page-header min-vh-75">
+				<div class="container">
+					<div class="row">
+						<div class="col-xl-4 col-lg-5 col-md-6 d-flex flex-column mx-auto">
+							<div class="card card-plain mt-8">
+								<div class="card-header pb-0 text-left bg-transparent">
+									<h3 class="font-weight-bolder text-info text-gradient">Welcome back</h3>
+									<p class="mb-0">Enter your email and password to sign in</p>
+								</div>
+								<div class="card-body">
+                                    @if (session()->has('loginError'))
+                                        <div class="alert alert-danger text-sm text-center text-white">{{ session('loginError') }}</div>
+                                    @endif
+									<form role="form" action="{{ route('loginHandler') }}" method="POST">
+										@csrf
+										<label>Email</label>
+										<div class="mb-3">
+                                            <div class="">
+                                                <input type="text" class="form-control @error('email') is-invalid @enderror" placeholder="Email" aria-label="Email" aria-describedby="email-addon" name="email">
+                                                @error('email')
+                                                <div class="invalid-feedback">
+                                                    <span>{{ $message }}</span>
+                                                </div>
+                                                @enderror
+                                            </div>
+										</div>
+										<label>Password</label>
+										<div class="mb-3">
+											<input type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="password-addon" name="password">
+										</div>
+										<div class="text-end">
+											<a class="text-sm" href="{{ route('password.request') }}">Forgot Password?</a>
+										</div>
+										<div class="text-center">
+											<button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">Sign in</button>
+										</div>
+									</form>
+								</div>
+								<div class="card-footer text-center pt-0 px-lg-2 px-1">
+									<p class="mb-4 text-sm mx-auto">
+										Don't have an account?
+										<a href="{{ route('register') }}" class="text-info text-gradient font-weight-bold">Sign up</a>
+									</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="oblique position-absolute top-0 h-100 d-md-block d-none me-n8">
+								<div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6" style="background-image:url({{ asset('dist/img/login.jpg') }})"></div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
-			<button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
-		</form>
+		</section>
 	</main>
-	{{-- <div class="container wow fadeIn" data-wow-delay="0.1s">
-        <div class="card position-absolute top-50 start-50 translate-middle w-25">
-            <div class="card-header">
-                <h2 class="text-center">Login</h2>
-                <div class="text-center">
-                    <span>Belum punya akun?</span> <a href="{{ route('register') }}">Daftar</a>
-                </div>
-            </div>
-            <div class="card-body">
-                @if (session()->has('status'))
-                <div class="alert alert-success">
-                    <span>{{ session('status') }}</span>
-                </div>
-                @endif
-                <form action="{{ route('loginHandler') }}" method="post">
-                    @csrf
-                    <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingInput" name="email" placeholder="" value="{{  old('email') }}">
-                        <label for="floatingInput">Email address</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
-                        <label for="floatingPassword">Password</label>
-                    </div>
-                    <div class="d-flex justify-content-between mb-3">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
-                                Ingat saya
-                            </label>
-                        </div>
-                        @if (Route::has('password.request'))
-                            <a href="{{ route('password.request') }}">
-                                {{ __('Lupa password?') }}
-                            </a>
-                        @endif
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">Submit</button>
-                </form>
-                @error('email')
-                    <div class="alert alert-danger mt-3">
-                        <span>{{ $message }}</span>
-                    </div>
-                @enderror
-            </div>
-        </div>
-    </div> --}}
 @endsection

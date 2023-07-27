@@ -1,39 +1,55 @@
-<div class="container">
-	<footer class="pt-4 my-md-5 pt-md-5 border-top">
-		<div class="row">
-			<div class="col-12 col-md">
-				<img class="mb-2" src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="24" height="19">
-				<small class="d-block mb-3 text-body-secondary">© 2017–2023</small>
-			</div>
-			<div class="col-6 col-md">
-				<h5>Features</h5>
-				<ul class="list-unstyled text-small">
-					<li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Cool stuff</a></li>
-					<li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Random feature</a></li>
-					<li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Team feature</a></li>
-					<li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Stuff for developers</a></li>
-					<li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Another one</a></li>
-					<li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Last time</a></li>
-				</ul>
-			</div>
-			<div class="col-6 col-md">
-				<h5>Resources</h5>
-				<ul class="list-unstyled text-small">
-					<li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Resource</a></li>
-					<li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Resource name</a></li>
-					<li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Another resource</a></li>
-					<li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Final resource</a></li>
-				</ul>
-			</div>
-			<div class="col-6 col-md">
-				<h5>About</h5>
-				<ul class="list-unstyled text-small">
-					<li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Team</a></li>
-					<li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Locations</a></li>
-					<li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Privacy</a></li>
-					<li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Terms</a></li>
-				</ul>
-			</div>
-		</div>
-	</footer>
-</div>
+<!-- -------- START FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
+<footer class="footer py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mb-4 mx-auto text-center">
+                <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
+                    Company
+                </a>
+                <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
+                    About Us
+                </a>
+                <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
+                    Team
+                </a>
+                <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
+                    Products
+                </a>
+                <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
+                    Blog
+                </a>
+                <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
+                    Pricing
+                </a>
+            </div>
+            <div class="col-lg-8 mx-auto text-center mb-4 mt-2">
+                <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
+                    <span class="text-lg fab fa-dribbble"></span>
+                </a>
+                <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
+                    <span class="text-lg fab fa-twitter"></span>
+                </a>
+                <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
+                    <span class="text-lg fab fa-instagram"></span>
+                </a>
+                <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
+                    <span class="text-lg fab fa-pinterest"></span>
+                </a>
+                <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
+                    <span class="text-lg fab fa-github"></span>
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-8 mx-auto text-center mt-1">
+                <p class="mb-0 text-secondary">
+                    Copyright ©
+                    <script>
+                        document.write(new Date().getFullYear())
+                    </script>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- -------- END FOOTER  ------- -->

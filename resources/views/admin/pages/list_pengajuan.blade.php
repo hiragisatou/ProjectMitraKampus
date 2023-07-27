@@ -28,7 +28,7 @@
 							<td class="text-sm font-weight-bold mb-0">{{ date_format(date_create($x['tgl_mulai']), 'd-m-Y') }} {{ $x['tgl_berakhir'] == null ? '' : ' s/d ' . date_format(date_create($x['tgl_berakhir']), 'd-m-Y') }}</td>
 							<td>
 								@if ($x['verify_pengajuan'] != null)
-									<span class="badge badge-sm {{ $x['verify_pengajuan']['status'] == 'Verify' || $x['verify_pengajuan']['status'] == 'Disetujui' ? 'bg-gradient-danger' : 'bg-gradient-danger' }}">{{ $x['verify_pengajuan']['status'] }}</span>
+									<span class="badge badge-sm {{ $x['verify_pengajuan']['status'] == 'Verify' || $x['verify_pengajuan']['status'] == 'Disetujui' ? 'bg-gradient-success' : 'bg-gradient-danger' }}">{{ $x['verify_pengajuan']['status'] }}</span>
 								@else
 									<span class="badge text-bg-secondary">Diproses</span>
 								@endif
@@ -64,13 +64,17 @@
 
 	<script>
 		var myTable = $('#list_pengajuan').DataTable({
-			searching: false,
 		});
 		$(document).ready(function() {
 			$('#header-search').on('keyup', function() {
 				myTable.search(this.value).draw();
+                $('#list_pengajuan_previous > a').empty()
+				$('#list_pengajuan_previous > a').append('<i class="fa fa-angle-left"></i>');
+				$('#list_pengajuan_next > a').empty()
+				$('#list_pengajuan_next > a').append('<i class="fa fa-angle-right"></i>');
 			});
 
+            $('#list_pengajuan_filter').css('visibility', 'hidden');
 			$('#list_pengajuan_paginate > ul').addClass('m-0');
 			$('#list_pengajuan_previous > a').empty()
 			$('#list_pengajuan_previous > a').append('<i class="fa fa-angle-left"></i>');

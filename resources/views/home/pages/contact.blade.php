@@ -1,7 +1,6 @@
 @extends('home.master')
 @section('title', 'About Us')
 @section('content')
-	<div class="container">
 		<div class="d-flex justify-content-center mb-5">
 			<h1>Contact</h1>
 		</div>
@@ -34,5 +33,4 @@
                 </div>
             </div>
         </div>
-	</div>
 @endsection

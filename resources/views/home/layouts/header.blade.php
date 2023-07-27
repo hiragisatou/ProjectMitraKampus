@@ -35,39 +35,62 @@
 								</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link me-2" href="{{ route('contactUs') }}">
+								<a class="nav-link me-2" href="{{ route('FAQ') }}">
 									<i class="fa fa-question-circle opacity-6 text-dark me-1"></i>
 									FAQ
 								</a>
 							</li>
-							@if (route('login') == url()->current())
-								<li class="nav-item">
-									<a class="nav-link me-2" href="{{ route('register') }}">
-										<i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
-										Sign Up
-									</a>
-								</li>
-							@elseif (route('register') == url()->current())
-								<li class="nav-item">
-									<a class="nav-link me-2" href="{{ route('login') }}">
-										<i class="fas fa-key opacity-6 text-dark me-1"></i>
-										Sign In
-									</a>
-								</li>
-							@else
-								<li class="nav-item">
-									<a class="nav-link me-2" href="{{ route('register') }}">
-										<i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
-										Sign Up
-									</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link me-2" href="{{ route('login') }}">
-										<i class="fas fa-key opacity-6 text-dark me-1"></i>
-										Sign In
-									</a>
-								</li>
-							@endif
+							@guest
+								@if (route('login') == url()->current())
+									<li class="nav-item">
+										<a class="nav-link me-2" href="{{ route('register') }}">
+											<i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
+											Sign Up
+										</a>
+									</li>
+								@elseif (route('register') == url()->current())
+									<li class="nav-item">
+										<a class="nav-link me-2" href="{{ route('login') }}">
+											<i class="fas fa-key opacity-6 text-dark me-1"></i>
+											Sign In
+										</a>
+									</li>
+								@else
+									<li class="nav-item">
+										<a class="nav-link me-2" href="{{ route('register') }}">
+											<i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
+											Sign Up
+										</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link me-2" href="{{ route('login') }}">
+											<i class="fas fa-key opacity-6 text-dark me-1"></i>
+											Sign In
+										</a>
+									</li>
+								@endif
+							@endguest
+                            @auth
+                            <li class="nav-item dropdown pe-2 d-flex align-items-center">
+                                <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end text-small" style="" aria-labelledby="dropdownMenuButton">
+                                    <li><a class="dropdown-item" href="{{ route('dashboard') }}">Dashboard</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('editProfile') }}">Profile</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('updateAkun') }}">Pengaturan Akun</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li>
+                                        <form action="{{ route('logoutHandler') }}" class="p-0 m-0" method="post">
+                                            @csrf
+                                            <button type="submit" class="dropdown-item">Keluar</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </li>
+                            @endauth
 						</ul>
 					</div>
 				</div>

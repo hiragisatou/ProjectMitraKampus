@@ -72,6 +72,7 @@
 					<span class="nav-link-text ms-1">Daftar Pengajuan</span>
 				</a>
 			</li>
+            @can('mitra')
             <li class="nav-item">
 				<a class="nav-link {{ route('PengajuanMoU') == url()->current() ? 'active' : '' }} " href="{{ route('PengajuanMoU') }}">
 					<div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -92,6 +93,7 @@
 					<span class="nav-link-text ms-1">Pengajuan MoU</span>
 				</a>
 			</li>
+            @endcan
 		</ul>
 	</div>
 </aside>

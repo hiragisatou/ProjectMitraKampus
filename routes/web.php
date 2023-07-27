@@ -17,7 +17,9 @@ use App\Http\Controllers\MailVerificationController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+Route::get('/home', function () {
+   return redirect(route('home'));
+});
 
 Route::controller(AutentikasiController::class)->group(function () {
     Route::get('/register', 'registerPage')->middleware('guest')->name('register');

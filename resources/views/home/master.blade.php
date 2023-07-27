@@ -18,7 +18,11 @@
 <body class="">
 	@include('home.layouts.header')
 
-    @yield('content')
+    <main class="main-content pt-8">
+        <section class="min-vh-100 mb-8">
+            @yield('content')
+        </section>
+    </main>
 
 	@include('home.layouts.footer')
 	<!--   Core JS Files   -->

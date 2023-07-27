@@ -3,8 +3,8 @@
 @section('judul', 'Pengajuan Kemitraan')
 @section('content')
 <div class="d-flex justify-content-end">
-    <a href="{{ asset('dist/TEMPLATE-DRAFT-PERJANJIAN-KERJA-SAMA-FAKULTAS.doc') }}" class="btn btn-primary">
-        <span class="me-2"><i class="lni lni-download"></i></span>
+    <a href="{{ asset('dist/TEMPLATE-DRAFT-PERJANJIAN-KERJA-SAMA-FAKULTAS.doc') }}" class="btn btn-info">
+        <span class="me-2"><i class="fa-solid fa-file-arrow-down"></i></span>
         Download Template MoU
     </a>
 </div>
@@ -12,11 +12,11 @@
 		<form action="{{ route('pengajuanMoUHandler') }}" method="post" enctype="multipart/form-data">
             @csrf
 			<div class="mb-3">
-				<label class="form-label">Judul Kemitraan</label>
+				<label class="form-label">Judul Kemitraan <span class="text-danger">*</span></label>
 				<input type="text" class="form-control" name="judul" required>
 			</div>
 			<div class="mb-3">
-				<label class="form-label">Jenis Kemitraan</label>
+				<label class="form-label">Jenis Kemitraan <span class="text-danger">*</span></label>
 				<select class="form-select" name="jenis" required>
 					<option selected>Open this select menu</option>
 					<option value="1">One</option>
@@ -25,7 +25,7 @@
 				</select>
 			</div>
 			<div class="mb-3">
-				<label class="form-label">Ruang Lingkup</label>
+				<label class="form-label">Ruang Lingkup <span class="text-danger">*</span></label>
 				<select class="form-select" id="ruang-lingkup-mitra" name="lingkup[]" multiple="multiple" required>
 					<option value="AL">Alabama</option>
 					...
@@ -36,7 +36,7 @@
 				</select>
 			</div>
             <div class="mb-3">
-				<label class="form-label">Program Studi</label>
+				<label class="form-label">Program Studi <span class="text-danger">*</span></label>
 				<select class="form-select" name="p_studi" required>
 					<option>-- Pilih Program Studi --</option>
 					@foreach ($prodi as $x)
@@ -45,15 +45,15 @@
 				</select>
             </div>
             <div class="mb-3">
-				<label class="form-label">Tanggal Mulai</label>
+				<label class="form-label">Tanggal Mulai <span class="text-danger">*</span></label>
 				<input type="date" class="form-control" name="tgl_mulai" required>
 			</div>
             <div class="mb-3">
-				<label class="form-label">Keterangan</label>
+				<label class="form-label">Keterangan <span class="text-danger">*</span></label>
 				<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="keterangan" required></textarea>
 			</div>
             <div class="mb-3">
-				<label class="form-label">Upload MoU</label>
+				<label class="form-label">Upload MoU <span class="text-danger">*</span></label>
 				<input class="form-control" type="file" id="formFile" name="mou" accept=".pdf" required>
 			</div>
             <hr/>

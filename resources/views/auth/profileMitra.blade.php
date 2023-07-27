@@ -11,15 +11,15 @@
 				<div class="card-body">
 					@csrf
 					<div class="mb-3">
-						<label for="nama" class="form-label">Nama Mitra</label>
+						<label for="nama" class="form-label">Nama Mitra <span class="text-danger">*</span></label>
 						<input type="text" class="form-control" id="nama" name="nama" placeholder="" required>
 					</div>
 					<div class="mb-3">
-						<label for="NIB" class="form-label">Nomor Induk Berusaha</label>
+						<label for="NIB" class="form-label">Nomor Induk Berusaha <span class="text-danger">*</span></label>
 						<input type="number" class="form-control" id="NIB" name="nib" placeholder="" required>
 					</div>
 					<div class="mb-3">
-						<label for="kriteria" class="form-label">Kriteria Mitra</label>
+						<label for="kriteria" class="form-label">Kriteria Mitra <span class="text-danger">*</span></label>
 						<select class="form-select" name="kriteria" id="kriteria" required>
 							<option selected>-- Pilih Kriteria Mitra --</option>
 							@foreach ($kriteria as $x)
@@ -28,7 +28,7 @@
 						</select>
 					</div>
 					<div class="mb-3">
-						<label class="form-label">Sektor Industri</label>
+						<label class="form-label">Sektor Industri <span class="text-danger">*</span></label>
 						<select class="form-select" name="sektor" required>
 							<option selected>-- Pilih Sektor Industri --</option>
 							@foreach ($sektor as $x)
@@ -37,7 +37,7 @@
 						</select>
 					</div>
 					<div class="mb-3">
-						<label class="form-label">Sifat Mitra</label>
+						<label class="form-label">Sifat Mitra <span class="text-danger">*</span></label>
 						<select class="form-select" name="sifat" required>
 							<option selected>-- Pilih Sifat Mitra --</option>
 							@foreach ($sifat as $x)
@@ -46,7 +46,7 @@
 						</select>
 					</div>
 					<div class="mb-3">
-						<label class="form-label">Jenis Mitra</label>
+						<label class="form-label">Jenis Mitra <span class="text-danger">*</span></label>
 						<select class="form-select" name="jenis" required>
 							<option selected>-- Pilih Jenis Mitra --</option>
 							@foreach ($jenis as $x)
@@ -55,24 +55,24 @@
 						</select>
 					</div>
 					<div class="mb-3">
-						<label class="form-label">Klasifikasi</label>
+						<label class="form-label">Klasifikasi <span class="text-danger">*</span></label>
 						<select class="form-select" name="klasifikasi" required>
 							<option selected>-- Pilih Klasifikasi Mitra --</option>
-							<option value="1">Besar</option>
-							<option value="2">Menengah</option>
-							<option value="3">Kecil</option>
+							<option value="Besar">Besar</option>
+							<option value="Menengah">Menengah</option>
+							<option value="Kecil">Kecil</option>
 						</select>
 					</div>
 					<div class="mb-3">
-						<label for="jumlah_pegawai" class="form-label">Jumlah Pegawai</label>
+						<label for="jumlah_pegawai" class="form-label">Jumlah Pegawai <span class="text-danger">*</span></label>
 						<input type="number" class="form-control" id="jumlah_pegawai" name="jumlah_pegawai" placeholder="" required>
 					</div>
 					<div class="mb-3">
-						<label for="alamat" class="form-label">Alamat</label>
+						<label for="alamat" class="form-label">Alamat <span class="text-danger">*</span></label>
 						<input type="text" class="form-control" id="alamat" name="alamat" placeholder="" required>
 					</div>
 					<div class="mb-3">
-						<label for="provinsi" class="form-label">Provinsi</label>
+						<label for="provinsi" class="form-label">Provinsi <span class="text-danger">*</span></label>
 						<select name="provinsi" id="provinsi" class="form-select" required>
 							<option value="">-- Pilih Provinsi --</option>
 							@foreach ($provinsi as $x)
@@ -81,23 +81,23 @@
 						</select>
 					</div>
 					<div class="mb-3">
-						<label for="kabupaten" class="form-label">Kabupaten</label>
+						<label for="kabupaten" class="form-label">Kabupaten <span class="text-danger">*</span></label>
 						<select name="kabupaten" id="kabupaten" class="form-select" disabled></select>
 					</div>
 					<div class="mb-3">
-						<label for="kecamatan" class="form-label">Kecamatan</label>
+						<label for="kecamatan" class="form-label">Kecamatan <span class="text-danger">*</span></label>
 						<select name="kecamatan" id="kecamatan" class="form-select" disabled></select>
 					</div>
 					<div class="mb-3">
-						<label for="url" class="form-label">Url Web</label>
+						<label for="url" class="form-label">Url Web <span class="text-danger">*</span></label>
 						<input type="text" class="form-control" id="url" name="url" placeholder="">
 					</div>
 					<div class="mb-3">
-						<label for="email" class="form-label">Email</label>
+						<label for="email" class="form-label">Email <span class="text-danger">*</span></label>
 						<input type="text" class="form-control" id="email" name="email" placeholder="" required>
 					</div>
 					<div class="mb-3">
-						<label for="notelp" class="form-label">Nomor Telepon</label>
+						<label for="notelp" class="form-label">Nomor Telepon <span class="text-danger">*</span></label>
 						<input type="text" class="form-control" id="notelp" name="notelp" placeholder="">
 					</div>
 					<div class="row">

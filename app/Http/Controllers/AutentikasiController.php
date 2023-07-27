@@ -36,7 +36,7 @@ class AutentikasiController extends Controller
     {
         if (collect(User::all())->contains('email', $request->email)) {
             $user = collect(User::where('email', $request->email)->get()->first());
-            if ($user->role == 'admin' || $user->role == 'prodi') {
+            if ($user['role'] == 'admin' || $user['role'] == 'prodi') {
                 $credentials = $request->validate([
                     'email' => ['required', 'exists:users,email'],
                     'password' => ['required'],
@@ -112,6 +112,9 @@ class AutentikasiController extends Controller
 
     public function profileMitra()
     {
+        if (auth()->user()->mitra != null) {
+            return redirect(route('editProfile'));
+        }
         return view('auth.profileMitra', [
             'sektor' => Sektor::all()->toArray(),
             'jenis' => JenisMitra::all()->toArray(),

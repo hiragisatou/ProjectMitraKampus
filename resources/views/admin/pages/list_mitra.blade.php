@@ -40,21 +40,16 @@
 	</div>
 
 	<script>
-		var myTable = $('#list_mitra').DataTable({
-		});
+		var myTable = $('#list_mitra').DataTable({});
 		$(document).ready(function() {
 			$('#header-search').on('keyup', function() {
 				myTable.search(this.value).draw();
-                $('#list_mitra_previous > a').empty()
-				$('#list_mitra_previous > a').append('<i class="fa fa-angle-left"></i>');
-				$('#list_mitra_next > a').empty()
-				$('#list_mitra_next > a').append('<i class="fa fa-angle-right"></i>');
 			});
 
-            $('#list_mitra_filter').css('visibility', 'hidden');
-            $('#list_mitra_filter > label').addClass('d-flex-middle justify-content-end');
-            $('#list_mitra_filter > label > input').css('width', '25%');
-            $('#list_mitra_filter > label > input').addClass('ms-2  ');
+			$('#list_mitra_filter').css('visibility', 'hidden');
+			$('#list_mitra_filter > label').addClass('d-flex-middle justify-content-end');
+			$('#list_mitra_filter > label > input').css('width', '25%');
+			$('#list_mitra_filter > label > input').addClass('ms-2  ');
 			$('#list_mitra_paginate > ul').addClass('m-0');
 			$('#list_mitra_previous > a').empty()
 			$('#list_mitra_previous > a').append('<i class="fa fa-angle-left"></i>');
@@ -65,12 +60,27 @@
 			$('#list_mitra_info').addClass('text-sm');
 			$('#list_mitra_length > label').addClass('d-flex-middle');;
 			$('select[name="list_mitra_length"]').addClass('select-w-10');
-			$('select[name="list_mitra_length"]').change(function(e) {
-				$('#list_mitra_previous > a').empty()
+            const targetNode = document.getElementsByClassName("pagination")[0];
+
+            // Options for the observer (which mutations to observe)
+            const config = {
+                attributes: true,
+                childList: true,
+            };
+
+            // Callback function to execute when mutations are observed
+            const callback = (mutationList, observer) => {
+                $('#list_mitra_previous > a').empty()
 				$('#list_mitra_previous > a').append('<i class="fa fa-angle-left"></i>');
 				$('#list_mitra_next > a').empty()
 				$('#list_mitra_next > a').append('<i class="fa fa-angle-right"></i>');
-			});
+            };
+
+            // Create an observer instance linked to the callback function
+            const observer = new MutationObserver(callback);
+
+            // Start observing the target node for configured mutations
+            observer.observe(targetNode, config);
 		});
 	</script>
 @endsection

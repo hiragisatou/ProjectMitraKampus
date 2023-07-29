@@ -23,7 +23,7 @@ class MitraFactory extends Factory
             'sektorIndustri_id' => fake()->randomElement([1,2]),
             'sifat_id' => fake()->randomElement([1,2]),
             'jenis_id' => fake()->randomElement([1,2]),
-            'user_id' => fake()->unique()->numberBetween(0, 100),
+            'user_id' => fake()->unique()->numberBetween(1, 100),
             'klasifikasi' => fake()->randomElement([1,2]),
             'jumlahPegawai' => fake()->randomNumber(3, false),
             'alamat' => fake()->streetAddress(),

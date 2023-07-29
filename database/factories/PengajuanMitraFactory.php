@@ -18,7 +18,7 @@ class PengajuanMitraFactory extends Factory
     {
         return [
             'judul' => fake()->sentence(),
-            'mitra_id' => fake()->numberBetween(0, 100),
+            'mitra_id' => fake()->numberBetween(1, 99),
             'jenisKemitraan' => fake()->word(),
             'ruangLingkup' => implode('+', fake()->words()),
             'tgl_mulai' => now(),

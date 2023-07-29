@@ -1,6 +1,5 @@
 @extends('admin.main')
-@section('title', 'Detail Mitra')
-@section('judul', 'Detail Mitra')
+@section('title', 'Detail Mitra ' . $data['nama'])
 @section('content')
 	<div class="card">
         <div class="card-body">

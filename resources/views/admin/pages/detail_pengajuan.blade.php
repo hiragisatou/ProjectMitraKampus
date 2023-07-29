@@ -1,6 +1,5 @@
 @extends('admin.main')
-@section('title', 'Detail Pengajuan Kemitraan')
-@section('judul', 'Detail Pengajuan Kemitraan')
+@section('title', 'Detail Pengajuan Mitra ' . $data['mitra']['nama'])
 @section('content')
 	@if ($data['verify_pengajuan'] != null)
 		@if ($data['verify_pengajuan']['status'] == 'Verify' || $data['verify_pengajuan']['status'] == 'Disetujui')

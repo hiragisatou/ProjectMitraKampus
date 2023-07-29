@@ -18,8 +18,8 @@
 <body class="">
 	@include('home.layouts.header')
 
-    <main class="main-content pt-8">
-        <section class="min-vh-100 mb-8">
+    <main class="main-content mt-7">
+        <section class="mb-8" style="min-height: 50vh">
             @yield('content')
         </section>
     </main>

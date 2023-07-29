@@ -21,6 +21,9 @@ class DashboardController extends Controller
 {
     public function viewDashboard()
     {
+        if (auth()->user()->role == 'mitra' && auth()->user()->email_verified_at == null) {
+            return redirect(route('profilMitra'));
+        }
         return view('admin.pages.dashboard');
     }
 
@@ -73,7 +76,8 @@ class DashboardController extends Controller
         return redirect(route('dashboard'))->with('success', 'Data profil berhasil diubah!');
     }
 
-    public function pengajuanMoU(Request $request) {
+    public function pengajuanMoU(Request $request)
+    {
         if (count(PengajuanMitra::all()) == 0) {
             $id = 1;
         } else {
@@ -105,7 +109,8 @@ class DashboardController extends Controller
         return redirect(route('viewListPengajuan'));
     }
 
-    public function listPengajuan()  {
+    public function listPengajuan()
+    {
         if (auth()->user()->role == 'mitra') {
             $data = PengajuanMitra::with(['mitra', 'prodi', 'verifyPengajuan'])->whereHas('mitra', fn ($query) => $query->where('user_id', auth()->user()->id))->get();
         } else {
@@ -114,17 +119,18 @@ class DashboardController extends Controller
         return view('admin.pages.list_pengajuan', ['data' => $data->toArray()]);
     }
 
-    public function detailPengajuan(PengajuanMitra $pengajuan) {
+    public function detailPengajuan(PengajuanMitra $pengajuan)
+    {
         $data = $pengajuan->load(['mitra', 'prodi', 'verifyPengajuan']);
         $data['ruangLingkup'] = explode('+', $pengajuan->ruangLingkup);
         return view('admin.pages.detail_pengajuan', ['data' => $data->toArray()]);
     }
 
-    public function deletePengajuan(PengajuanMitra $pengajuan) {
+    public function deletePengajuan(PengajuanMitra $pengajuan)
+    {
         if (count(PengajuanMitra::where('id', $pengajuan->id)->has('verifyPengajuan')->get()) > 0) {
             return redirect(route('viewListPengajuan'))->with('error', 'Data sudah diverifikasi');
-        }
-        else {
+        } else {
             Storage::delete($pengajuan->file_mou);
             $pengajuan->delete();
         }
@@ -132,7 +138,8 @@ class DashboardController extends Controller
         return redirect(route('viewListPengajuan'))->with('success', 'Data pengajuan berhasil dihapus!');
     }
 
-    public function verifyMoU(Request $request) {
+    public function verifyMoU(Request $request)
+    {
         $this->authorize('admin');
 
         if (count(VerifyPengajuan::all()) == 0) {
@@ -163,7 +170,8 @@ class DashboardController extends Controller
         return redirect()->back();
     }
 
-    public function tolakMoU(Request $request) {
+    public function tolakMoU(Request $request)
+    {
         $this->authorize('admin');
         $data = $request->validate([
             'id_pengajuan' => 'required',
@@ -180,12 +188,14 @@ class DashboardController extends Controller
         return redirect()->back();
     }
 
-    public function listMitra() {
+    public function listMitra()
+    {
         $this->authorize('admin');
         return view('admin.pages.list_mitra', ['data' => Mitra::with(['kabupaten', 'provinsi', 'kriteria'])->get()->toArray()]);
     }
 
-    function detailMitra(Mitra $mitra) {
+    function detailMitra(Mitra $mitra)
+    {
         $this->authorize('admin');
         $data['Nama Mitra'] = $mitra->nama;
         $data['Nomor Induk Berusaha'] = $mitra->nomorIndukBerusaha;

@@ -6,6 +6,8 @@ namespace Database\Seeders;
 use App\Models\Sektor;
 use App\Models\Kriteria;
 use App\Models\JenisMitra;
+use App\Models\Mitra;
+use App\Models\PengajuanMitra;
 use App\Models\Prodi;
 use App\Models\SifatMitra;
 use App\Models\User;
@@ -18,7 +20,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        User::factory(100)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
@@ -51,5 +53,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AlamatSeeder::class,
         ]);
+
+        Mitra::factory(100)->create();
+        PengajuanMitra::factory(500)->create();
     }
 }

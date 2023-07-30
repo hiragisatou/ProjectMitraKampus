@@ -10,7 +10,9 @@
 	<!--     Fonts and icons     -->
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
 	<!-- Font Awesome Icons -->
-	<script src="https://kit.fontawesome.com/6787aab0d7.js" crossorigin="anonymous"></script>
+	{{-- <script src="https://kit.fontawesome.com/6787aab0d7.js" crossorigin="anonymous"></script> --}}
+    <link rel="stylesheet" href="{{ asset('dist/css/all.min.css') }}">
+    <script src="{{ asset('dist/js/all.min.js') }}"></script>
 	<!-- CSS Files -->
 	<link id="pagestyle" href="{{ asset('dist/css/admin-page/soft-ui-dashboard.min.css') }}" rel="stylesheet" />
 </head>
@@ -29,15 +31,6 @@
 	<script src="{{ asset('dist/js/bootstrap.bundle.min.js') }}"></script>
 	<script src="{{ asset('dist/js/admin-page/perfect-scrollbar.min.js') }}"></script>
 	<script src="{{ asset('dist/js/admin-page/smooth-scrollbar.min.js') }}"></script>
-	<script>
-		var win = navigator.platform.indexOf('Win') > -1;
-		if (win && document.querySelector('#sidenav-scrollbar')) {
-			var options = {
-				damping: '0.5'
-			}
-			Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-		}
-	</script>
 	<script src="{{ asset('dist/js/admin-page/soft-ui-dashboard.min.js') }}"></script>
 </body>
 </html>

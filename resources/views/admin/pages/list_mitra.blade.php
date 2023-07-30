@@ -46,7 +46,7 @@
 				myTable.search(this.value).draw();
 			});
 
-			$('#list_mitra_filter').css('visibility', 'hidden');
+			$('#list_mitra_filter').empty();
 			$('#list_mitra_filter > label').addClass('d-flex-middle justify-content-end');
 			$('#list_mitra_filter > label > input').css('width', '25%');
 			$('#list_mitra_filter > label > input').addClass('ms-2  ');

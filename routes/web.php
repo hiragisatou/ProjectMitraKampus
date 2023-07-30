@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AutentikasiController;
 use App\Http\Controllers\MailVerificationController;
+use App\Http\Controllers\SettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,5 +67,10 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/verifyMoU', 'verifyMoU')->name('VerifyMoU');
         Route::post('/tolakMoU', 'tolakMoU')->name('tolakMoU');
         Route::delete('/pengajuan/{pengajuan}', 'deletePengajuan')->name('deletePengajuan');
+    });
+
+    Route::controller(SettingController::class)->group(function () {
+        Route::get('/set-prodi', 'viewProdi')->name('viewSetProdi');
+        Route::post('/set-prodi', 'store')->name('addProdi');
     });
 });

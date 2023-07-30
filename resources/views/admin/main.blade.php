@@ -11,7 +11,8 @@
 
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
 	{{-- <link rel="stylesheet" href="{{ asset('dist/css/bootstrap.min.css') }}"> --}}
-	<script src="https://kit.fontawesome.com/6787aab0d7.js" crossorigin="anonymous"></script>
+	{{-- <script src="https://kit.fontawesome.com/6787aab0d7.js" crossorigin="anonymous"></script> --}}
+    <link rel="stylesheet" href="{{ asset('dist/css/all.min.css') }}">
 	<link id="pagestyle" rel="stylesheet" href="{{ asset('dist/css/admin-page/soft-ui-dashboard.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('dist/css/admin-page/select2-bootstrap-5-theme.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('dist/css/select2.min.css') }}">
@@ -25,6 +26,7 @@
 	<script src="{{ asset('dist/js/select2.min.js') }}"></script>
     <script src="{{ asset('dist/js/sweetalert2.all.min.js') }}"></script>
     <script src="{{ asset('dist/js/admin-page/chartjs.min.js') }}"></script>
+    <script src="{{ asset('dist/js/all.min.js') }}"></script>
 </head>
 
 <body class="g-sidenav-show bg-gray-100">

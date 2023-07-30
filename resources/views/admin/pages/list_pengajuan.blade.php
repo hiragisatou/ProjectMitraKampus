@@ -67,7 +67,7 @@
 				myTable.search(this.value).draw();
 			});
 
-			$('#list_pengajuan_filter').css('visibility', 'hidden');
+			$('#list_pengajuan_filter').empty();
 			$('#list_pengajuan_paginate > ul').addClass('m-0');
 			$('#list_pengajuan_previous > a').empty()
 			$('#list_pengajuan_previous > a').append('<i class="fa fa-angle-left"></i>');

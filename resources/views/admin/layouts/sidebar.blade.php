@@ -30,7 +30,7 @@
 				</a>
 			</li>
             <li class="nav-item mt-3">
-				<h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Pages</h6>
+				<h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Menu</h6>
 			</li>
             @can('admin')
 			<li class="nav-item">
@@ -94,6 +94,29 @@
 				</a>
 			</li>
             @endcan
+            <li class="nav-item mt-3">
+				<h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Pengaturan</h6>
+			</li>
+            <li class="nav-item">
+				<a class="nav-link {{ route('viewSetProdi') == url()->current() ? 'active' : '' }} " href="{{ route('viewSetProdi') }}">
+					<div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12px" height="12px" viewBox="0 0 384 512">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+								<g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF" fill-rule="nonzero">
+									<g transform="translate(1716.000000, 291.000000)">
+										<g transform="translate(453.000000, 454.000000)">
+											<path class="color-background opacity-6" d="M64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zM256 0V128H384L256 0zM80 64h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H80c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H80c-8.8 0-16-7.2-16-16s7.2-16 16-16zm16 96H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V256c0-17.7 14.3-32 32-32zm0 32v64H288V256H96zM240 416h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H240c-8.8 0-16-7.2-16-16s7.2-16 16-16z"></path>
+											<path class="color-background" d="M64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zM256 0V128H384L256 0zM80 64h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H80c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H80c-8.8 0-16-7.2-16-16s7.2-16 16-16zm16 96H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V256c0-17.7 14.3-32 32-32zm0 32v64H288V256H96zM240 416h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H240c-8.8 0-16-7.2-16-16s7.2-16 16-16z"></path>
+
+										</g>
+									</g>
+								</g>
+							</g>
+                        </svg>
+					</div>
+					<span class="nav-link-text ms-1">Program Studi</span>
+				</a>
+			</li>
 		</ul>
 	</div>
 </aside>

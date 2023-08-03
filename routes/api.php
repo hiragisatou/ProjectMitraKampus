@@ -1,13 +1,10 @@
 <?php
 
-use App\Models\Provinsi;
-use Illuminate\Http\Request;
-use App\Http\Resources\DataResource;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AutentikasiController;
+use App\Models\User;
 use App\Models\Kabupaten;
 use App\Models\Kecamatan;
-use App\Models\Mitra;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +21,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('email_check', function(Request $request){
+    if (count(User::where('email', $request->email)->get()) == 0) {
+        return 'true';
+    }
+    else {
+        return 'false';
+    }
+})->name('check_email_register');
+
 Route::get('/alamatKabupaten', function (Request $request) {
     return response()->json(Kabupaten::where('provinsi_id', $request->id)->get());
 })->name('api_kabupaten');
@@ -31,3 +37,4 @@ Route::get('/alamatKabupaten', function (Request $request) {
 Route::get('/alamatKecamatan', function (Request $request) {
     return response()->json(Kecamatan::where('kabupaten_id', $request->id)->get());
 })->name('api_kecamatan');
+

@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Kabupaten extends Model
 {
@@ -11,13 +13,15 @@ class Kabupaten extends Model
     protected $table = 'kabupaten';
     protected $guarded = ['id'];
 
-    public function kecamatan()
+    protected $with = ['provinsi'];
+
+    public function kecamatan(): HasMany
     {
-        return $this->belongsTo(Kecamatan::class, 'kabupaten_id');
+        return $this->hasMany(Kecamatan::class, 'kabupaten_id');
     }
 
-    public function provinsi()
+    public function provinsi(): BelongsTo
     {
-        return $this->hasMany(Provinsi::class, 'provinsi_id');
+        return $this->belongsTo(Provinsi::class, 'provinsi_id');
     }
 }

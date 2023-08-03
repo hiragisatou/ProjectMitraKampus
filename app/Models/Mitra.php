@@ -2,50 +2,50 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Mitra extends Model
 {
-	use HasFactory;
-	protected $table = 'mitra';
-	protected $guarded = ['id'];
+    use HasFactory;
+    protected $table = 'mitra';
+    protected $guarded = ['id'];
 
-	public function jenisMitra()
-	{
-		return $this->belongsTo(jenisMitra::class, 'jenis_id');
+    public function jenisMitra(): BelongsTo
+    {
+        return $this->belongsTo(JenisMitra::class, 'jenis_mitra_id');
+    }
 
-	}
-	public function sifatMitra()
-	{
-		return $this->belongsTo(SifatMitra::class, 'sifat_id');
-	}
-	public function sektor()
-	{
-		return $this->belongsTo(Sektor::class, 'sektorIndustri_id');
-	}
-	public function kriteria()
-	{
-		return $this->belongsTo(Kriteria::class, 'kriteriaMitra_id');
-	}
-	public function user()
+    public function sifatMitra(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(SifatMitra::class, 'sifat_mitra_id');
     }
-    public function pengajuanMitra()
+
+    public function kriteriaMitra(): BelongsTo
     {
-        return $this->hasMany(PengajuanMitra::class, 'mitra_id');
+        return $this->belongsTo(KriteriaMitra::class, 'kriteria_mitra_id');
     }
-    public function provinsi()
+
+    public function sektorIndustri(): BelongsTo
     {
-        return $this->belongsTo(Provinsi::class, 'provinsi_id');
+        return $this->belongsTo(SektorIndustri::class, 'sektor_industri_id');
     }
-    public function kabupaten()
-    {
-        return $this->belongsTo(Kabupaten::class, 'kabupaten_id');
-    }
-    public function kecamatan()
+
+    public function kecamatan(): BelongsTo
     {
         return $this->belongsTo(Kecamatan::class, 'kecamatan_id');
     }
+
+    public function pengajuanMoU(): HasMany
+    {
+        return $this->hasMany(PengajuanMoU::class, 'mitra_id');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
 }

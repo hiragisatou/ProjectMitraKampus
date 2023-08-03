@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Provinsi extends Model
 {
@@ -11,7 +12,7 @@ class Provinsi extends Model
     protected $table = 'provinsi';
     protected $guarded = ['id'];
 
-    public function kabupaten()
+    public function kabupaten(): HasMany
     {
         return $this->hasMany(Kabupaten::class, 'provinsi_id');
     }

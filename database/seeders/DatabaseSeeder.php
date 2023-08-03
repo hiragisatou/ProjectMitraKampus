@@ -3,14 +3,15 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\Sektor;
-use App\Models\Kriteria;
-use App\Models\JenisMitra;
-use App\Models\Mitra;
-use App\Models\PengajuanMitra;
-use App\Models\Prodi;
-use App\Models\SifatMitra;
+
 use App\Models\User;
+use App\Models\Mitra;
+use App\Models\Prodi;
+use App\Models\JenisMitra;
+use App\Models\SifatMitra;
+use App\Models\KriteriaMitra;
+use App\Models\PengajuanMoU;
+use App\Models\SektorIndustri;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,40 +22,33 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::factory(100)->create();
+        User::create(['name' => 'Administrator', 'email' => 'admin', 'password' => bcrypt('1234qwer'), 'role' => 'admin', 'email_verified_at' => now()]);
+        User::create(['name' => 'Admin Prodi', 'email' => 'prodiakuntansi', 'password' => bcrypt('1234qwer'), 'role' => 'prodi', 'email_verified_at' => now()]);
+        User::create(['name' => 'Admin Prodi', 'email' => 'prodiapolitik', 'password' => bcrypt('1234qwer'), 'role' => 'prodi', 'email_verified_at' => now()]);
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        SektorIndustri::create(['name' => 'Perdagangan Besar dan Eceran']);
+        SektorIndustri::create(['name' => 'Reparasi dan Perawatan Mobil dan Sepeda Motor']);
 
-        User::create(['name' => 'Administrator', 'email' => 'admin', 'password' => bcrypt('1234qwer'), 'role' => 'admin']);
-        User::create(['name' => 'Admin Prodi', 'email' => 'prodiakuntansi', 'password' => bcrypt('1234qwer'), 'role' => 'prodi']);
-        User::create(['name' => 'Admin Prodi', 'email' => 'prodiapolitik', 'password' => bcrypt('1234qwer'), 'role' => 'prodi']);
+        SifatMitra::create(['name' => 'Nasional']);
+        SifatMitra::create(['name' => 'Internasional']);
 
-        //sektor seeders
-        Sektor::create(['sektor' => 'Perdagangan Besar dan Eceran']);
-        Sektor::create(['sektor' => 'Reparasi dan Perawatan Mobil dan Sepeda Motor']);
+        JenisMitra::create(['name' => 'Pemerintahan']);
+        JenisMitra::create(['name' => 'Dudi']);
+        JenisMitra::create(['name' => 'Sekolah']);
+        JenisMitra::create(['name' => 'Perguruan Tinggi']);
+        JenisMitra::create(['name' => 'Organisasi']);
 
-        SifatMitra::create(['kategori' => 'Nasional']);
-        SifatMitra::create(['kategori' => 'Internasional']);
+        KriteriaMitra::create(['name' => 'Perusahaan Swasta']);
+        KriteriaMitra::create(['name' => 'Perusahaan Negeri']);
 
-        JenisMitra::create(['jenis' => 'Pemerintahan']);
-        JenisMitra::create(['jenis' => 'Dudi']);
-        JenisMitra::create(['jenis' => 'Sekolah']);
-        JenisMitra::create(['jenis' => 'Perguruan Tinggi']);
-        JenisMitra::create(['jenis' => 'Organisasi']);
-
-        Kriteria::create(['kriteria' => 'Perusahaan Swasta']);
-        Kriteria::create(['kriteria' => 'Perusahaan Negeri']);
-
-        Prodi::create(['prodi' => 'Akuntansi', 'jurusan_id' => 1]);
-        Prodi::create(['prodi' => 'Politik', 'jurusan_id' => 1]);
+        Prodi::create(['name' => 'Akuntansi', 'jurusan_id' => 1]);
+        Prodi::create(['name' => 'Politik', 'jurusan_id' => 1]);
 
         $this->call([
             AlamatSeeder::class,
         ]);
 
         Mitra::factory(100)->create();
-        PengajuanMitra::factory(500)->create();
+        PengajuanMoU::factory(500)->create();
     }
 }

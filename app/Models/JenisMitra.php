@@ -2,17 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class JenisMitra extends Model
 {
     use HasFactory;
     protected $table = 'jenis_mitra';
-    protected $fillable = ['jenis'];
+    protected $guarded = ['id'];
 
-    public function mitra()
+    public function mitra(): HasMany
     {
-        return $this->hasMany(Mitra::class, 'jenis_id');
+        return $this->hasMany(Mitra::class, 'jenis_mitra_id');
     }
 }

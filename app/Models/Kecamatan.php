@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Kecamatan extends Model
 {
@@ -11,8 +12,10 @@ class Kecamatan extends Model
     protected $table = 'kecamatan';
     protected $guarded = ['id'];
 
-    public function kabupaten()
+    protected $with = ['kabupaten'];
+
+    public function kabupaten(): BelongsTo
     {
-        return $this->belongsTo(Kabupaten::class, 'kecamatan_id');
+        return $this->belongsTo(Kabupaten::class, 'kabupaten_id');
     }
 }

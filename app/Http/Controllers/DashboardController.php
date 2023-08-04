@@ -83,7 +83,6 @@ class DashboardController extends Controller
     }
 
     //Detail Mitra Page
-
     public function viewDetailMitra(Mitra $mitra) {
         return view('pages.detail-mitra', ['data' => collect($mitra->load('kriteriamitra', 'sektorindustri', 'sifatmitra', 'jenismitra', 'kecamatan', 'pengajuanmou', 'user'))]);
     }

@@ -105,7 +105,7 @@
 						<input type="text" class="form-control" id="alamat" name="alamat" value="@isset($mitra){{ $mitra['alamat'] }}@endisset">
 					</div>
 					<div class="mb-3">
-						<label for="notelp" class="form-label">Nomor Telepon</label>
+						<label for="notelp" class="form-label">Nomor Telepon <span class="text-danger">*</span></label>
 						<input type="text" class="form-control" id="no_telp" name="no_telp" value="@isset($mitra){{ $mitra['no_telp'] }}@endisset">
 					</div>
 				</div>

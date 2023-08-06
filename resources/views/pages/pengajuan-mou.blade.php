@@ -82,6 +82,8 @@
 		});
 		$(document).ready(function() {
 			$('#formPengajuan').validate({
+                validClass: "is-valid",
+                errorClass: "is-invalid",
 				rules: {
 					name: 'required',
 					jenis_kemitraan: {required: true},
@@ -107,12 +109,6 @@
 					}
 				},
 				errorElement: "div",
-				highlight: function(element, errorClass) {
-					$(element).addClass("is-invalid");
-				},
-				unhighlight: function(element, errorClass) {
-					$(element).removeClass("is-invalid");
-				},
 				errorPlacement: function(error, element) {
 					error.addClass("invalid-feedback");
 					if (element.attr("type") == "checkbox") {

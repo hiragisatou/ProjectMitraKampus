@@ -5,14 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Mitra;
 use App\Models\Provinsi;
-use App\Models\JenisMitra;
 use App\Models\Kabupaten;
 use App\Models\Kecamatan;
+use App\Models\JenisMitra;
 use App\Models\SifatMitra;
 use Illuminate\Http\Request;
 use App\Models\KriteriaMitra;
 use App\Models\SektorIndustri;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
@@ -118,6 +119,28 @@ class AuthController extends Controller
         $data['user_id'] = auth()->user()->id;
         Mitra::updateOrCreate(['user_id' => auth()->user()->id],$data->toArray());
         return redirect(route('dashboard'))->with('success', 'Data profil perusahaan berhasil disimpan.');
+    }
+
+    public function viewForgotPassword() {
+        return view('pages.forgot-password');
+    }
+
+    //Update Account Page
+    public function viewUpdateAccount(){
+        return view('pages.update-akun', ['data' => auth()->user()]);
+    }
+
+    //Update Account Handlerr
+    public function updateAccountHandler(Request $request){
+        if (isset($request->confirm_password)) {
+            $data = collect($request)->except(['_token', 'confirm_password', 'old_password']);
+        } else {
+            $data = collect($request)->except(['_token', 'old_password']);
+        }
+
+        $data['password'] = bcrypt($request->password);
+        User::where('email', $data['email'])->update($data->except(['email'])->toArray());
+        return redirect(route('dashboard'))->with('success', 'Data akun berhasil di update!');
     }
 
     //Logout

@@ -4,6 +4,7 @@ use App\Models\User;
 use App\Models\Kabupaten;
 use App\Models\Kecamatan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,6 +30,14 @@ Route::post('email_check', function(Request $request){
         return 'false';
     }
 })->name('check_email_register');
+
+Route::get('password_check/{user}', function(User $user, Request $request) {
+    if (Hash::check($request->password, $user->password)) {
+        return 'true';
+    } else {
+        return 'false';
+    }
+})->name('check_password_update');
 
 Route::get('/alamatKabupaten', function (Request $request) {
     return response()->json(Kabupaten::where('provinsi_id', $request->id)->get());

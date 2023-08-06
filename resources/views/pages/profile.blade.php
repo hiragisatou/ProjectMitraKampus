@@ -192,6 +192,8 @@
 			});
 
 			$('#form_profile').validate({
+                validClass: "is-valid",
+                errorClass: "is-invalid",
 				rules: {
 					name: 'required',
 					nib: 'required',
@@ -232,12 +234,6 @@
                     no_telp: 'Nomor telepon wajib diisi.',
 				},
 				errorElement: "div",
-				highlight: function(element, errorClass) {
-					$(element).addClass("is-invalid");
-				},
-				unhighlight: function(element, errorClass) {
-					$(element).removeClass("is-invalid");
-				},
 				errorPlacement: function(error, element) {
 					error.addClass("invalid-feedback");
 					if (element.attr("type") == "checkbox") {

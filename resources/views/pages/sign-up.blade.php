@@ -102,6 +102,8 @@
             var checkMail = {{ Js::from(route('check_email_register')) }}
             $(document).ready(function() {
                 $('#form_sign-up').validate({
+                    validClass: "is-valid",
+                    errorClass: "is-invalid",
                     rules: {
                         name: 'required',
                         email: {
@@ -142,12 +144,6 @@
                         }
                     },
                     errorElement: "div",
-                    highlight: function(element, errorClass) {
-                        $(element).addClass("is-invalid");
-                    },
-                    unhighlight: function(element, errorClass) {
-                        $(element).removeClass("is-invalid");
-                    },
                     errorPlacement: function(error, element) {
                         error.addClass("invalid-feedback");
                         if (element.attr("type") == "checkbox") {

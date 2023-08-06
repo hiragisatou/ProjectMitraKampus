@@ -23,11 +23,14 @@ Route::get('/home', function () {
 Route::controller(AuthController::class)->group(function () {
     Route::get('/login', 'viewLogin')->middleware('guest')->name('login');
     Route::get('/register', 'viewRegister')->middleware('guest')->name('register');
+    Route::get('/forgot-password', 'viewForgotPassword')->middleware('guest')->name('password.request');
     Route::get('/email/verify', 'viewVerifyNotice')->middleware('auth')->name('verification.notice');
     Route::get('/email/verify/{id}/{hash}', 'verificationMailHandler')->middleware(['auth', 'signed'])->name('verification.verify');
     Route::get('/profile', 'viewAddProfile')->middleware('auth')->name('add_profile');
     Route::get('/profile/edit', 'viewEditProfile')->middleware('auth')->name('edit_profile');
+    Route::get('/update_account', 'viewUpdateAccount')->middleware('auth')->name('view_update_account');
 
+    Route::post('/update_account', 'updateAccountHandler')->middleware('auth')->name('update_account_handler');
     Route::post('/profile', 'profileHandler')->middleware('auth')->name('profile_handler');
     Route::post('/login', 'loginHandler')->middleware('guest')->name('login_handler');
     Route::post('/logout', 'logout')->middleware('auth')->name('logout_handler');

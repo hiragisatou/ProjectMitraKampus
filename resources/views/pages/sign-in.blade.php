@@ -108,10 +108,15 @@
 										<div class="mb-3">
 											<input type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="password-addon" name="password" id="password">
 										</div>
-										<div class="form-check form-switch">
-											<input class="form-check-input" type="checkbox" id="rememberMe" name="remember">
-											<label class="form-check-label" for="rememberMe">Remember me</label>
-										</div>
+                                        <div class="d-flex justify-content-between align-content-center">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="rememberMe" name="remember">
+                                                <label class="form-check-label" for="rememberMe">Remember me</label>
+                                            </div>
+                                            <div class="text-end">
+                                                <a class="text-sm" href="{{ route('password.request') }}">Forgot Password?</a>
+                                            </div>
+                                        </div>
 										<div class="text-center">
 											<button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">Sign in</button>
 										</div>
@@ -140,6 +145,8 @@
 	<script>
 		$(document).ready(function() {
 			$('#form_sign-in').validate({
+                validClass: "is-valid",
+                errorClass: "is-invalid",
 				rules: {
 					email: {
 						required: true,
@@ -159,12 +166,6 @@
 					}
 				},
 				errorElement: "div",
-				highlight: function(element, errorClass) {
-					$(element).addClass("is-invalid");
-				},
-				unhighlight: function(element, errorClass) {
-					$(element).removeClass("is-invalid");
-				},
 				errorPlacement: function(error, element) {
 					error.addClass("invalid-feedback");
 					if (element.attr("type") == "checkbox") {

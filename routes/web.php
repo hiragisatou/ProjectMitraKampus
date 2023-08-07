@@ -67,7 +67,12 @@ Route::middleware(['auth', 'verified', 'hasProfile'])->group(function () {
 
     Route::controller(SettingController::class)->group(function () {
         Route::get('/setting-prodi', 'indexProdi')->name('view_prodi');
+        Route::get('/setting-kriteria_mitra', 'indexKriteria')->name('view_kriteria');
+
         Route::post('/setting-prodi', 'prodiHandler')->name('prodi_handler');
+        Route::post('/setting-kriteria_mitra', 'kriteriaHandler')->name('kriteria_handler');
+        
         Route::delete('/prodi/{prodi}', 'deleteProdi')->name('delete_prodi');
+        Route::delete('/setting-kriteria_mitra/{kriteria}', 'deletekriteria')->name('delete_kriteria');
     });
 });

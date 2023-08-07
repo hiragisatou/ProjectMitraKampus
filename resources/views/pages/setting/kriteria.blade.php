@@ -1,19 +1,18 @@
 @extends('master-dashboard')
-@section('title', 'Program Studi')
+@section('title', 'Kriteria Mitra')
 @section('content')
     <div class="card p-3">
         <div class="card-body">
             <div class="d-flex justify-content-end">
-                <button type="button" class="btn bg-gradient-success btn-block mb-3" data-bs-toggle="modal" data-bs-target="#prodiModal">
-                    <span class="me-2"><i class="fa-solid fa-plus"></i></span> Tambah Prodi
+                <button type="button" class="btn bg-gradient-success btn-block mb-3" data-bs-toggle="modal" data-bs-target="#addModal">
+                    <span class="me-2"><i class="fa-solid fa-plus"></i></span> Tambah Kriteria
                 </button>
             </div>
-            <table class="table" id="prodi">
+            <table class="table" id="mytable">
                 <thead>
                     <tr>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2" style="width: 4em">No</th>
-                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2">Program Studi</th>
-                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2">Jurusan</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2">Nama Kriteria</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2">Aksi</th>
                     </tr>
                 </thead>
@@ -22,13 +21,12 @@
                         <tr>
                             <td class="text-sm font-weight-bold mb-0">{{ $loop->iteration }}</td>
                             <td class="text-sm font-weight-bold mb-0">{{ $x->name }}</td>
-                            <td class="text-sm font-weight-bold mb-0">{{ $x->jurusan()->exists() ? $x->jurusan->name : '' }}</td>
                             <td class="text-sm font-weight-bold mb-0">
                                 <div class="d-flex">
-                                    <button type="button" class="btn bg-gradient-warning me-1 my-0 py-1 px-2" data-bs-toggle="modal" data-bs-target="#editProdiModal" data-bs-id="{{ $x->id }}">
+                                    <button type="button" class="btn bg-gradient-warning me-1 my-0 py-1 px-2" data-bs-toggle="modal" data-bs-target="#editModal" data-bs-all="{{ $x }}">
                                         <i class="fa-regular fa-pen-to-square"></i>
                                     </button>
-                                    <button type="button" class="btn bg-gradient-danger m-0 py-1 px-2" data-bs-toggle="modal" data-bs-target="#modal-notification" data-bs-url="{{ route('delete_prodi', ['prodi' => $x->id]) }}" data-bs-name="{{ $x->name }}"><i class="fa-regular fa-trash-can"></i></button>
+                                    <button type="button" class="btn bg-gradient-danger m-0 py-1 px-2" data-bs-toggle="modal" data-bs-target="#modal-notification" data-bs-url="{{ route('delete_kriteria', ['kriteria' => $x->id]) }}" data-bs-name="{{ $x->name }}"><i class="fa-regular fa-trash-can"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -39,7 +37,6 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td></td>
                     </tr>
                 </tfoot>
             </table>
@@ -47,30 +44,21 @@
     </div>
 
     <!-- Add Modal -->
-    <div class="modal fade" id="prodiModal" tabindex="-1" role="dialog" aria-labelledby="prodiModalTitle" aria-hidden="true">
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="prodiModalLabel">Tambah Program Studi</h5>
+                    <h5 class="modal-title" id="addModalLabel">Tambah Program Studi</h5>
                     <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <form action="{{ route('prodi_handler') }}" method="POST">
+                <form action="{{ route('kriteria_handler') }}" method="POST">
                     <div class="modal-body">
                         @csrf
                         <input type="hidden" name="id" value="{{ $id }}">
                         <div class="form-group">
-                            <label for="jurusan" class="col-form-label">Jurusan</label>
-                            <select name="jurusan_id" class="form-select">
-                                <option value="">Pilih Jurusan</option>
-                                @foreach ($jurusan as $x)
-                                    <option value="{{ $x->id }}">{{ $x->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="message-text" class="col-form-label">Nama Prodi</label>
+                            <label for="message-text" class="col-form-label">Nama</label>
                             <input type="text" name="name" class="form-control">
                         </div>
                     </div>
@@ -84,30 +72,21 @@
     </div>
 
     <!-- Edit Modal -->
-    <div class="modal fade" id="editProdiModal" tabindex="-1" role="dialog" aria-labelledby="editProdiModalTitle" aria-hidden="true">
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editProdiModalLabel">Edit Prodi</h5>
+                    <h5 class="modal-title" id="editModalLabel">Edit</h5>
                     <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <form action="{{ route('prodi_handler') }}" method="POST">
+                <form action="{{ route('kriteria_handler') }}" method="POST">
                     <div class="modal-body">
                         @csrf
                         <input type="hidden" name="id">
                         <div class="form-group">
-                            <label for="jurusan" class="col-form-label">Jurusan</label>
-                            <select name="jurusan_id" class="form-select">
-                                <option value="">Pilih Jurusan</option>
-                                @foreach ($jurusan as $x)
-                                    <option value="{{ $x->id }}">{{ $x->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="message-text" class="col-form-label">Nama Prodi</label>
+                            <label for="message-text" class="col-form-label">Nama</label>
                             <input type="text" name="name" class="form-control">
                         </div>
                     </div>
@@ -150,7 +129,7 @@
     </div>
 
     <script>
-        var myTable = $('#prodi ').DataTable({
+        var myTable = $('#mytable ').DataTable({
             initComplete: function() {
                 this.api().columns().every(function() {
                     let column = this;
@@ -179,29 +158,24 @@
         $(document).ready(function() {
             $('#breadcrumb').empty();
             $('#breadcrumb').append('<li class="breadcrumb-item text-sm text-dark" aria-current="page">Pengaturan</li>');
-            $('#breadcrumb').append('<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Program Studi</li>');
+            $('#breadcrumb').append('<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Kriteria Mitra</li>');
             $('td > select').addClass('form-select form-select-sm');
             $('tfoot > tr > td:first-child').empty();
             $('tfoot > tr > td:last-child').empty();
 
-            $('#prodi_paginate > ul').addClass('m-0');
-            $('#prodi_paginate').addClass('d-flex justify-content-end')
-            $('#prodi_info').parent().addClass('d-flex align-items-center');
-            $('#prodi_info').addClass('text-sm');
-            $('#prodi_length > label').addClass('d-flex-middle');;
-            $('select[name="prodi_length"]').addClass('w-50');
+            $('#mytable_paginate > ul').addClass('m-0');
+            $('#mytable_paginate').addClass('d-flex justify-content-end')
+            $('#mytable_info').parent().addClass('d-flex align-items-center');
+            $('#mytable_info').addClass('text-sm');
+            $('#mytable_length > label').addClass('d-flex-middle');;
+            $('select[name="mytable_length"]').addClass('w-50');
 
-            $('#editProdiModal').on('show.bs.modal', event => {
+            $('#editModal').on('show.bs.modal', event => {
                 const button = event.relatedTarget
-                var prodi_id = button.getAttribute('data-bs-id');
-                $.get({{ Js::from(route('data_prodi')) }}, {
-                    id: prodi_id
-                }, function(data, status) {
-                    $('#editProdiModal').find('.modal-title').text('Edit Prodi ' + data['name']);
-                    $('#editProdiModal').find('input[name="id"]').val(data['id']);
-                    $('#editProdiModal').find('input[name="name"]').val(data['name']);
-                    $('#editProdiModal').find('option[value="' + data['jurusan_id'] + '"]').attr('selected', 'true');
-                });
+                var data = JSON.parse(button.getAttribute('data-bs-all'));
+                $('#editModal').find('.modal-title').text('Edit ' + data['name']);
+                $('#editModal').find('input[name="id"]').val(data['id']);
+                $('#editModal').find('input[name="name"]').val(data['name']);
             });
 
             $('#modal-notification').on('show.bs.modal', event => {
@@ -209,67 +183,55 @@
                 var url = button.getAttribute('data-bs-url');
                 var name = button.getAttribute('data-bs-name');
                 $('#modal-notification').find('form').attr('action', url);
-                $('#modal-notification').find('p:first').text("Apakah anda yakin menghapus program studi "+name+" ?")
+                $('#modal-notification').find('p:first').text("Apakah anda yakin menghapus program studi " + name + " ?")
             });
 
-            $('#prodiModal').find('form').validate({
+            $('#addModal').find('form').validate({
                 validClass: "is-valid",
                 errorClass: "is-invalid",
-				rules: {
-					jurusan_id: {
-						required: true,
-					},
-					name: {
-						required: true,
-					}
-				},
-				messages: {
-                    jurusan_id: {
-						required: 'Jurusan wajib diisi',
-					},
-					name: {
-						required: 'Nama prodi wajib diisi.',
-					}
-				},
-				errorElement: "div",
-				errorPlacement: function(error, element) {
-					error.addClass("invalid-feedback");
-					if (element.attr("type") == "checkbox") {
-						element.closest(".form-group").children(0).prepend(error);
-					} else {
-						error.insertAfter(element);
-					}
-				}
-			});
-            $('#editProdiModal').find('form').validate({
+                rules: {
+                    name: {
+                        required: true,
+                    }
+                },
+                messages: {
+                    name: {
+                        required: 'Nama kriteria wajib diisi.',
+                    }
+                },
+                errorElement: "div",
+                errorPlacement: function(error, element) {
+                    error.addClass("invalid-feedback");
+                    if (element.attr("type") == "checkbox") {
+                        element.closest(".form-group").children(0).prepend(error);
+                    } else {
+                        error.insertAfter(element);
+                    }
+                }
+            });
+            $('#editModal').find('form').validate({
                 validClass: "is-valid",
                 errorClass: "is-invalid",
-				rules: {
-					jurusan_id: {
-						required: true,
-					},
-					name: {
-						required: true,
-					}
-				},
-				messages: {
-                    jurusan_id: {
-						required: 'Jurusan wajib diisi',
-					},
-					name: {
-						required: 'Nama prodi wajib diisi.',
-					}
-				},
-				errorElement: "div",
-				errorPlacement: function(error, element) {
-					error.addClass("invalid-feedback");
-					if (element.attr("type") == "checkbox") {
-						element.closest(".form-group").children(0).prepend(error);
-					} else {
-						error.insertAfter(element);
-					}
-				}
-			});
+                rules: {
+                    name: {
+                        required: true,
+                    }
+                },
+                messages: {
+                    name: {
+                        required: 'Nama kriteria wajib diisi.',
+                    }
+                },
+                errorElement: "div",
+                errorPlacement: function(error, element) {
+                    error.addClass("invalid-feedback");
+                    if (element.attr("type") == "checkbox") {
+                        element.closest(".form-group").children(0).prepend(error);
+                    } else {
+                        error.insertAfter(element);
+                    }
+                }
+            });
         });
 
         const targetNode = document.getElementsByClassName("pagination")[0];
@@ -282,10 +244,10 @@
 
         // Callback function to execute when mutations are observed
         const callback = (mutationList, observer) => {
-            $('#prodi_previous > a').empty()
-            $('#prodi_previous > a').append('<i class="fa fa-angle-left"></i>');
-            $('#prodi_next > a').empty()
-            $('#prodi_next > a').append('<i class="fa fa-angle-right"></i>');
+            $('#mytable_previous > a').empty()
+            $('#mytable_previous > a').append('<i class="fa fa-angle-left"></i>');
+            $('#mytable_next > a').empty()
+            $('#mytable_next > a').append('<i class="fa fa-angle-right"></i>');
             $('.paginate_button.page-item.active > a').addClass('text-white');
         };
 

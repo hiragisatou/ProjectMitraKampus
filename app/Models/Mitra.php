@@ -15,22 +15,22 @@ class Mitra extends Model
 
     public function jenisMitra(): BelongsTo
     {
-        return $this->belongsTo(JenisMitra::class, 'jenis_mitra_id');
+        return $this->belongsTo(JenisMitra::class, 'jenis_mitra_id')->withTrashed();
     }
 
     public function sifatMitra(): BelongsTo
     {
-        return $this->belongsTo(SifatMitra::class, 'sifat_mitra_id');
+        return $this->belongsTo(SifatMitra::class, 'sifat_mitra_id')->withTrashed();
     }
 
     public function kriteriaMitra(): BelongsTo
     {
-        return $this->belongsTo(KriteriaMitra::class, 'kriteria_mitra_id');
+        return $this->belongsTo(KriteriaMitra::class, 'kriteria_mitra_id')->withTrashed();
     }
 
     public function sektorIndustri(): BelongsTo
     {
-        return $this->belongsTo(SektorIndustri::class, 'sektor_industri_id');
+        return $this->belongsTo(SektorIndustri::class, 'sektor_industri_id')->withTrashed();
     }
 
     public function kecamatan(): BelongsTo

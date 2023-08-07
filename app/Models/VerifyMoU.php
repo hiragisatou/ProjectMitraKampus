@@ -14,7 +14,7 @@ class VerifyMoU extends Model
 
     public function pengajuanmou(): BelongsTo
     {
-        return $this->belongsTo(PengajuanMoU::class, 'pengajuan_mou_id');
+        return $this->belongsTo(PengajuanMoU::class, 'pengajuan_mou_id')->withTrashed();
     }
 
     public function user(): BelongsTo

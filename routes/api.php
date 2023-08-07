@@ -1,8 +1,10 @@
 <?php
 
 use App\Models\User;
+use App\Models\Jurusan;
 use App\Models\Kabupaten;
 use App\Models\Kecamatan;
+use App\Models\Prodi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +24,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/jurusan', function () {
+    return response()->json(Jurusan::all());
+})->name('data_jurusan');
+
+Route::get('/prodi_detail', function (Request $request) {
+    return response()->json(Prodi::find($request->id));
+})->name('data_prodi');
 Route::post('email_check', function(Request $request){
     if (count(User::where('email', $request->email)->get()) == 0) {
         return 'true';

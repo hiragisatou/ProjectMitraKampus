@@ -35,7 +35,7 @@ class DashboardController extends Controller
         $data['ruang_lingkup'] = implode('+', $request->ruang_lingkup);
         $data['mou'] = $request->file('mou')->storeAs('pengajuanMoU', $id . '_MOU_' . $data['name'] . '_' . auth()->user()->mitra->name . '.pdf');
         PengajuanMoU::create($data);
-        return redirect(route('dashboard'))->with('success', 'MoU berhasil diajukan.');
+        return redirect(route('view_list_pengajuan'))->with('success', 'MoU berhasil diajukan.');
     }
 
     //List Pengajuan MoU Page

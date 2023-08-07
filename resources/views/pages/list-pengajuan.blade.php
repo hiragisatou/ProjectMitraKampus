@@ -37,7 +37,7 @@
 								<a href="{{ route('detail_pengajuan', ['mou' => $x['id']]) }}" class="btn btn-outline-dark btn-sm py-1 px-2 m-0">
 									<i class="fa-regular fa-eye"></i>
 								</a>
-								<{{-- form action="{{ route('detail_pengajuan', ['mou' => $x['id']]) }}" method="post" class="d-inline">
+								{{-- <form action="{{ route('detail_pengajuan', ['mou' => $x['id']]) }}" method="post" class="d-inline">
 									@method('delete')
 									@csrf
 									<button type="submit" class="btn btn-outline-danger btn-sm py-2 px-3 m-0">
@@ -104,10 +104,6 @@
 			$('tfoot > tr > td:nth-child(7) > select').append(new Option("Diproses", "Diproses"));
 
 			$('#list-pengajuan_mou_paginate > ul').addClass('m-0');
-			$('#list-pengajuan_mou_previous > a').empty()
-			$('#list-pengajuan_mou_previous > a').append('<i class="fa fa-angle-left"></i>');
-			$('#list-pengajuan_mou_next > a').empty()
-			$('#list-pengajuan_mou_next > a').append('<i class="fa fa-angle-right"></i>');
 			$('#list-pengajuan_mou_paginate').addClass('d-flex justify-content-end')
 			$('#list-pengajuan_mou_info').parent().addClass('d-flex align-items-center');
 			$('#list-pengajuan_mou_info').addClass('text-sm');
@@ -128,6 +124,7 @@
 			$('#list-pengajuan_mou_previous > a').append('<i class="fa fa-angle-left"></i>');
 			$('#list-pengajuan_mou_next > a').empty()
 			$('#list-pengajuan_mou_next > a').append('<i class="fa fa-angle-right"></i>');
+            $('.paginate_button.page-item.active > a').addClass('text-white');
 		};
 
 		// Create an observer instance linked to the callback function

@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sifat_mitras');
+        Schema::dropIfExists('sifat_mitra');
     }
 };

@@ -96,8 +96,8 @@
 			<li class="nav-item mt-3">
 				<h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Pengaturan</h6>
 			</li>
-			{{-- <li class="nav-item">
-				<a class="nav-link {{ route('viewSetProdi') == url()->current() ? 'active' : '' }} " href="{{ route('viewSetProdi') }}">
+			<li class="nav-item">
+				<a class="nav-link {{ route('view_prodi') == url()->current() ? 'active' : '' }} " href="{{ route('view_prodi') }}">
 					<div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" width="12px" height="12px">
                             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -114,7 +114,7 @@
 					</div>
 					<span class="nav-link-text ms-1">Program Studi</span>
 				</a>
-			</li> --}}
+			</li>
 		</ul>
 	</div>
 </aside>

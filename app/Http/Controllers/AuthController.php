@@ -9,12 +9,15 @@ use App\Models\Kabupaten;
 use App\Models\Kecamatan;
 use App\Models\JenisMitra;
 use App\Models\SifatMitra;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\KriteriaMitra;
 use App\Models\SektorIndustri;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 class AuthController extends Controller
@@ -125,12 +128,49 @@ class AuthController extends Controller
         return view('pages.forgot-password');
     }
 
+    public function forgotPasswordHandler(Request $request) {
+        $request->validate(['email' => 'required|email']);
+
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
+
+        return $status === Password::RESET_LINK_SENT ? back()->with(['status' => __($status)]) : back()->withErrors(['email' => __($status)]);
+    }
+
+    public function viewResetPassword(string $token) {
+        return view('pages.reset-password', ['token' => $token]);
+    }
+
+    public function resetPasswordHandler(Request $request) {
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|min:8|confirmed',
+        ]);
+
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function (User $user, string $password) {
+                $user->forceFill([
+                    'password' => Hash::make($password)
+                ])->setRememberToken(Str::random(60));
+
+                $user->save();
+
+                event(new PasswordReset($user));
+            }
+        );
+
+        return $status === Password::PASSWORD_RESET ? redirect()->route('login')->with('status', __($status)) : back()->withErrors(['email' => [__($status)]]);
+    }
+
     //Update Account Page
     public function viewUpdateAccount(){
         return view('pages.update-akun', ['data' => auth()->user()]);
     }
 
-    //Update Account Handlerr
+    //Update Account Handler
     public function updateAccountHandler(Request $request){
         if (isset($request->confirm_password)) {
             $data = collect($request)->except(['_token', 'confirm_password', 'old_password']);

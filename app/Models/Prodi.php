@@ -13,13 +13,15 @@ class Prodi extends Model
     protected $table = 'prodi';
     protected $guarded = ['id'];
 
-    public function pengajuanMoU(): HasMany
+    public function PengajuanMoU(): HasMany
     {
         return $this->hasMany(PengajuanMoU::class, 'prodi_id');
     }
 
-    public function kriteriaMitra(): BelongsTo
+    public function jurusan(): BelongsTo
     {
         return $this->belongsTo(Jurusan::class, 'jurusan_id');
     }
+
+
 }

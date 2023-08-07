@@ -3,7 +3,7 @@
 @section('content')
 	<div class="card">
 		<div class="card-body">
-			<table class="table" id="list_mitra">
+			<table class="table" id="list-mitra">
 				<thead>
 					<tr>
 						<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2">No</th>
@@ -45,7 +45,7 @@
 	</div>
 
 	<script>
-		var myTable = $('#list_mitra').DataTable({
+		var myTable = $('#list-mitra').DataTable({
 			initComplete: function() {
 				this.api().columns().every(function() {
 					let column = this;
@@ -75,41 +75,35 @@
 			$('td > select').addClass('form-select form-select-sm');
             $('tfoot > tr > td:first-child').empty();
 			$('tfoot > tr > td:last-child').empty();
-			$('#list_mitra_filter').empty();
-			$('#list_mitra_filter > label').addClass('d-flex-middle justify-content-end');
-			$('#list_mitra_filter > label > input').css('width', '25%');
-			$('#list_mitra_filter > label > input').addClass('ms-2  ');
-			$('#list_mitra_paginate > ul').addClass('m-0');
-			$('#list_mitra_previous > a').empty()
-			$('#list_mitra_previous > a').append('<i class="fa fa-angle-left"></i>');
-			$('#list_mitra_next > a').empty()
-			$('#list_mitra_next > a').append('<i class="fa fa-angle-right"></i>');
-			$('#list_mitra_paginate').addClass('d-flex justify-content-end')
-			$('#list_mitra_info').parent().addClass('d-flex align-items-center');
-			$('#list_mitra_info').addClass('text-sm');
-			$('#list_mitra_length > label').addClass('d-flex-middle');;
-			$('select[name="list_mitra_length"]').addClass('select-w-10');
-			const targetNode = document.getElementsByClassName("pagination")[0];
 
-			// Options for the observer (which mutations to observe)
-			const config = {
-				attributes: true,
-				childList: true,
-			};
-
-			// Callback function to execute when mutations are observed
-			const callback = (mutationList, observer) => {
-				$('#list_mitra_previous > a').empty()
-				$('#list_mitra_previous > a').append('<i class="fa fa-angle-left"></i>');
-				$('#list_mitra_next > a').empty()
-				$('#list_mitra_next > a').append('<i class="fa fa-angle-right"></i>');
-			};
-
-			// Create an observer instance linked to the callback function
-			const observer = new MutationObserver(callback);
-
-			// Start observing the target node for configured mutations
-			observer.observe(targetNode, config);
+			$('#list-mitra_paginate > ul').addClass('m-0');
+			$('#list-mitra_paginate').addClass('d-flex justify-content-end')
+			$('#list-mitra_info').parent().addClass('d-flex align-items-center');
+			$('#list-mitra_info').addClass('text-sm');
+			$('#list-mitra_length > label').addClass('d-flex-middle');;
+			$('select[name="list-mitra_length"]').addClass('w-50');
 		});
+        const targetNode = document.getElementsByClassName("pagination")[0];
+
+        // Options for the observer (which mutations to observe)
+        const config = {
+            attributes: true,
+            childList: true,
+        };
+
+        // Callback function to execute when mutations are observed
+        const callback = (mutationList, observer) => {
+            $('#list-mitra_previous > a').empty()
+            $('#list-mitra_previous > a').append('<i class="fa fa-angle-left"></i>');
+            $('#list-mitra_next > a').empty()
+            $('#list-mitra_next > a').append('<i class="fa fa-angle-right"></i>');
+            $('.paginate_button.page-item.active > a').addClass('text-white');
+        };
+
+        // Create an observer instance linked to the callback function
+        const observer = new MutationObserver(callback);
+
+        // Start observing the target node for configured mutations
+        observer.observe(targetNode, config);
 	</script>
 @endsection

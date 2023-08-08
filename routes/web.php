@@ -70,15 +70,18 @@ Route::middleware(['auth', 'verified', 'hasProfile'])->group(function () {
         Route::get('/setting-kriteria_mitra', 'indexKriteria')->name('view_kriteria');
         Route::get('/setting-sifat_mitra', 'indexSifat')->name('view_sifat_mitra');
         Route::get('/setting-jenis_mitra', 'indexJenis')->name('view_jenis_mitra');
+        Route::get('/setting-sektor_industri', 'indexSektor')->name('view_sektor_industri');
 
         Route::post('/setting-prodi', 'prodiHandler')->name('prodi_handler');
         Route::post('/setting-kriteria_mitra', 'kriteriaHandler')->name('kriteria_handler');
         Route::post('/setting-sifat_mitra', 'sifatHandler')->name('sifat_mitra_handler');
         Route::post('/setting-jenis_mitra', 'jenisHandler')->name('jenis_mitra_handler');
+        Route::post('/setting-sektor_industri', 'sektorHandler')->name('sektor_industri_handler');
 
         Route::delete('/prodi/{prodi}', 'deleteProdi')->name('delete_prodi');
         Route::delete('/setting-kriteria_mitra/{kriteria}', 'deletekriteria')->name('delete_kriteria');
         Route::delete('/setting-sifat_mitra/{sifat}', 'deleteSifat')->name('delete_sifat_mitra');
         Route::delete('/setting-jenis_mitra/{jenis}', 'deleteJenis')->name('delete_jenis_mitra');
+        Route::delete('/setting-sektor_industri/{sektor}', 'deleteSektor')->name('delete_sektor_industri');
     });
 });

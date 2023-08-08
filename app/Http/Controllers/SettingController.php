@@ -6,6 +6,7 @@ use App\Models\JenisMitra;
 use App\Models\Prodi;
 use App\Models\Jurusan;
 use App\Models\KriteriaMitra;
+use App\Models\SektorIndustri;
 use App\Models\SifatMitra;
 use Illuminate\Http\Request;
 
@@ -117,5 +118,31 @@ class SettingController extends Controller
     {
         $jenis->delete();
         return redirect(route('view_jenis_mitra'))->with('success', 'Data jenis mitra berhasil dihapus.');
+    }
+
+    // Setting Sektor Industri Page
+    public function indexSektor()
+    {
+        if (count(SektorIndustri::all()) == 0) {
+            $id = 1;
+        } else {
+            $id = collect(SektorIndustri::all())->last()->id + 1;
+        }
+        return view('pages.setting.sektor', ['data' => collect(SektorIndustri::all()), 'id' => $id]);
+    }
+
+    //Sifat Mitra Handler
+    public function sektorHandler(Request $request)
+    {
+        $data = collect($request)->except('_token');
+        SektorIndustri::updateOrCreate(['id' => $data['id']], $data->except('id')->toArray());
+        return redirect(route('view_sektor_industri'))->with('success', 'Data sektor industri berhasil disimpan.');
+    }
+
+    //Delete Data Kriteria
+    public function deleteSektor(SektorIndustri $sektor)
+    {
+        $sektor->delete();
+        return redirect(route('view_sektor_industri'))->with('success', 'Data sektor industri berhasil dihapus.');
     }
 }

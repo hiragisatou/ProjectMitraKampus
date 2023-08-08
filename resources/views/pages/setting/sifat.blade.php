@@ -1,18 +1,18 @@
 @extends('master-dashboard')
-@section('title', 'Kriteria Mitra')
+@section('title', 'Sifat Mitra')
 @section('content')
     <div class="card p-3">
         <div class="card-body">
             <div class="d-flex justify-content-end">
                 <button type="button" class="btn bg-gradient-success btn-block mb-3" data-bs-toggle="modal" data-bs-target="#addModal">
-                    <span class="me-2"><i class="fa-solid fa-plus"></i></span> Tambah Kriteria
+                    <span class="me-2"><i class="fa-solid fa-plus"></i></span> Tambah Sifat Mitra
                 </button>
             </div>
             <table class="table" id="mytable">
                 <thead>
                     <tr>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2" style="width: 4em">No</th>
-                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2">Nama Kriteria</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2">Nama Sifat</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2">Aksi</th>
                     </tr>
                 </thead>
@@ -26,7 +26,7 @@
                                     <button type="button" class="btn bg-gradient-warning me-1 my-0 py-1 px-2" data-bs-toggle="modal" data-bs-target="#editModal" data-bs-all="{{ $x }}">
                                         <i class="fa-regular fa-pen-to-square"></i>
                                     </button>
-                                    <button type="button" class="btn bg-gradient-danger m-0 py-1 px-2" data-bs-toggle="modal" data-bs-target="#modal-notification" data-bs-url="{{ route('delete_kriteria', ['kriteria' => $x->id]) }}" data-bs-name="{{ $x->name }}"><i class="fa-regular fa-trash-can"></i></button>
+                                    <button type="button" class="btn bg-gradient-danger m-0 py-1 px-2" data-bs-toggle="modal" data-bs-target="#modal-notification" data-bs-url="{{ route('delete_sifat_mitra', ['sifat' => $x->id]) }}" data-bs-name="{{ $x->name }}"><i class="fa-regular fa-trash-can"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -48,17 +48,17 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addModalLabel">Tambah Kriteria Mitra</h5>
+                    <h5 class="modal-title" id="addModalLabel">Tambah Jenis Mitra</h5>
                     <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <form action="{{ route('kriteria_handler') }}" method="POST">
+                <form action="{{ route('sifat_mitra_handler') }}" method="POST">
                     <div class="modal-body">
                         @csrf
                         <input type="hidden" name="id" value="{{ $id }}">
                         <div class="form-group">
-                            <label for="message-text" class="col-form-label">Nama</label>
+                            <label for="message-text" class="col-form-label">Nama Sifat</label>
                             <input type="text" name="name" class="form-control">
                         </div>
                     </div>
@@ -81,12 +81,12 @@
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <form action="{{ route('kriteria_handler') }}" method="POST">
+                <form action="{{ route('sifat_mitra_handler') }}" method="POST">
                     <div class="modal-body">
                         @csrf
                         <input type="hidden" name="id">
                         <div class="form-group">
-                            <label for="message-text" class="col-form-label">Nama</label>
+                            <label for="message-text" class="col-form-label">Nama Sifat</label>
                             <input type="text" name="name" class="form-control">
                         </div>
                     </div>
@@ -158,7 +158,7 @@
         $(document).ready(function() {
             $('#breadcrumb').empty();
             $('#breadcrumb').append('<li class="breadcrumb-item text-sm text-dark" aria-current="page">Pengaturan</li>');
-            $('#breadcrumb').append('<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Kriteria Mitra</li>');
+            $('#breadcrumb').append('<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Sifat Mitra</li>');
             $('td > select').addClass('form-select form-select-sm');
             $('tfoot > tr > td:first-child').empty();
             $('tfoot > tr > td:last-child').empty();
@@ -183,7 +183,7 @@
                 var url = button.getAttribute('data-bs-url');
                 var name = button.getAttribute('data-bs-name');
                 $('#modal-notification').find('form').attr('action', url);
-                $('#modal-notification').find('p:first').text("Apakah anda yakin menghapus kriteria mitra " + name + " ?")
+                $('#modal-notification').find('p:first').text("Apakah anda yakin menghapus jenis mitra " + name + " ?")
             });
 
             $('#addModal').find('form').validate({
@@ -196,7 +196,7 @@
                 },
                 messages: {
                     name: {
-                        required: 'Nama kriteria wajib diisi.',
+                        required: 'Nama sifat mitra wajib diisi.',
                     }
                 },
                 errorElement: "div",
@@ -219,7 +219,7 @@
                 },
                 messages: {
                     name: {
-                        required: 'Nama kriteria wajib diisi.',
+                        required: 'Nama sifat mitra wajib diisi.',
                     }
                 },
                 errorElement: "div",

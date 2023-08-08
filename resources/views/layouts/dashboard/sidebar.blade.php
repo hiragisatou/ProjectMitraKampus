@@ -7,7 +7,7 @@
         </a>
     </div>
     <hr class="horizontal dark mt-0">
-    <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main" style="min-height: 80vh;">
+    <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main" style="min-height: 85vh;">
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link {{ route('dashboard') == url()->current() ? 'active' : '' }}" href="{{ route('dashboard') }}">

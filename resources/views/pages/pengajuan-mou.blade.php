@@ -1,5 +1,5 @@
 @extends('master-dashboard')
-@section('title', 'Pengajuan Kemitraan')
+@section('title', 'Pengajuan MoU')
 @section('content')
     <div class="card">
         <div class="card-body">
@@ -13,12 +13,16 @@
                 <form action="{{ route('pengajuan_mou_handler') }}" novalidate method="POST" enctype="multipart/form-data" id="formPengajuan">
                     @csrf
                     <div class="mb-3">
-                        <label class="form-label">Judul Kemitraan <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" name="judul" id="judul">
+                        <label class="form-label">Nomor MoU <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="nomor_mou">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Judul MoU <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="judul">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Jenis Kemitraan <span class="text-danger">*</span></label>
-                        <select class="form-select" name="jenis_kemitraan" id="jenis_kemitraan">
+                        <select class="form-select" name="jenis_kemitraan">
                             <option value=""></option>
                             <option value="1">One</option>
                             <option value="2">Two</option>
@@ -27,7 +31,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Ruang Lingkup <span class="text-danger">*</span></label>
-                        <select class="form-select" id="ruang_lingkup" name="ruang_lingkup[]" multiple="multiple">
+                        <select class="form-select" name="ruang_lingkup[]" multiple="multiple">
                             <option value="AL">Alabama</option>
                             ...
                             <option value="WY">Wyoming</option>
@@ -36,15 +40,6 @@
                             <option value="WY">Wyoming</option>
                         </select>
                     </div>
-                    {{-- <div class="mb-3">
-                        <label class="form-label">Program Studi <span class="text-danger">*</span></label>
-                        <select class="form-select" name="prodi_id" id="prodi_id">
-                            <option value=""></option>
-                            @foreach ($prodi as $x)
-                                <option value="{{ $x['id'] }}">{{ $x['name'] }}</option>
-                            @endforeach
-                        </select>
-                    </div> --}}
                     <div class="mb-3">
                         <label class="form-label">Tanggal Mulai <span class="text-danger">*</span></label>
                         <input type="date" class="form-control" name="tgl_mulai" id="tgl_mulai">
@@ -66,34 +61,27 @@
         </div>
     </div>
     <script>
-        $('#ruang_lingkup').select2({
+        $('select[name="ruang_lingkup[]"]').select2({
             width: '100%',
             placeholder: '-- Pilih Ruang Lingkup --',
             theme: 'bootstrap-5',
         });
-        $('#jenis_kemitraan').select2({
+        $('select[name="jenis_kemitraan"]').select2({
             width: '100%',
             theme: 'bootstrap-5',
             placeholder: '-- Pilih Jenis Kemitraan --',
         });
-        // $('#prodi_id').select2({
-        //     width: '100%',
-        //     theme: 'bootstrap-5',
-        //     placeholder: '-- Pilih Program Studi --',
-        // });
         $(document).ready(function() {
             $('#formPengajuan').validate({
                 validClass: "is-valid",
                 errorClass: "is-invalid",
                 rules: {
+                    nomor_mou: 'required',
                     judul: 'required',
                     jenis_kemitraan: {
                         required: true
                     },
                     'ruang_lingkup[]': {
-                        required: true
-                    },
-                    prodi_id: {
                         required: true
                     },
                     tgl_mulai: 'required',
@@ -104,15 +92,13 @@
                     }
                 },
                 messages: {
+                    nomor_mou: 'Nomor MoU wajib diisi.',
                     judul: 'Judul kemitraan wajib diisi.',
                     jenis_kemitraan: {
                         required: "Jenis kemitraan wajib diisi."
                     },
                     'ruang_lingkup[]': {
                         required: "Ruang lingkup wajib diisi."
-                    },
-                    prodi_id: {
-                        required: 'Prodi wajib diisi'
                     },
                     tgl_mulai: 'Tanggal mulai kerjasama wajib diisi',
                     keterangan: 'Keterangan wajib diisi',

@@ -112,9 +112,13 @@ class AuthController extends Controller
     //Profile Handler
     public function profileHandler(Request $request)
     {
+        $data = collect($request)->only(['nama', 'nib', 'kriteria_id', 'sektor_id', 'sifat_id', 'jenis_id', 'klasifikasi', 'jumlah_pegawai', 'url', 'email', 'alamat', 'no_telp', 'linkedin', 'instagram', 'facebook', 'twitter', 'tiktok', 'youtube']);
         $data = collect($request)->except(['_token', 'kabupaten', 'provinsi']);
         $data['user_id'] = auth()->user()->id;
-        Mitra::updateOrCreate(['user_id' => auth()->user()->id],$data->toArray());
+        $data['kecamatan_id'] = $request->kecamatan;
+        $data['kabupaten_id'] = $request->kabupaten;
+        $data['provinsi_id'] = $request->provinsi;
+        Mitra::updateOrCreate(['user_id' => auth()->user()->id], $data->toArray());
         return redirect(route('dashboard'))->with('success', 'Data profil perusahaan berhasil disimpan.');
     }
 

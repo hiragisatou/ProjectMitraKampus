@@ -15,10 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('nomor');
             $table->string('judul');
-            $table->foreignId('mou_id');
+            $table->foreignId('mou_id')->nullable();
             $table->foreignId('mitra_id');
+            $table->foreignId('jurusan_id');
             $table->dateTime('checked')->nullable();
             $table->string('send_to');
+            $table->string('prodi_id');
             $table->date('tgl_mulai');
             $table->date('tgl_akhir')->nullable();
             $table->string('moa_file');

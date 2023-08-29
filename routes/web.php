@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,15 +54,16 @@ Route::middleware(['auth', 'verified', 'hasProfile'])->group(function () {
         Route::get('/dashboard', 'viewDashboard')->name('dashboard');
         Route::get('/pengajuan_mou', 'viewPengajuan')->name('pengajuan_mou');
         Route::get('/pengajuan_moa', 'viewMoA')->name('view_pengajuan_moa');
-        Route::get('/list-pengajuan_mou', 'viewListPengajuan')->name('view_list_pengajuan');
+        Route::get('/list-pengajuan_mou', 'viewListMou')->name('view_list_mou');
         Route::get('/list-pengajuan_moa', 'viewListMoa')->name('view_list_moa');
-        Route::get('/pengajuan_mou/{mou}', 'viewDetailPengajuan')->name('detail_pengajuan');
+        Route::get('/pengajuan_mou/{mou}', 'viewDetailMou')->name('detail_mou');
         Route::get('/list-mitra', 'viewListMitra')->name('view_list_mitra');
         Route::get('/mitra/{mitra}', 'viewDetailMitra')->name('detail_mitra');
 
         Route::post('/pengajuan_mou', 'pengajuanMoU')->name('pengajuan_mou_handler');
         Route::post('/pengajuan_moa', 'pengajuanMoA')->name('pengajuan_moa_handler');
         Route::post('/verifyMoU', 'verificationMou')->name('verify_mou_handler');
+        Route::delete('/delete_mou/{mou}', 'deleteMou')->name('delete_mou_handler');
     });
 
     Route::controller(SettingController::class)->group(function () {

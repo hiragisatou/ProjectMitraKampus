@@ -3,8 +3,9 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <div class="d-flex justify-content-end">
-                <a href="{{ asset('dist/file/Template MoU.docx') }}" class="btn btn-info">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 class="m-0 align-middle">Form Pengajuan MoA</h5>
+                <a href="{{ asset('dist/file/Template MoU.docx') }}" class="btn btn-info m-0">
                     <span class="me-2"><i class="fa-solid fa-file-arrow-down"></i></span>
                     Download Template MoA
                 </a>
@@ -13,6 +14,10 @@
                 <form action="{{ route('pengajuan_moa_handler') }}" novalidate method="POST" enctype="multipart/form-data" id="formMoA">
                     @csrf
                     <div class="mb-3">
+                        <label class="form-label">Nomor MoA <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="nomor_moa">
+                    </div>
+                    <div class="mb-3">
                         <label class="form-label">Judul MoA <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" name="judul">
                     </div>
@@ -20,9 +25,6 @@
                         <label class="form-label">Jurusan <span class="text-danger">*</span></label>
                         <select class="form-select" name="jurusan" id="jurusan">
                             <option value="">-- Pilih Jurusan -- </option>
-                            @foreach ($jurusan as $x)
-                                <option value="{{ $x['id'] }}">{{ $x['name'] }}</option>
-                            @endforeach
                         </select>
                     </div>
                     <div class="mb-3">
@@ -36,7 +38,7 @@
                         <select class="form-select" name="kategori[]" id="kategori" multiple='multiple'>
                             <option value="">-- Pilih Kategori Kerjasama --</option>
                             @foreach ($kategori as $x)
-                                <option value="{{ $x['id'] }}">{{ $x['name'] }}</option>
+                                <option value="{{ $x['id'] }}">{{ $x['nama'] }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -57,7 +59,13 @@
         </div>
     </div>
     <script>
-        var urlProdi = {{ Js::from(route('prodi_in_jurusan')) }}
+        var jurusan, prodi;
+        $.getJSON("{{ route('data-prodi-jurusan') }}", "",
+            function (data, textStatus, jqXHR) {
+                jurusan = data.jurusan;
+                prodi = data.prodi
+            }
+        );
         $('#prodi').select2({
             width: '100%',
             placeholder: '-- Pilih Program Studi --',
@@ -68,26 +76,19 @@
             theme: 'bootstrap-5',
             placeholder: '-- Pilih Kategori --',
         });
-        // $('#prodi_id').select2({
-        //     width: '100%',
-        //     theme: 'bootstrap-5',
-        //     placeholder: '-- Pilih Program Studi --',
-        // });
         $(document).ready(function() {
-            $('#breadcrumb').empty();
             $('#breadcrumb').append('<li class="breadcrumb-item text-sm text-dark" aria-current="page"><a class="opacity-5 text-dark" href="' + {{ Js::From(route('dashboard')) }} + '">Dashboard</a></li>');
             $('#breadcrumb').append('<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Pengajuan MoA</li>');
 
+            jurusan.forEach(e => {
+                $('#jurusan').append(new Option(e.nama, e.id));
+            })
             $('#jurusan').change(function (e) {
-                $.getJSON(urlProdi, {'jurusan': this.value},
-                    function (data, textStatus, jqXHR) {
-                        $('#prodi').empty();
-                        $("#prodi").append(new Option("-- Pilih Program Studi --", ""));
-                        data.forEach(element => {
-                            $("#prodi").append(new Option(element['name'], element['id']));
-                        });
-                    }
-                );
+                $('#prodi').empty();
+                $("#prodi").append(new Option("-- Pilih Program Studi --", ""));
+                prodi.filter(v => v.jurusan_id == this.value).forEach(e => {
+                    $("#prodi").append(new Option(e.nama, e.id));
+                })
                 if (this.value == "") {
                     $('#prodi').attr('disabled', 'true');
                 } else {
@@ -99,6 +100,7 @@
                 validClass: "is-valid",
                 errorClass: "is-invalid",
                 rules: {
+                    nomor_moa: 'required',
                     judul: 'required',
                     'kategori[]': 'required',
                     jurusan: {
@@ -114,6 +116,7 @@
                     }
                 },
                 messages: {
+                    nomor_moa: 'Nomor MoA wajib diisi.',
                     judul: 'Judul wajib diisi.',
                     'kategori[]': 'Kategori Kemitraan wajib diisi.',
                     jurusan: {

@@ -1,5 +1,5 @@
 @extends('master-dashboard')
-@section('title', 'Pengajuan ' . $data['name'])
+@section('title', 'Detail Kemitraan')
 @section('content')
 {{-- @dd($data) --}}
 	@if ($data['verifymou'] != null)
@@ -17,7 +17,7 @@
 	<div class="card">
 		<div class="card-body p-3">
 			<div class="d-flex justify-content-between mb-4">
-				<h6 class="font-weight-bolder">Data Kemitraan {{ $data['mitra']['name'] }}</h6>
+				<h6 class="font-weight-bolder">Detail Data MoU {{ $data['mitra']['nama'] }}</h6>
 				@can('admin')
 					@if ($data['verifymou'] == null)
 						<div class="d-flex justify-content-end">
@@ -33,58 +33,48 @@
 					@endif
 				@endcan
 			</div>
-			<table class="table">
-				<tbody class="align-items-center">
-					<tr>
-						<td class="col-lg-3 col-md-5">Judul Kemitraan</td>
-						<td style="width: 5px">:</td>
-						<td>{{ $data['name'] }}</td>
-					</tr>
-					<tr>
-						<td>Jenis Kemitraan</td>
-						<td>:</td>
-						<td>{{ $data['jenis_kemitraan'] }}</td>
-					</tr>
-					<tr>
-						<td>Nama Mitra</td>
-						<td>:</td>
-						<td>{{ $data['mitra']['name'] }}</td>
-					</tr>
-					<tr>
-						<td>Ruang Lingkup</td>
-						<td>:</td>
-						<td>
-							<ul>
-								@foreach ($data['ruang_lingkup'] as $x)
-									<li>
-										{{ $x }}
-									</li>
-								@endforeach
-							</ul>
-						</td>
-					</tr>
-					<tr>
-						<td>Tanggal</td>
-						<td>:</td>
-						<td>{{ date_format(date_create($data['tgl_mulai']), 'd-m-Y') }} {{ $data['tgl_berakhir'] == null ? '' : ' s/d ' . date_format(date_create($data['tgl_berakhir']), 'd-m-Y') }}</td>
-					</tr>
-					{{-- <tr>
-						<td>Program Studi yang Melakukan Kemitraan / Kerja Sama</td>
-						<td>:</td>
-						<td>{{ $data['prodi']['name'] }}</td>
-					</tr> --}}
-					<tr>
-						<td>Keterangan</td>
-						<td>:</td>
-						<td><p class="text-break">{{ $data['keterangan'] }}</p></td>
-					</tr>
-					<tr>
-						<td>Dokumen Terkait</td>
-						<td>:</td>
-						<td>
-							<div class="row">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td class="col-lg-3 text-sm">Nomor MoU</td>
+                        <td class="text-sm">: {{ $data['nomor'] }}</td>
+                    </tr>
+                    <tr>
+                        <td class="col-lg-3 text-sm">Judul MoU</td>
+                        <td class="text-sm">: {{ $data['judul'] }}</td>
+                    </tr>
+                    <tr>
+                        <td class="col-lg-3 text-sm">Jenis Kemitraan</td>
+                        <td class="text-sm">: {{ $data['jenis_kemitraan'] }}</td>
+                    </tr>
+                    <tr>
+                        <td class="col-lg-3 text-sm">Nama Mitra</td>
+                        <td class="text-sm">: {{ $data['mitra']['nama'] }}</td>
+                    </tr>
+                    <tr>
+                        <td class="col-lg-3 text-sm">Ruang Lingkup</td>
+                        <td class="text-sm d-flex">:
+                            <ul>
+                            @foreach (explode("+", $data['ruang_lingkup']) as $x)
+                                <li>{{ $x }}</li>
+                            @endforeach
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-lg-3 text-sm">Tanggal Mulai</td>
+                        <td class="text-sm">: {{ $data['tgl_mulai'] }}</td>
+                    </tr>
+                    <tr>
+                        <td class="col-lg-3 text-sm">Keterangan</td>
+                        <td class="text-sm">: {{ $data['keterangan'] }}</td>
+                    </tr>
+                    <tr>
+                        <td class="col-lg-3 text-sm">Dokumen terkait</td>
+                        <td class="text-sm d-flex">:
+                            <div class="row ms-1">
 								<div class="col">
-									<a class="btn btn-icon btn-sm btn-info" type="button" target="_blank" href="{{ asset('storage/' . $data['mou']) }}">
+									<a class="btn btn-icon btn-sm btn-info m-0" type="button" target="_blank" href="{{ asset('files/' . $data['mou_file']) }}">
 										<span class="btn-inner--icon"><i class="fa-solid fa-file-pen"></i></span>
 										<span class="btn-inner--text">Usulan MoU</span>
 									</a>
@@ -98,10 +88,10 @@
 									</div>
 								@endif
 							</div>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 		</div>
 	</div>
 	@can('admin')
@@ -119,15 +109,15 @@
 								<div class="card-body">
 									<form role="form text-left" action="{{ route('verify_mou_handler') }}" method="post" enctype="multipart/form-data">
 										@csrf
-                                        <input type="hidden" name="pengajuan_mou_id" id="pengajuan_mou_id" value="{{ $data['id'] }}">
+                                        <input type="hidden" name="mou_id" value="{{ $data['id'] }}">
 										<input type="hidden" name="status" id="status" value="verify">
 										<label>Tanggal Berakhir Kerjasama <span class="text-danger">*</span></label>
 										<div class="input-group mb-3">
-											<input type="date" class="form-control" id="tgl_berakhir" name="tgl_berakhir" required>
+											<input type="date" class="form-control" name="tgl_berakhir" required>
 										</div>
 										<label>File Kemitraan <span class="text-danger">*</span></label>
 										<div class="input-group mb-3">
-											<input class="form-control" type="file" id="valid_mou" name="valid_mou" accept=".pdf" required>
+											<input class="form-control" type="file" name="valid_mou" accept=".pdf" required>
 										</div>
 										<div class="text-center">
 											<button type="submit" class="btn btn-round bg-gradient-success btn-lg w-100 mt-4 mb-0">Verifikasi</button>
@@ -159,9 +149,9 @@
 								</p>
 								<div class="mb-3">
 									<label for="keterangan" class="form-label">Keterangan :</label>
-                                    <input type="hidden" name="pengajuan_mou_id" id="pengajuan_mou_id" value="{{ $data['id'] }}">
-                                    <input type="hidden" name="status" id="status" value="tolak">
-									<textarea class="form-control" id="keterangan" name="keterangan" rows="3" required></textarea>
+                                    <input type="hidden" name="mou_id" value="{{ $data['id'] }}">
+                                    <input type="hidden" name="status" value="tolak">
+									<textarea class="form-control" name="keterangan" rows="3" required></textarea>
 								</div>
 							</div>
 							<div class="modal-footer">
@@ -176,10 +166,8 @@
 		@endif
 	@endcan
 	<script>
-		var url = {{ Js::from(route('view_list_pengajuan')) }};
-		var judul = {{ Js::from($data['name']) }};
-		$('#breadcrumb > .active').remove();
-		$('#breadcrumb').append('<li class="breadcrumb-item text-sm text-dark" aria-current="page"><a class="opacity-5 text-dark" href="' + url + '">Daftar Pengajuan</a></li>');
-		$('#breadcrumb').append('<li class="breadcrumb-item text-sm text-dark active" aria-current="page">' + judul + '</li>');
+		$('#breadcrumb').append('<li class="breadcrumb-item text-sm text-dark" aria-current="page"><a class="opacity-5 text-dark" href="' + {{ Js::from(route('dashboard')) }} + '">Dashboard</a></li>');
+		$('#breadcrumb').append('<li class="breadcrumb-item text-sm text-dark" aria-current="page"><a class="opacity-5 text-dark" href="' + {{ Js::from(route('view_list_mou')) }} + '">Daftar Pengajuan MoU</a></li>');
+		$('#breadcrumb').append('<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Detail</li>');
 	</script>
 @endsection

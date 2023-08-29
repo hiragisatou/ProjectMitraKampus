@@ -23,9 +23,9 @@ return new class extends Migration
             $table->string('klasifikasi');
             $table->string('jumlah_pegawai');
             $table->string('alamat');
-            $table->string('provinsi');
-            $table->string('kabupaten');
-            $table->string('kecamatan');
+            $table->string('provinsi_id');
+            $table->string('kabupaten_id');
+            $table->string('kecamatan_id');
             $table->string('url')->nullable();
             $table->string('email')->nullable();
             $table->string('no_telp')->nullable();

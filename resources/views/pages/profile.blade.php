@@ -8,7 +8,7 @@
                 <div class="row row-cols-2 mb-4">
                     <div class="mb-3">
                         <label for="name" class="form-label">Nama Mitra <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="name" name="name" value="@isset($mitra){{ $mitra['name'] }}@endisset">
+                        <input type="text" class="form-control" id="nama" name="nama" value="@isset($mitra){{ $mitra['nama'] }}@endisset">
                     </div>
                     <div class="mb-3">
                         <label for="NIB" class="form-label">Nomor Induk Berusaha <span class="text-danger">*</span></label>
@@ -16,37 +16,37 @@
                     </div>
                     <div class="mb-3">
                         <label for="kriteria" class="form-label">Kriteria Mitra <span class="text-danger">*</span></label>
-                        <select class="form-select select2" name="kriteria_mitra_id" id="kriteria_mitra_id">
+                        <select class="form-select select2" name="kriteria_id" id="kriteria_id">
                             <option value=""></option>
                             @foreach ($kriteria as $x)
-                                <option value="{{ $x['id'] }}" @isset($mitra){{ $mitra['kriteria_mitra_id'] == $x['id'] ? 'selected' : '' }}@endisset>{{ $x['name'] }}</option>
+                                <option value="{{ $x['id'] }}" @isset($mitra){{ $mitra['kriteria_id'] == $x['id'] ? 'selected' : '' }}@endisset>{{ $x['nama'] }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Sektor Industri <span class="text-danger">*</span></label>
-                        <select class="form-select select2" name="sektor_industri_id" id="sektor_industri_id">
+                        <select class="form-select select2" name="sektor_id" id="sektor_id">
                             <option value=""></option>
                             @foreach ($sektor as $x)
-                                <option value="{{ $x['id'] }}" @isset($mitra){{ $mitra['sektor_industri_id'] == $x['id'] ? 'selected' : '' }}@endisset>{{ $x['name'] }}</option>
+                                <option value="{{ $x['id'] }}" @isset($mitra){{ $mitra['sektor_id'] == $x['id'] ? 'selected' : '' }}@endisset>{{ $x['nama'] }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Sifat Mitra <span class="text-danger">*</span></label>
-                        <select class="form-select select2" name="sifat_mitra_id" id="sifat_mitra_id">
+                        <select class="form-select select2" name="sifat_id" id="sifat_id">
                             <option value=""></option>
                             @foreach ($sifat as $x)
-                                <option value="{{ $x['id'] }}" @isset($mitra){{ $mitra['sifat_mitra_id'] == $x['id'] ? 'selected' : '' }}@endisset>{{ $x['name'] }}</option>
+                                <option value="{{ $x['id'] }}" @isset($mitra){{ $mitra['sifat_id'] == $x['id'] ? 'selected' : '' }}@endisset>{{ $x['nama'] }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Jenis Mitra <span class="text-danger">*</span></label>
-                        <select class="form-select select2" name="jenis_mitra_id" id="jenis_mitra_id">
+                        <select class="form-select select2" name="jenis_id" id="jenis_id">
                             <option value=""></option>
                             @foreach ($jenis as $x)
-                                <option value="{{ $x['id'] }}" @isset($mitra){{ $mitra['jenis_mitra_id'] == $x['id'] ? 'selected' : '' }}@endisset>{{ $x['name'] }}</option>
+                                <option value="{{ $x['id'] }}" @isset($mitra){{ $mitra['jenis_id'] == $x['id'] ? 'selected' : '' }}@endisset>{{ $x['nama'] }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -61,8 +61,8 @@
                     </div>
                     <div class="mb-3">
                         <label for="provinsi" class="form-label">Provinsi <span class="text-danger">*</span></label>
-                        <select name="provinsi" id="provinsi" class="form-select select2">
-
+                        <select name="provinsi" class="form-select select2">
+                            <option value=""></option>
                         </select>
                     </div>
                     <div class="mb-3">
@@ -82,7 +82,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="kecamatan" class="form-label">Kecamatan <span class="text-danger">*</span></label>
-                        <select name="kecamatan_id" id="kecamatan_id" class="form-select select2">
+                        <select name="kecamatan" id="kecamatan" class="form-select select2">
                             @isset($mitra)
                             @endisset
                         </select>
@@ -133,10 +133,18 @@
         </div>
     </div>
     <script>
+        var prov, kab, kec;
+        $.getJSON("{{ route('select-alamat') }}", "",
+            function(data, textStatus, jqXHR) {
+                prov = data.provinsi;
+                kab = data.kabupaten;
+                kec = data.kecamatan;
+            }
+        );
         if (window.location.href == {{ Js::from(route('add_profile')) }}) {
             $('aside').remove();
-            $('#kabupaten').attr('disabled', 'true');
-            $('#kecamatan_id').attr('disabled', 'true');
+            $('select[name="kabupaten"]').attr('disabled', 'true');
+            $('select[name="kecamatan"]').attr('disabled', 'true');
         }
 
         $(document).ready(function() {
@@ -145,60 +153,65 @@
                 theme: 'bootstrap-5',
                 placeholder: '-- Pilih salah satu --',
             });
-            $.getJSON("{{ route('select_provinsi') }}", {
-                'id': 1
-            }, function(data, status, jqXHR) {
-                console.log(data);
-                $("#provinsi").append(new Option("-- Pilih Provinsi --", ""));
-                data.forEach(provinsi => {
-                    $("#provinsi").append(new Option(provinsi['name'], provinsi['id']));
-                });
+
+            prov.forEach(e => {
+                $('select[name="provinsi"]').append(new Option(e['name'], e['id']))
             });
 
-            $('#provinsi').change(function(e) {
+            $('select[name="provinsi"]').change(function(e) {
                 if (this.value == '') {
-                    $("#kabupaten").children().remove().end();
-                    $("#kabupaten").attr('disabled', 'true');
+                    $('select[name="kabupaten"]').children().remove().end();
+                    $('select[name="kabupaten"]').attr('disabled', 'true');
                 } else {
-                    $.getJSON("{{ route('select_kabupaten') }}", {
-                            'id': this.value
-                        },
-                        function(kab, textStatus, jqXHR) {
-                            console.log(kab);
-                            $("#kabupaten").children().remove().end();
-                            $("#kabupaten").removeAttr('disabled');
-                            $("#kabupaten").attr('required', 'true');
-                            $("#kabupaten").append(new Option("-- Pilih Kabupaten --", ""));
-                            kab.forEach(element => {
-                                $("#kabupaten").append(new Option(element['name'], element['id']));
-                            });
-                            $("#kecamatan_id").children().remove().end();
-                            $("#kecamatan_id").attr('disabled', 'true');
-                        }
-                    );
+                    $('select[name="kabupaten"]').children().remove().end();
+                    $('select[name="kabupaten"]').removeAttr('disabled');
+                    $('select[name="kabupaten"]').attr('required', 'true');
+                    $('select[name="kecamatan"]').children().remove().end();
+                    $('select[name="kecamatan"]').attr('disabled', 'true');
+
+                    $('select[name="kabupaten"]').append(new Option("", ""));
+                    kab.filter(e => e.provinsi_id == this.value).forEach(element => {
+                        $('select[name="kabupaten"]').append(new Option(element['name'], element['id']));
+                    });
                 }
+
             });
-            $('#kabupaten').change(function(e) {
-                $.getJSON("{{ route('select_kecamatan') }}", {
-                        'id': this.value
-                    },
-                    function(data, textStatus, jqXHR) {
-                        $("#kecamatan_id").children().remove().end();
-                        $("#kecamatan_id").removeAttr('disabled');
-                        $("#kecamatan_id").attr('required', 'true');
-                        $("#kecamatan_id").append(new Option("-- Pilih kecamatan --", ""));
-                        data.forEach(element => {
-                            $("#kecamatan_id").append(new Option(element['name'], element['id']));
-                        });
-                    }
-                );
+
+            $('select[name="kabupaten"]').change(function(e) {
+                if (this.value == '') {
+                    $('select[name="kecamatan"]').children().remove().end();
+                    $('select[name="kecamatan"]').attr('disabled', 'true');
+                } else {
+                    $('select[name="kecamatan"]').children().remove().end();
+                    $('select[name="kecamatan"]').removeAttr('disabled');
+                    $('select[name="kecamatan"]').attr('required', 'true');
+                    $('select[name="kecamatan"]').append(new Option("", ""));
+                    kec.filter(e => e.kabupaten_id == this.value).forEach(element => {
+                        $('select[name="kecamatan"]').append(new Option(element['name'], element['id']));
+                    });
+                }
+
             });
+
+            if (window.location.href == {{ Js::from(route('edit_profile')) }}) {
+                var mitra = {{ Js::from($mitra) }};
+                $('select[name="provinsi"]').find('option[value="' + mitra.provinsi_id + '"]').attr('selected', 'true');
+                kab.filter(e => e.provinsi_id == $('select[name="provinsi"]').val()).forEach(element => {
+                    $('select[name="kabupaten"]').append(new Option(element['name'], element['id']));
+                });
+                $('select[name="kabupaten"]').find('option[value="' + mitra.kabupaten_id + '"]').attr('selected', 'true');
+                kec.filter(e => e.kabupaten_id == $('select[name="kabupaten"]').val()).forEach(element => {
+                    $('select[name="kecamatan"]').append(new Option(element['name'], element['id']));
+                });
+                $('select[name="kecamatan"]').find('option[value="' + mitra.kecamatan_id + '"]').attr('selected', 'true');
+
+            }
 
             $('#form_profile').validate({
                 validClass: "is-valid",
                 errorClass: "is-invalid",
                 rules: {
-                    name: 'required',
+                    nama: 'required',
                     nib: 'required',
                     kriteria_mitra_id: 'required',
                     sektor_industri_id: 'required',
@@ -207,7 +220,7 @@
                     klasifikasi: 'required',
                     provinsi: 'required',
                     kabupaten: 'required',
-                    kecamatan_id: 'required',
+                    kecamatan: 'required',
                     alamat: 'required',
                     jumlah_pegawai: 'required',
                     url: 'required',
@@ -219,7 +232,7 @@
 
                 },
                 messages: {
-                    name: 'Nama wajib diisi.',
+                    nama: 'Nama wajib diisi.',
                     nib: 'Nomor induk perusahaan wajib diisi.',
                     kriteria_mitra_id: 'Kriteria mitra wajib diisi.',
                     sektor_industri_id: 'Sektor industri wajib diisi.',
@@ -228,7 +241,7 @@
                     klasifikasi: 'Klasifikasi wajib diisi.',
                     provinsi: 'Provinsi wajib diisi.',
                     kabupaten: 'Kabupaten wajib diisi.',
-                    kecamatan_id: 'Kecamatan wajib diisi.',
+                    kecamatan: 'Kecamatan wajib diisi.',
                     alamat: 'Alamat wajib diisi.',
                     jumlah_pegawai: 'Jumlah Pegawai wajib diisi.',
                     url: 'Alamat web perusahaan wajib diisi.',

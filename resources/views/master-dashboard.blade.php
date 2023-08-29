@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="{{ asset('dist/css/datatables.min.css') }}">
     <link rel="stylesheet" href="{{ asset('dist/css/select2-bootstrap-5-theme.min.css') }}">
     <link rel="stylesheet" href="{{ asset('dist/css/sweetalert2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('dist/css/bootstrap.min.css') }}">
     <link id="pagestyle" href="{{ asset('dist/css/soft-ui-dashboard.min.css') }}" rel="stylesheet" />
 
     <!-- Script Files -->

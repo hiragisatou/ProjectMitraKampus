@@ -4,22 +4,7 @@
     <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5" id="breadcrumb">
-                <li class="breadcrumb-item text-sm">
-                    @if (route('dashboard') == url()->current())
-                        Dashboard
-                    @else
-                        <a class="opacity-5 text-dark" href="{{ route('dashboard') }}">Dashboard</a>
-                    @endif
-                </li>
-                <li class="breadcrumb-item text-sm text-dark active" aria-current="page">
-                    @if (route('view_list_pengajuan') == url()->current())
-                        Daftar Pengajuan
-                    @elseif (route('view_list_mitra') == url()->current())
-                        Daftar Mitra
-                    @elseif (route('pengajuan_mou') == url()->current())
-                        Pengajuan MoU
-                    @endif
-                </li>
+                
             </ol>
             <h6 class="font-weight-bolder mb-0">@yield('title')</h6>
         </nav>

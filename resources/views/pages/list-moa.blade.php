@@ -19,19 +19,21 @@
                     @foreach ($data as $x)
                         <tr>
                             <td class="text-sm font-weight-bold mb-0">{{ $loop->iteration }}</td>
-                            <td class="text-sm font-weight-bold mb-0">{{ $x['mitra']['name'] }}</td>
-                            <td class="text-sm font-weight-bold mb-0 text-truncate" style="max-width: 25rem">
+                            <td class="text-sm font-weight-bold mb-0">{{ $x['mitra']['nama'] }}</td>
+                            <td class="text-sm font-weight-bold mb-0 text-wrap" style="max-width: 25rem">
                                 @php
                                     foreach ($x['kategori'] as $k) {
-                                        $kategori[] = $k['name'];
+                                        $kategori[] = $k['nama'];
                                     }
                                     echo implode(', ', $kategori);
                                 @endphp
                             </td>
                             {{-- <td class="text-sm font-weight-bold mb-0">{{ isset($x['prodi']['name']) ? $x['prodi']['name'] : '' }}</td> --}}
                             <td class="text-sm font-weight-bold mb-0">
-                                {{ date_format(date_create($x['tgl_mulai']), 'd-m-Y') }}
-                                {{ $x['tgl_berakhir'] == null ? '' : ' s/d ' . date_format(date_create($x['tgl_berakhir']), 'd-m-Y') }}
+                                {{ $x['tgl_mulai'] }}
+                                {{ $x['tgl_berakhir'] == null ? '' : ' s/d ' . $x['tgl_berakhir'] }}
+                                {{-- {{ date_format(date_create($x['tgl_mulai']), 'd-m-Y') }}
+                                {{ $x['tgl_berakhir'] == null ? '' : ' s/d ' . date_format(date_create($x['tgl_berakhir']), 'd-m-Y') }} --}}
                             </td>
                             <td class="text-sm font-weight-bold mb-0">
                                 @if ($x['verifymou'] != null)
@@ -45,7 +47,7 @@
                                 @endif
                             </td>
                             <td class="text-sm font-weight-bold mb-0 align-items-center">
-                                <a href="{{ route('detail_pengajuan', ['mou' => $x['id']]) }}" class="btn btn-outline-dark btn-sm py-1 px-2 m-0">
+                                <a href="{{ route('detail_mou', ['mou' => $x['id']]) }}" class="btn btn-outline-dark btn-sm py-1 px-2 m-0">
                                     <i class="fa-regular fa-eye"></i>
                                 </a>
                                 {{-- <form action="{{ route('detail_pengajuan', ['mou' => $x['id']]) }}" method="post" class="d-inline">
@@ -75,9 +77,8 @@
         </div>
     </div>
     <script>
-        $('#breadcrumb').empty();
         $('#breadcrumb').append('<li class="breadcrumb-item text-sm text-dark" aria-current="page"><a class="opacity-5 text-dark" href="' + {{ Js::From(route('dashboard')) }} + '">Dashboard</a></li>');
-        $('#breadcrumb').append('<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Daftar Pengajuan MoA</li>');
+        $('#breadcrumb').append('<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Daftar MoA</li>');
 
         var myTable = $('#list-moa').DataTable({
             initComplete: function() {

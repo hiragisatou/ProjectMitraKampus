@@ -22,7 +22,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::controller(ApiController::class)->group(function () {
     Route::post('/email_check', 'checkEmail')->name('check_email_register');
-    Route::get('/provinsi', 'selectProvinsi')->name('select_provinsi');
-    Route::get('/kabupaten', 'selectKabupaten')->name('select_kabupaten');
-    Route::get('/kecamatan', 'selectKecamatan')->name('select_kecamatan');
+    Route::get('/select-alamat', 'selectAlamat')->name('select-alamat');
+    Route::get('/prodi-jurusan', 'dataProdiJurusan')->name('data-prodi-jurusan');
 });

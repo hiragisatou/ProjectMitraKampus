@@ -111,6 +111,9 @@ class DatabaseSeeder extends Seeder
         Kategori::create(['nama' => 'Pelatihan Kepada Dunia Kerja']);
 
 
+        $this->call([
+            AlamatSeeder::class,
+        ]);
         Mitra::factory(100)->create();
     }
 }

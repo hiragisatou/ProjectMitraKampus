@@ -2,13 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\JenisMitra;
-use App\Models\KriteriaMitra;
-use App\Models\Provinsi;
-use App\Models\SektorIndustri;
-use App\Models\SifatMitra;
-use Illuminate\Http\Request;
-
 class HomeController extends Controller
 {
     // Home Page
@@ -16,5 +9,18 @@ class HomeController extends Controller
         return view('pages.index');
     }
 
+    // About Us Page
+    public function about() {
+        return view('pages.about-us');
+    }
 
+    // Contact Us Page
+    public function contact() {
+        return view('pages.contact');
+    }
+
+    // FAQ Page
+    public function faq() {
+        return view('pages.faq');
+    }
 }

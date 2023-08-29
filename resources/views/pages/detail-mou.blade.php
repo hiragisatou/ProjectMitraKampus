@@ -68,15 +68,15 @@
 						<td>:</td>
 						<td>{{ date_format(date_create($data['tgl_mulai']), 'd-m-Y') }} {{ $data['tgl_berakhir'] == null ? '' : ' s/d ' . date_format(date_create($data['tgl_berakhir']), 'd-m-Y') }}</td>
 					</tr>
-					<tr>
+					{{-- <tr>
 						<td>Program Studi yang Melakukan Kemitraan / Kerja Sama</td>
 						<td>:</td>
 						<td>{{ $data['prodi']['name'] }}</td>
-					</tr>
+					</tr> --}}
 					<tr>
 						<td>Keterangan</td>
 						<td>:</td>
-						<td>{{ $data['keterangan'] }}</td>
+						<td><p class="text-break">{{ $data['keterangan'] }}</p></td>
 					</tr>
 					<tr>
 						<td>Dokumen Terkait</td>
@@ -89,7 +89,7 @@
 										<span class="btn-inner--text">Usulan MoU</span>
 									</a>
 								</div>
-								@if ($data['verifymou'] != null && $data['verifymou']['status'] == 'Verify')
+								@if ($data['verifymou'] != null && $data['verifymou']['status'] == 'verify')
 									<div class="col">
 										<a class="btn btn-icon btn-sm btn-success" type="button" target="_blank" href="{{ asset('storage/' . $data['verifymou']['valid_mou']) }}">
 											<span class="btn-inner--icon"><i class="fa-solid fa-file-pen"></i></span>

@@ -1,10 +1,9 @@
 <?php
 
-use App\Models\User;
-use App\Models\Kabupaten;
-use App\Models\Kecamatan;
+use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Spatie\FlareClient\Api;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,20 +20,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('email_check', function(Request $request){
-    if (count(User::where('email', $request->email)->get()) == 0) {
-        return 'true';
-    }
-    else {
-        return 'false';
-    }
-})->name('check_email_register');
-
-Route::get('/alamatKabupaten', function (Request $request) {
-    return response()->json(Kabupaten::where('provinsi_id', $request->id)->get());
-})->name('api_kabupaten');
-
-Route::get('/alamatKecamatan', function (Request $request) {
-    return response()->json(Kecamatan::where('kabupaten_id', $request->id)->get());
-})->name('api_kecamatan');
-
+Route::controller(ApiController::class)->group(function () {
+    Route::post('/email_check', 'checkEmail')->name('check_email_register');
+    Route::get('/provinsi', 'selectProvinsi')->name('select_provinsi');
+    Route::get('/kabupaten', 'selectKabupaten')->name('select_kabupaten');
+    Route::get('/kecamatan', 'selectKecamatan')->name('select_kecamatan');
+});

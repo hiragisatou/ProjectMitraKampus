@@ -12,7 +12,7 @@
                         {{-- <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2">Prodi</th> --}}
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2">Tanggal</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2">Status</th>
-                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2">Aksi</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2" style="max-width: 50px">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>

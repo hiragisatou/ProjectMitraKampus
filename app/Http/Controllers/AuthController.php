@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use App\Models\Jenis;
 use App\Models\Mitra;
@@ -101,7 +102,7 @@ class AuthController extends Controller
     //Edit Profile Page
     public function viewEditProfile() {
         return view('pages.profile', [
-            'mitra' => auth()->user()->mitra,
+            'mitra' => auth()->user()->role->roleable,
             'jenis' => collect(Jenis::all()),
             'kriteria' => collect(Kriteria::all()),
             'sektor' => collect(Sektor::all()),
@@ -118,7 +119,8 @@ class AuthController extends Controller
         $data['kecamatan_id'] = $request->kecamatan;
         $data['kabupaten_id'] = $request->kabupaten;
         $data['provinsi_id'] = $request->provinsi;
-        Mitra::updateOrCreate(['user_id' => auth()->user()->id], $data->toArray());
+        $mitra = Mitra::updateOrCreate(['user_id' => auth()->user()->id], $data->toArray());
+        Role::updateOrCreate(['user_id' => auth()->user()->id], ['name' => 'mitra', 'roleable_id' => $mitra->id, 'roleable_type' => 'App\Models\Mitra', 'user_id' => auth()->user()->id]);
         return redirect(route('dashboard'))->with('success', 'Data profil perusahaan berhasil disimpan.');
     }
 

@@ -72,8 +72,6 @@
                     <div class="mb-3">
                         <label for="kabupaten" class="form-label">Kabupaten <span class="text-danger">*</span></label>
                         <select name="kabupaten" id="kabupaten" class="form-select select2">
-                            @isset($mitra)
-                            @endisset
                         </select>
                     </div>
                     <div class="mb-3">
@@ -83,8 +81,6 @@
                     <div class="mb-3">
                         <label for="kecamatan" class="form-label">Kecamatan <span class="text-danger">*</span></label>
                         <select name="kecamatan" id="kecamatan" class="form-select select2">
-                            @isset($mitra)
-                            @endisset
                         </select>
                     </div>
                     <div class="mb-3">
@@ -132,6 +128,20 @@
             </form>
         </div>
     </div>
+    @if (url()->current() == route('edit_profile'))
+        <script>
+            var mitra = {{ Js::from($mitra) }};
+            $('select[name="provinsi"]').find('option[value="' + mitra.provinsi_id + '"]').attr('selected', 'true');
+            kab.filter(e => e.provinsi_id == $('select[name="provinsi"]').val()).forEach(element => {
+                $('select[name="kabupaten"]').append(new Option(element['name'], element['id']));
+            });
+            $('select[name="kabupaten"]').find('option[value="' + mitra.kabupaten_id + '"]').attr('selected', 'true');
+            kec.filter(e => e.kabupaten_id == $('select[name="kabupaten"]').val()).forEach(element => {
+                $('select[name="kecamatan"]').append(new Option(element['name'], element['id']));
+            });
+            $('select[name="kecamatan"]').find('option[value="' + mitra.kecamatan_id + '"]').attr('selected', 'true');
+        </script>
+    @endif
     <script>
         var prov, kab, kec;
         $.getJSON("{{ route('select-alamat') }}", "",
@@ -192,20 +202,6 @@
                 }
 
             });
-
-            if (window.location.href == {{ Js::from(route('edit_profile')) }}) {
-                var mitra = {{ Js::from($mitra) }};
-                $('select[name="provinsi"]').find('option[value="' + mitra.provinsi_id + '"]').attr('selected', 'true');
-                kab.filter(e => e.provinsi_id == $('select[name="provinsi"]').val()).forEach(element => {
-                    $('select[name="kabupaten"]').append(new Option(element['name'], element['id']));
-                });
-                $('select[name="kabupaten"]').find('option[value="' + mitra.kabupaten_id + '"]').attr('selected', 'true');
-                kec.filter(e => e.kabupaten_id == $('select[name="kabupaten"]').val()).forEach(element => {
-                    $('select[name="kecamatan"]').append(new Option(element['name'], element['id']));
-                });
-                $('select[name="kecamatan"]').find('option[value="' + mitra.kecamatan_id + '"]').attr('selected', 'true');
-
-            }
 
             $('#form_profile').validate({
                 validClass: "is-valid",

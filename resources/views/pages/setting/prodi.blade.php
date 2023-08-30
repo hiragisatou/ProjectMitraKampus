@@ -3,7 +3,8 @@
 @section('content')
     <div class="card p-3">
         <div class="card-body">
-            <div class="d-flex justify-content-end">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="m-0 align-middle">Data Program Studi</h5>
                 <button type="button" class="btn bg-gradient-success btn-block mb-3" data-bs-toggle="modal" data-bs-target="#prodiModal">
                     <span class="me-2"><i class="fa-solid fa-plus"></i></span> Tambah Prodi
                 </button>
@@ -14,7 +15,7 @@
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2" style="width: 4em">No</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2">Program Studi</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2">Jurusan</th>
-                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2">Aksi</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2" style="max-width: 50px">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>

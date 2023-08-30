@@ -3,7 +3,8 @@
 @section('content')
     <div class="card p-3">
         <div class="card-body">
-            <div class="d-flex justify-content-end">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="m-0 align-middle">Data User</h5>
                 <button type="button" class="btn bg-gradient-success btn-block mb-3" data-bs-toggle="modal" data-bs-target="#addModal">
                     <span class="me-2"><i class="fa-solid fa-plus"></i></span> Tambah User
                 </button>
@@ -14,8 +15,8 @@
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2" style="width: 4em">No</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2">Nama User</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2">Username</th>
-                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2">Prodi</th>
-                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2">Aksi</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2">Jenis User</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2" style="max-width: 50px">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -24,7 +25,7 @@
                             <td class="text-sm font-weight-bold mb-0">{{ $loop->iteration }}</td>
                             <td class="text-sm font-weight-bold mb-0">{{ $x->name }}</td>
                             <td class="text-sm font-weight-bold mb-0">{{ $x->email }}</td>
-                            <td class="text-sm font-weight-bold mb-0">{{ $x->prodi->name }}</td>
+                            <td class="text-sm font-weight-bold mb-0">{{ $x->role->name }}</td>
                             <td class="text-sm font-weight-bold mb-0">
                                 <div class="d-flex">
                                     <button type="button" class="btn bg-gradient-warning me-1 my-0 py-1 px-2" data-bs-toggle="modal" data-bs-target="#editModal" data-bs-all="{{ $x }}">

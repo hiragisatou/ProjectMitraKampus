@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Moa;
 use App\Models\Mou;
 use App\Models\Mitra;
-use App\Models\Prodi;
 use App\Models\Jurusan;
 use App\Models\Kategori;
 use App\Models\VerifyMou;
@@ -49,7 +48,7 @@ class DashboardController extends Controller
 
     //List Pengajuan MoU Page
     public function viewListMou() {
-        if (auth()->user()->role == 'mitra') {
+        if (auth()->user()->role->name == 'mitra') {
             $data = Mou::with(['mitra', 'verifymou'])->where('mitra_id', auth()->user()->mitra->id)->get();
         } else {
             $data = Mou::with(['mitra', 'verifymou'])->get();
@@ -136,7 +135,7 @@ class DashboardController extends Controller
 
     public function viewListMoa() {
         // dd(MoA::with(['mitra', 'jurusan'])->get()->load('kategori'));
-        if (auth()->user()->role == 'mitra') {
+        if (auth()->user()->role->name == 'mitra') {
             $data = Moa::where('mitra_id', auth()->user()->mitra->id)->get();
         } else {
             $data = Moa::all();

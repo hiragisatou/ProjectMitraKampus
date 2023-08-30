@@ -22,13 +22,32 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Gate::define('admin', function (User $user) {
-            return $user->role == 'admin';
+            if ($user->role != null) {
+                return $user->role->name == 'admin';
+            } else {
+                return false;
+            }
         });
-        Gate::define('prodi_jurusan', function (User $user) {
-            return $user->role == 'prodi' || $user->role == 'jurusan';
+        Gate::define('prodi', function (User $user) {
+            if ($user->role != null) {
+                return $user->role->name == 'prodi';
+            } else {
+                return false;
+            }
+        });
+        Gate::define('jurusan', function (User $user) {
+            if ($user->role != null) {
+                return $user->role->name == 'jurusan';
+            } else {
+                return false;
+            }
         });
         Gate::define('mitra', function (User $user) {
-            return $user->role == 'mitra';
+            if ($user->role != null) {
+                return $user->role->name == 'mitra';
+            } else {
+                return false;
+            }
         });
     }
 }

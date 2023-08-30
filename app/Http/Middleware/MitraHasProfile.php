@@ -15,7 +15,7 @@ class MitraHasProfile
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(auth()->user()->role == 'mitra' && auth()->user()->mitra == null){
+        if(auth()->user()->role == null){
             return redirect(route('add_profile'));
         }
         return $next($request);

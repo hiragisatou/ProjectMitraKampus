@@ -19,7 +19,6 @@ return new class extends Migration
             $table->foreignId('sektor_id');
             $table->foreignId('sifat_id');
             $table->foreignId('jenis_id');
-            $table->foreignId('user_id');
             $table->string('klasifikasi');
             $table->string('jumlah_pegawai');
             $table->string('alamat');

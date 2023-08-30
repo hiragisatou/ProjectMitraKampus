@@ -13,6 +13,7 @@ use App\Models\Sektor;
 use App\Models\Jurusan;
 use App\Models\Kategori;
 use App\Models\Kriteria;
+use App\Models\Role;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,10 +23,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(100)->create();
-        User::create(['name' => 'Administrator', 'email' => 'admin', 'password' => bcrypt('1234qwer'), 'role' => 'admin', 'email_verified_at' => now()]);
-        User::create(['name' => 'Admin Prodi', 'email' => 'prodiperhotelan', 'password' => bcrypt('1234qwer'), 'role' => 'prodi', 'email_verified_at' => now()]);
-        User::create(['name' => 'Admin Prodi', 'email' => 'prodiusahawisata', 'password' => bcrypt('1234qwer'), 'role' => 'prodi', 'email_verified_at' => now()]);
+        User::factory(10)->create();
+        $user = new User(['name' => 'Administrator', 'email' => 'admin1', 'password' => bcrypt('1234qwer'),  'email_verified_at' => now()]);
+        $user->save();
+        $user->role()->save(new Role(['name' => 'admin', 'roleable_id' => '1', 'roleable_type' => 'App\Models\VerifyMou']));
+        $user1 = User::create(['name' => 'Administrator', 'email' => 'admin', 'password' => bcrypt('1234qwer'),  'email_verified_at' => now()]);
+        $user1->role()->save(new Role(['name' => 'admin', 'roleable_id' => '2', 'roleable_type' => 'App\Models\VerifyMou']));
+        $prodi1 = User::create(['name' => 'Admin Prodi', 'email' => 'prodi1', 'password' => bcrypt('1234qwer'), 'email_verified_at' => now()]);
+        $prodi1->role()->save(new Role(['name' => 'prodi', 'roleable_id' => '2', 'roleable_type' => 'App\Models\Prodi']));
+        $jurusan1 = User::create(['name' => 'Admin Jurusan', 'email' => 'jurusan1', 'password' => bcrypt('1234qwer'),  'email_verified_at' => now()]);
+        $jurusan1->role()->save(new Role(['name' => 'jurusan', 'roleable_id' => '1', 'roleable_type' => 'App\Models\Jurusan']));
 
         Sektor::create(['nama' => 'Perdagangan Besar dan Eceran']);
         Sektor::create(['nama' => 'Reparasi dan Perawatan Mobil dan Sepeda Motor']);
@@ -114,6 +121,6 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AlamatSeeder::class,
         ]);
-        Mitra::factory(100)->create();
+        // Mitra::factory(100)->create();
     }
 }

@@ -9,6 +9,7 @@ use App\Models\Sifat;
 use App\Models\Sektor;
 use App\Models\Jurusan;
 use App\Models\Kriteria;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class SettingController extends Controller
@@ -179,7 +180,7 @@ class SettingController extends Controller
     public function indexUser()
     {
         return view('pages.setting.user', [
-        'data' => collect(User::whereIn('role', ['prodi', 'jurusan'])->get()),
+        'data' => User::whereHas('role', fn (Builder $query) => $query->whereIn('name', ['jurusan', 'prodi']))->get(),
         'prodi' => collect(Prodi::all()),
         'jurusan' => collect(Jurusan::all()),
         ]);

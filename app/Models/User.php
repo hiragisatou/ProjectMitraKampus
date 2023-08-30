@@ -45,8 +45,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'password' => 'hashed',
     ];
 
-    public function mitra(): HasOne
+    public function role(): HasOne
     {
-        return $this->hasOne(Mitra::class, 'user_id');
+        return $this->hasOne(Role::class, 'user_id');
     }
 }

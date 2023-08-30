@@ -42,7 +42,7 @@ class DashboardController extends Controller
         $data->ruang_lingkup = implode('+', $request->ruang_lingkup);
         $data->tgl_mulai = $request->tgl_mulai;
         $data->keterangan = $request->keterangan;
-        $data->mou_file = $request->file('mou')->storeAs('MoU', $id . '_MOU_' . $data->nomor . '_' . auth()->user()->mitra->nama . '.pdf');
+        $data->mou_file = $request->file('mou')->storeAs('MoU', $id . '_MOU_' . $data->judul . '_' . auth()->user()->mitra->nama . '.pdf');
         $data->save();
         return redirect(route('view_list_mou'))->with('success', 'MoU berhasil diajukan.');
     }
@@ -79,28 +79,28 @@ class DashboardController extends Controller
             $id = VerifyMou::all()->last()->id + 1;
         }
         if (isset($request->valid_mou)) {
-            $pengajuan = Mou::find($request->pengajuan_mou_id);
-            $pengajuan->tgl_berakhir = $request->tgl_berakhir;
-            $pengajuan->save();
-            $data = collect($request)->except(['_token', 'tgl_berakhir']);
-            $data['valid_mou'] = $request->file('valid_mou')->storeAs('verifyMoU', $id . '_Verify MOU_' . $pengajuan->name . '_' . $pengajuan->mitra->name . '.pdf');
+            $mou = Mou::find($request->mou_id);
+            $mou->tgl_akhir = $request->tgl_berakhir;
+            $mou->save();
+            $data = collect($request)->except(['_token', 'tgl_berakhir', 'valid_mou']);
+            $data['valid_mou_file'] = $request->file('valid_mou')->storeAs('verifyMoU', $id . '_Verify MOU_' . $mou->judul . '_' . $mou->mitra->nama . '.pdf');
         } else {
             $data = collect($request)->except(['_token']);
         }
         $data['admin_id'] = auth()->user()->id;
-        VerifyMou::updateOrCreate(['pengajuan_mou_id' => $data['pengajuan_mou_id']], $data->toArray());
+        VerifyMou::updateOrCreate(['mou_id' => $data['mou_id']], $data->toArray());
 
         return redirect()->back();
     }
 
     //List Mitra Page
     public function viewListMitra() {
-        return view('pages.list-mitra', ['data' => collect(Mitra::all()->load('kecamatan', 'kriteriamitra'))]);
+        return view('pages.list-mitra', ['data' => collect(Mitra::all()->load('provinsi', 'kabupaten', 'kriteria'))]);
     }
 
     //Detail Mitra Page
     public function viewDetailMitra(Mitra $mitra) {
-        return view('pages.detail-mitra', ['data' => collect($mitra->load('kriteriamitra', 'sektorindustri', 'sifatmitra', 'jenismitra', 'kecamatan', 'pengajuanmou', 'user'))]);
+        return view('pages.detail-mitra', ['data' => collect($mitra->load('kriteria', 'sektor', 'sifat', 'jenis', 'kecamatan', 'kabupaten', 'provinsi'))]);
     }
 
     //Pengajuan MoA Page
@@ -127,7 +127,7 @@ class DashboardController extends Controller
         }
         $data->prodi_id = implode('+', $request->prodi);
         $data->tgl_mulai = $request->tgl_mulai;
-        $data->moa_file = $request->file('moa')->storeAs('pengajuanMoA', $id . '_MOA_' . $data->nomor . '_' . auth()->user()->mitra->nama . '.pdf');
+        $data->moa_file = $request->file('moa')->storeAs('pengajuanMoA', $id . '_MOA_' . $data->judul . '_' . auth()->user()->mitra->nama . '.pdf');
         $data->save();
         $data->kategori()->attach($request->kategori);
         return redirect(route('view_list_moa'))->with('success', 'MoA berhasil diajukan.');

@@ -20,13 +20,13 @@
                     @foreach ($data as $x)
                         <tr>
                             <td class="text-sm font-weight-bold mb-0">{{ $loop->iteration }}</td>
-                            <td class="text-sm font-weight-bold mb-0">{{ $x->name }}</td>
+                            <td class="text-sm font-weight-bold mb-0">{{ $x->nama }}</td>
                             <td class="text-sm font-weight-bold mb-0">
                                 <div class="d-flex">
                                     <button type="button" class="btn bg-gradient-warning me-1 my-0 py-1 px-2" data-bs-toggle="modal" data-bs-target="#editModal" data-bs-all="{{ $x }}">
                                         <i class="fa-regular fa-pen-to-square"></i>
                                     </button>
-                                    <button type="button" class="btn bg-gradient-danger m-0 py-1 px-2" data-bs-toggle="modal" data-bs-target="#modal-notification" data-bs-url="{{ route('delete_kriteria', ['kriteria' => $x->id]) }}" data-bs-name="{{ $x->name }}"><i class="fa-regular fa-trash-can"></i></button>
+                                    <button type="button" class="btn bg-gradient-danger m-0 py-1 px-2" data-bs-toggle="modal" data-bs-target="#modal-notification" data-bs-url="{{ route('delete_kriteria', ['kriteria' => $x->id]) }}" data-bs-name="{{ $x->nama }}"><i class="fa-regular fa-trash-can"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -156,9 +156,9 @@
             },
         });
         $(document).ready(function() {
-            $('#breadcrumb').empty();
-            $('#breadcrumb').append('<li class="breadcrumb-item text-sm text-dark" aria-current="page">Pengaturan</li>');
+            $('#breadcrumb').append('<li class="breadcrumb-item text-sm text-dark" aria-current="page"><span class="opacity-5 text-dark">Pengaturan</span></li>');
             $('#breadcrumb').append('<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Kriteria Mitra</li>');
+
             $('td > select').addClass('form-select form-select-sm');
             $('tfoot > tr > td:first-child').empty();
             $('tfoot > tr > td:last-child').empty();
@@ -173,9 +173,9 @@
             $('#editModal').on('show.bs.modal', event => {
                 const button = event.relatedTarget
                 var data = JSON.parse(button.getAttribute('data-bs-all'));
-                $('#editModal').find('.modal-title').text('Edit ' + data['name']);
+                $('#editModal').find('.modal-title').text('Edit ' + data['nama']);
                 $('#editModal').find('input[name="id"]').val(data['id']);
-                $('#editModal').find('input[name="name"]').val(data['name']);
+                $('#editModal').find('input[name="name"]').val(data['nama']);
             });
 
             $('#modal-notification').on('show.bs.modal', event => {

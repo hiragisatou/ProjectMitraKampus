@@ -1,7 +1,7 @@
 @extends('master-dashboard')
 @section('title', 'Pengaturan Akun')
 @section('content')
-    <div class="card p-3 col-lg-7 mx-auto">
+    <div class="card p-3 col-xxl-7 mx-auto">
         <div class="card-body">
             <form action="{{ route('update_account_handler') }}" method="POST" class="needs-validation" id="form_update-akun"
                 novalidate>
@@ -9,7 +9,7 @@
                 <div class="mb-3 row">
                     <label for="nama" class="col-sm-2 col-form-label">Nama <span class="text-danger">*</span></label>
                     <div class="col">
-                        <input type="text" class="form-control" id="name" value="{{ $data->name }}" name="name"
+                        <input type="text" class="form-control" id="name" value="{{ old('name', $data->name) }}" name="name"
                             required>
                     </div>
                 </div>
@@ -47,13 +47,17 @@
                     <label for="inputPassword" class="col-sm-2 col-form-label">Password <span
                             class="text-danger">*</span></label>
                     <div class="col">
-                        <input type="password" class="form-control  {{ session()->has('error') ? 'is-invalid' : '' }}"
-                            id="old_password" name="old_password" required>
-                        @if (session()->has('error'))
+                        <input type="password" class="form-control @error('errorPassword') is-invalid @enderror" id="old_password" name="old_password" required>
+                        @error('errorPassword')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                        {{-- @if (session()->has('error'))
                             <div class="invalid-feedback">
                                 {{ session('error') }}
                             </div>
-                        @endif
+                        @endif --}}
                     </div>
                 </div>
                 <div class="d-flex justify-content-end pe-2 mt-40">
@@ -66,7 +70,6 @@
     </div>
 
     <script>
-        var checkPW = {{ Js::from(route('check_password_update', ['user' => $data->id])) }};
         $(document).ready(function() {
             $('#newPasswordSwitch').change(function() {
                 if (this.value == "") {
@@ -102,18 +105,6 @@
                     },
                     old_password: {
                         required: true,
-                        remote: {
-                            url: checkPW,
-                            type: 'get',
-                            data: {
-                                '_token': function() {
-                                    return $('input[name="_token"]').val();
-                                },
-                                'password': function() {
-                                    return $('#old_password').val();
-                                }
-                            }
-                        }
                     }
                 },
                 messages: {
@@ -128,7 +119,6 @@
                     },
                     old_password: {
                         required: 'Password wajib diisi',
-                        remote: 'Password tidak sesuai.'
                     }
                 },
                 errorElement: "div",

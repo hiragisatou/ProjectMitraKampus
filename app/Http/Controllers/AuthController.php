@@ -170,6 +170,9 @@ class AuthController extends Controller
 
     //Update Account Handler
     public function updateAccountHandler(Request $request){
+        if (!Hash::check($request->old_password, auth()->user()->password)) {
+            return back()->withErrors(['errorPassword' => 'Password tidak sesuai!'])->withInput();
+        }
         if (isset($request->confirm_password)) {
             $data = collect($request)->except(['_token', 'confirm_password', 'old_password']);
         } else {

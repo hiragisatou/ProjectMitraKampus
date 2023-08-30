@@ -18,10 +18,10 @@
 					@foreach ($data as $x)
 						<tr>
 							<td class="text-sm font-weight-bold mb-0">{{ $loop->iteration }}</td>
-							<td class="text-sm font-weight-bold mb-0">{{ $x['name'] }}</td>
-							<td class="text-sm font-weight-bold mb-0">{{ $x['kriteriamitra']['name'] }}</td>
-							<td class="text-sm font-weight-bold mb-0">{{ $x['kecamatan']['kabupaten']['name'] }}</td>
-							<td class="text-sm font-weight-bold mb-0">{{ $x['kecamatan']['kabupaten']['provinsi']['name'] }}</td>
+							<td class="text-sm font-weight-bold mb-0">{{ $x['nama'] }}</td>
+							<td class="text-sm font-weight-bold mb-0">{{ $x['kriteria'] == null ? '' : $x['kriteria']['nama'] }}</td>
+							<td class="text-sm font-weight-bold mb-0">{{ $x['kabupaten'] == null ? '' : $x['kabupaten']['nama'] }}</td>
+							<td class="text-sm font-weight-bold mb-0">{{ $x['provinsi'] == null ? '' : $x['provinsi']['nama'] }}</td>
 							<td class="font-weight-bold mb-0 align-items-center">
 								<a href="{{ route('detail_mitra', ['mitra' => $x['id']]) }}" class="btn btn-outline-dark btn-sm py-1 px-2 m-0">
 									<i class="fa-regular fa-eye"></i>
@@ -45,6 +45,9 @@
 	</div>
 
 	<script>
+        $('#breadcrumb').append('<li class="breadcrumb-item text-sm text-dark" aria-current="page"><a class="opacity-5 text-dark" href="' + {{ Js::from(route('dashboard')) }} + '">Dashboard</a></li>');
+        $('#breadcrumb').append('<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Daftar Mitra</li>');
+
 		var myTable = $('#list-mitra').DataTable({
 			initComplete: function() {
 				this.api().columns().every(function() {

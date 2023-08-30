@@ -66,6 +66,10 @@
                         <td class="text-sm">: {{ $data['tgl_mulai'] }}</td>
                     </tr>
                     <tr>
+                        <td class="col-lg-3 text-sm">Tanggal Berakhir</td>
+                        <td class="text-sm">: {{ $data['tgl_akhir'] }}</td>
+                    </tr>
+                    <tr>
                         <td class="col-lg-3 text-sm">Keterangan</td>
                         <td class="text-sm">: {{ $data['keterangan'] }}</td>
                     </tr>
@@ -81,7 +85,7 @@
 								</div>
 								@if ($data['verifymou'] != null && $data['verifymou']['status'] == 'verify')
 									<div class="col">
-										<a class="btn btn-icon btn-sm btn-success" type="button" target="_blank" href="{{ asset('storage/' . $data['verifymou']['valid_mou']) }}">
+										<a class="btn btn-icon btn-sm btn-success" type="button" target="_blank" href="{{ asset('files/' . $data['verifymou']['valid_mou_file']) }}">
 											<span class="btn-inner--icon"><i class="fa-solid fa-file-pen"></i></span>
 											<span class="btn-inner--text">Valid MoU</span>
 										</a>
@@ -104,7 +108,7 @@
 							<div class="card card-plain">
 								<div class="card-header pb-0 text-left">
 									<h3 class="font-weight-bolder text-success text-gradient">Verifikasi</h3>
-									<p class="mb-0">Kemitraan {{ $data['mitra']['name'] }}</p>
+									<p class="mb-0">Kemitraan {{ $data['mitra']['nama'] }}</p>
 								</div>
 								<div class="card-body">
 									<form role="form text-left" action="{{ route('verify_mou_handler') }}" method="post" enctype="multipart/form-data">
@@ -139,13 +143,13 @@
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h1 class="modal-title fs-5" id="modalTolakLabel">Tolak Permintaan Kerjasama {{ $data['mitra']['name'] }}</h1>
+							<h1 class="modal-title fs-5" id="modalTolakLabel">Tolak Permintaan Kerjasama {{ $data['mitra']['nama'] }}</h1>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 						<form action="{{ route('verify_mou_handler') }}" method="post">
 							<div class="modal-body">
 								<p class="mb-3">
-									Apakah anda yakin menolak permintaan kerjasama {{ $data['name'] }} dengan mitra {{ $data['mitra']['name'] }} ?
+									Apakah anda yakin menolak permintaan kerjasama {{ $data['judul'] }} dengan mitra {{ $data['mitra']['nama'] }} ?
 								</p>
 								<div class="mb-3">
 									<label for="keterangan" class="form-label">Keterangan :</label>
@@ -157,7 +161,6 @@
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
 								@csrf
-								<input type="hidden" value="{{ $data['id'] }}" name="id_pengajuan">
 								<button type="submit" class="btn btn-danger">Tolak</button>
 						</form>
 					</div>

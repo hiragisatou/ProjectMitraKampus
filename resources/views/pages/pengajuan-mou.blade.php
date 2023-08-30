@@ -3,10 +3,11 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <div class="d-flex justify-content-end">
-                <a href="{{ asset('dist/file/Template MoU.docx') }}" class="btn btn-info">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 class="m-0 align-middle">Form Pengajuan MoU</h5>
+                <a href="{{ asset('dist/file/Template MoU.docx') }}" class="btn btn-info m-0">
                     <span class="me-2"><i class="fa-solid fa-file-arrow-down"></i></span>
-                    Download Template MoU
+                    Download Template MoA
                 </a>
             </div>
             <div class="container-fluid">
@@ -72,6 +73,9 @@
             placeholder: '-- Pilih Jenis Kemitraan --',
         });
         $(document).ready(function() {
+            $('#breadcrumb').append('<li class="breadcrumb-item text-sm text-dark" aria-current="page"><a class="opacity-5 text-dark" href="' + {{ Js::From(route('dashboard')) }} + '">Dashboard</a></li>');
+            $('#breadcrumb').append('<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Pengajuan MoU</li>');
+
             $('#formPengajuan').validate({
                 validClass: "is-valid",
                 errorClass: "is-invalid",

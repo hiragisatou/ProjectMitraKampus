@@ -16,6 +16,7 @@
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2">Nama User</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2">Username</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2">Jenis User</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2">Prodi / Jurusan</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2" style="max-width: 50px">Aksi</th>
                     </tr>
                 </thead>
@@ -26,6 +27,7 @@
                             <td class="text-sm font-weight-bold mb-0">{{ $x->name }}</td>
                             <td class="text-sm font-weight-bold mb-0">{{ $x->email }}</td>
                             <td class="text-sm font-weight-bold mb-0">{{ $x->role->name }}</td>
+                            <td class="text-sm font-weight-bold mb-0">{{ $x->role->roleable->nama }}</td>
                             <td class="text-sm font-weight-bold mb-0">
                                 <div class="d-flex">
                                     <button type="button" class="btn bg-gradient-warning me-1 my-0 py-1 px-2" data-bs-toggle="modal" data-bs-target="#editModal" data-bs-all="{{ $x }}" data-bs-role="{{ $x->role->roleable }}">
@@ -39,6 +41,7 @@
                 </tbody>
                 <tfoot>
                     <tr>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>

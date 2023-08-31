@@ -1,25 +1,25 @@
 @extends('master-dashboard')
-@section('title', 'Detail Kemitraan')
+@section('title', 'Detail MoA ' . $data->judul)
 @section('content')
 {{-- @dd($data) --}}
-	@if ($data['verifymou'] != null)
-		@if ($data['verifymou']['status'] == 'verify')
+	@if ($data['verifymoa'] != null)
+		@if ($data['verifymoa']['status'] == 'verify')
 			<div class="alert alert-success">
 				<span class="text-white bold">Disetujui</span>
 			</div>
 		@endif
-		@if ($data['verifymou']['status'] == 'tolak')
+		@if ($data['verifymoa']['status'] == 'tolak')
 			<div class="alert alert-danger" role="alert">
-				<span class="text-white bold">Ditolak : {{ $data['verifymou']['keterangan'] }}</span>
+				<span class="text-white bold">Ditolak : {{ $data['verifymoa']['keterangan'] }}</span>
 			</div>
 		@endif
 	@endif
 	<div class="card">
 		<div class="card-body p-3">
 			<div class="d-flex justify-content-between mb-4">
-				<h6 class="font-weight-bolder">Detail Data MoU {{ $data['mitra']['nama'] }}</h6>
+				<h6 class="font-weight-bolder">Detail MoA {{ $data['judul'] }}</h6>
 				@can('admin')
-					@if ($data['verifymou'] == null)
+					@if ($data['verifymoa'] == null)
 						<div class="d-flex justify-content-end">
 							<button class="btn btn-icon btn-sm btn-success me-4" type="button" data-bs-toggle="modal" data-bs-target="#modalVerify" style="width: 15em">
 								<span class="btn-inner--icon"><i class="fa-solid fa-check"></i></span>
@@ -36,27 +36,37 @@
             <table class="table">
                 <tbody>
                     <tr>
-                        <td class="col-lg-3 text-sm">Nomor MoU</td>
+                        <td class="col-lg-3 text-sm">Nomor MoA</td>
                         <td class="text-sm">: {{ $data['nomor'] }}</td>
                     </tr>
                     <tr>
-                        <td class="col-lg-3 text-sm">Judul MoU</td>
+                        <td class="col-lg-3 text-sm">Judul MoA</td>
                         <td class="text-sm">: {{ $data['judul'] }}</td>
-                    </tr>
-                    <tr>
-                        <td class="col-lg-3 text-sm">Jenis Kemitraan</td>
-                        <td class="text-sm">: {{ $data['jenis_kemitraan'] }}</td>
                     </tr>
                     <tr>
                         <td class="col-lg-3 text-sm">Nama Mitra</td>
                         <td class="text-sm">: {{ $data['mitra']['nama'] }}</td>
                     </tr>
                     <tr>
-                        <td class="col-lg-3 text-sm">Ruang Lingkup</td>
+                        <td class="col-lg-3 text-sm">Jurusan</td>
+                        <td class="text-sm">: {{ $data['jurusan']['nama'] }}</td>
+                    </tr>
+                    <tr>
+                        <td class="col-lg-3 text-sm">Program Studi</td>
                         <td class="text-sm d-flex">:
                             <ul>
-                            @foreach (explode("+", $data['ruang_lingkup']) as $x)
-                                <li>{{ $x }}</li>
+                            @foreach ($data['prodi'] as $x)
+                                <li>{{ $x['nama'] }}</li>
+                            @endforeach
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-lg-3 text-sm">Kategori</td>
+                        <td class="text-sm d-flex">:
+                            <ul>
+                            @foreach ($data['kategori'] as $x)
+                                <li>{{ $x['nama'] }}</li>
                             @endforeach
                             </ul>
                         </td>
@@ -70,34 +80,30 @@
                         <td class="text-sm">: {{ $data['tgl_akhir'] }}</td>
                     </tr>
                     <tr>
-                        <td class="col-lg-3 text-sm">Keterangan</td>
-                        <td class="text-sm">: {{ $data['keterangan'] }}</td>
-                    </tr>
-                    <tr>
                         <td class="col-lg-3 text-sm">Dokumen terkait</td>
                         <td class="text-sm d-flex">:
                             <div class="row ms-1">
 								<div class="col">
-                                    <a class="btn btn-icon btn-sm btn-info m-0" type="button" target="_blank" href="{{ asset('files/' . $data['mou_file']) }}">
+                                    <a class="btn btn-icon btn-sm btn-info m-0" type="button" target="_blank" href="{{ asset('files/' . $data['moa_file']) }}">
 										<span class="btn-inner--icon"><i class="fa-solid fa-file-pen"></i></span>
-										<span class="btn-inner--text">Usulan MoU</span>
+										<span class="btn-inner--text">Usulan MoA</span>
 									</a>
 								</div>
-								@if ($data['verifymou'] != null && $data['verifymou']['status'] == 'verify')
+								@if ($data['verifymoa'] != null && $data['verifymoa']['status'] == 'verify')
                                 <div class="col">
-                                    <a class="btn btn-icon btn-sm btn-success" type="button" target="_blank" href="{{ asset('files/' . $data['verifymou']['valid_mou_file']) }}">
+                                    <a class="btn btn-icon btn-sm btn-success" type="button" target="_blank" href="{{ asset('files/' . $data['verifymoa']['valid_mou_file']) }}">
                                         <span class="btn-inner--icon"><i class="fa-solid fa-file-pen"></i></span>
-                                        <span class="btn-inner--text">Valid MoU</span>
+                                        <span class="btn-inner--text">Valid MoA</span>
                                     </a>
                                 </div>
 								@endif
 							</div>
                         </td>
                     </tr>
-                    @if ($data['verifymou'] != null)
+                    @if ($data['verifymoa'] != null)
                     <tr>
                         <td class="col-lg-3 text-sm">Diverifikasi oleh</td>
-                        <td class="text-sm">: {{ $data['verifymou']['user']['name'] }}</td>
+                        <td class="text-sm">: {{ $data['verifymoa']['user']['name'] }}</td>
                     </tr>
 
                     @endif
@@ -106,7 +112,7 @@
 		</div>
 	</div>
 	@can('admin')
-		@if ($data['verifymou'] == null)
+		@if ($data['verifymoa'] == null)
 			<!-- Modal Verify -->
 			<div class="modal fade" id="modalVerify" tabindex="-1" role="dialog" aria-labelledby="modalVerifyLabel" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">
@@ -177,7 +183,7 @@
 	@endcan
 	<script>
 		$('#breadcrumb').append('<li class="breadcrumb-item text-sm text-dark" aria-current="page"><a class="opacity-5 text-dark" href="' + {{ Js::from(route('dashboard')) }} + '">Dashboard</a></li>');
-		$('#breadcrumb').append('<li class="breadcrumb-item text-sm text-dark" aria-current="page"><a class="opacity-5 text-dark" href="' + {{ Js::from(route('view_list_mou')) }} + '">Daftar Pengajuan MoU</a></li>');
+		$('#breadcrumb').append('<li class="breadcrumb-item text-sm text-dark" aria-current="page"><a class="opacity-5 text-dark" href="' + {{ Js::from(route('view_list_mou')) }} + '">Daftar Pengajuan MoA</a></li>');
 		$('#breadcrumb').append('<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Detail</li>');
 	</script>
 @endsection

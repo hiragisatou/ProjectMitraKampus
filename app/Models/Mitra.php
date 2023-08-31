@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -46,6 +47,11 @@ class Mitra extends Model
     public function sektor(): BelongsTo
     {
         return $this->belongsTo(Sektor::class, 'sektor_id');
+    }
+
+    public function mou(): HasMany
+    {
+        return $this->hasMany(Mou::class, 'mitra_id');
     }
 
     public function role(): MorphOne

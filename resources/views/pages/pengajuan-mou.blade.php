@@ -5,10 +5,16 @@
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h5 class="m-0 align-middle">Form Pengajuan MoU</h5>
-                <a href="{{ asset('dist/file/Template MoU.docx') }}" class="btn btn-info m-0">
-                    <span class="me-2"><i class="fa-solid fa-file-arrow-down"></i></span>
-                    Download Template MoA
-                </a>
+                <div class="d-flex">
+                    <a href="{{ asset('dist/file/Template MOU - Bahasa Inggris.docx') }}" class="btn btn-info m-0">
+                        <span class="me-2"><i class="fa-solid fa-file-arrow-down"></i></span>
+                        Template MoU (EN)
+                    </a>
+                    <a href="{{ asset('dist/file/Template MOU - Bahasa Indonesia.doc') }}" class="btn btn-info ms-3 my-0">
+                        <span class="me-2"><i class="fa-solid fa-file-arrow-down"></i></span>
+                        Template MoU (ID)
+                    </a>
+                </div>
             </div>
             <div class="container-fluid">
                 <form action="{{ route('pengajuan_mou_handler') }}" novalidate method="POST" enctype="multipart/form-data" id="formPengajuan">
@@ -43,7 +49,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Tanggal Mulai <span class="text-danger">*</span></label>
-                        <input type="date" class="form-control" name="tgl_mulai" id="tgl_mulai">
+                        <input type="date" class="form-control w-lg-20" name="tgl_mulai" id="tgl_mulai">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Keterangan <span class="text-danger">*</span></label>

@@ -58,6 +58,7 @@ Route::middleware(['auth', 'verified', 'hasProfile'])->group(function () {
         Route::get('/list-pengajuan_mou', 'viewListMou')->name('view_list_mou');
         Route::get('/list-pengajuan_moa', 'viewListMoa')->name('view_list_moa');
         Route::get('/pengajuan_mou/{mou}', 'viewDetailMou')->name('detail_mou');
+        Route::get('/pengajuan_moa/{moa}', 'viewDetailMoa')->name('detail_moa');
         Route::get('/list-mitra', 'viewListMitra')->name('view_list_mitra');
         Route::get('/mitra/{mitra}', 'viewDetailMitra')->name('detail_mitra');
 

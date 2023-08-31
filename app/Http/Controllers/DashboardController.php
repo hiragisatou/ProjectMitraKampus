@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Moa;
 use App\Models\Mou;
 use App\Models\Mitra;
+use App\Models\Prodi;
 use App\Models\Jurusan;
 use App\Models\Kategori;
-use App\Models\Prodi;
 use App\Models\VerifyMou;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class DashboardController extends Controller
 {
@@ -64,7 +65,7 @@ class DashboardController extends Controller
 
     //Delete MoU
     public function deleteMou(Mou $mou) {
-        if (collect($mou)->has('verifyMou')) {
+        if ($mou->verifymou != null) {
             return redirect(route('view_list_mou'))->with('error', 'Gagal! Mou sudah diverifikasi.');
         }
         Storage::delete($mou->mou_file);
@@ -105,10 +106,15 @@ class DashboardController extends Controller
 
     //Pengajuan MoA Page
     public function viewMoA() {
-        if (collect(auth()->user()->role->roleable)->has('mou')) {
-            return view('pages.pengajuan-moa_blank', ['message' => 'Anda belum pernah mengajukan MoU.', 'saran' => 'Ajukan MoU terlebih dahulu.']);
+        $mou = Mou::whereHas('verifyMou', fn (Builder $query) => $query->where('status', 'verify'))->where('mitra_id', auth()->user()->role->roleable->id)->get();
+        // dd(date_create($mou->last()->tgl_akhir));
+        if (count($mou) == 0) {
+            return view('pages.pengajuan-moa_blank', ['message' => 'Anda belum pernah mengajukan MoU.', 'saran' => 'Silahkan mengajukan MoU terlebih dahulu.']);
         } else {
-            return view('pages.pengajuan-moa', ['jurusan' => Jurusan::all(), 'prodi' => Prodi::all(), 'kategori' => Kategori::all()]);
+            if (date_create($mou->last()->tgl_akhir) <= now()) {
+                return view('pages.pengajuan-moa_blank', ['message' => 'Masa berlaku MoU anda telah berakhir.', 'saran' => 'Silahkan ajukan MoU kembali.']);
+            }
+            return view('pages.pengajuan-moa', ['jurusan' => Jurusan::all(), 'prodi' => Prodi::all(), 'kategori' => Kategori::all(), 'mou' => $mou->last()]);
         }
     }
 
@@ -120,31 +126,36 @@ class DashboardController extends Controller
             $id = Moa::all()->last()->id + 1;
         }
         $data =  new Moa();
+        $data->mou_id = $request->mou_id;
         $data->nomor = $request->nomor_moa;
         $data->judul = $request->judul;
-        $data->mitra_id = auth()->user()->mitra->id;
+        $data->mitra_id = auth()->user()->role->roleable->id;
         $data->jurusan_id = $request->jurusan;
-        if (count($request->prodi) > 1) {
-            $data->send_to = 'jurusan';
-        } else {
-            $data->send_to = 'prodi';
-        }
-        $data->prodi_id = implode('+', $request->prodi);
         $data->tgl_mulai = $request->tgl_mulai;
-        $data->moa_file = $request->file('moa')->storeAs('pengajuanMoA', $id . '_MOA_' . $data->judul . '_' . auth()->user()->mitra->nama . '.pdf');
+        $data->moa_file = $request->file('moa')->storeAs('MoA', $id . '_MOA_' . $data->judul . '_' . auth()->user()->role->roleable->nama . '.pdf');
         $data->save();
         $data->kategori()->attach($request->kategori);
+        $data->prodi()->attach($request->prodi);
         return redirect(route('view_list_moa'))->with('success', 'MoA berhasil diajukan.');
 
     }
 
+    //List MoA Page
     public function viewListMoa() {
-        // dd(MoA::with(['mitra', 'jurusan'])->get()->load('kategori'));
         if (auth()->user()->role->name == 'mitra') {
-            $data = Moa::where('mitra_id', auth()->user()->mitra->id)->get();
+            $data = Moa::where('mitra_id', auth()->user()->role->roleable->id)->get();
+        } else if (auth()->user()->role->name == 'jurusan') {
+            $data = Moa::where('jurusan_id', auth()->user()->role->roleable->id)->get();
+        } else if (auth()->user()->role->name == 'prodi') {
+            $data = Moa::where('jurusan_id', auth()->user()->role->roleable->id)->get();
         } else {
             $data = Moa::all();
         }
-        return view('pages.list-moa', ['data' => collect($data->load(['mitra', 'kategori']))]);
+        return view('pages.list-moa', ['data' => collect($data->load(['mitra', 'kategori', 'verifymoa', 'prodi']))]);
+    }
+
+    //Detail Pengajuan MoU Page
+    public function viewDetailMoa(Moa $moa) {
+        return view('pages.detail-moa', ['data' => $moa->load(['mitra', 'verifymoa', 'kategori', 'prodi', 'jurusan'])]);
     }
 }

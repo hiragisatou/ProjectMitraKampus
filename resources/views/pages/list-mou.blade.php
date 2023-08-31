@@ -11,7 +11,8 @@
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2">Judul</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2">Jenis Kemitraan
                         </th>
-                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2">Tanggal</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2">Tanggal Mulai</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2">Tanggal Selesai</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2">Status</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-2" style="max-width: 50px">Aksi</th>
                     </tr>
@@ -23,13 +24,11 @@
                             <td class="text-sm font-weight-bold mb-0">{{ $x['mitra']['nama'] }}</td>
                             <td class="text-sm font-weight-bold mb-0">{{ $x['judul'] }}</td>
                             <td class="text-sm font-weight-bold mb-0">{{ $x['jenis_kemitraan'] }}</td>
-                            <td class="text-sm font-weight-bold mb-0">
-                                {{ date_format(date_create($x['tgl_mulai']), 'd-m-Y') }}
-                                {{ $x['tgl_berakhir'] == null ? '' : ' s/d ' . date_format(date_create($x['tgl_berakhir']), 'd-m-Y') }}
-                            </td>
+                            <td class="text-sm font-weight-bold mb-0">{{ $x['tgl_mulai'] }}</td>
+                            <td class="text-sm font-weight-bold mb-0">{{ $x['tgl_akhir'] }}</td>
                             <td class="text-sm font-weight-bold mb-0">
                                 @if ($x['verifymou'] != null)
-                                    @if ($x['verifymou']['status'] == 'verify' && date_create($x['tgl_berakhir'])->modify('+1 day') < now())
+                                    @if ($x['verifymou']['status'] == 'verify' && date_create($x['tgl_akhir']) <= now())
                                         <span class="badge badge-sm bg-gradient-info">Berakhir</span>
                                     @else
                                         <span class="badge badge-sm {{ $x['verifymou']['status'] == 'verify' ? 'bg-gradient-success' : 'bg-gradient-danger' }}">{{ $x['verifymou']['status'] }}</span>
@@ -42,6 +41,7 @@
                                 <a href="{{ route('detail_mou', ['mou' => $x['id']]) }}" class="btn btn-outline-dark btn-sm py-1 px-2 m-0">
                                     <i class="fa-regular fa-eye"></i>
                                 </a>
+                                @if ($x->verifymou == null)
                                 <form action="{{ route('delete_mou_handler', ['mou' => $x['id']]) }}" method="post" class="d-inline">
                                     @method('delete')
                                     @csrf
@@ -49,12 +49,14 @@
                                         <i class="fa-regular fa-trash-can"></i>
                                     </button>
                                 </form>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
                 <tfoot>
                     <tr>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>

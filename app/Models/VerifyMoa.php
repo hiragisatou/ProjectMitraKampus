@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class VerifyMou extends Model
+class VerifyMoa extends Model
 {
     use HasFactory;
-    protected $table = 'verify_mou';
+    protected $table = 'verify_moa';
     protected $guarded = ['id'];
 
     public function user(): BelongsTo

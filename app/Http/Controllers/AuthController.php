@@ -98,7 +98,10 @@ class AuthController extends Controller
             'jenis' => collect(Jenis::all()),
             'kriteria' => collect(Kriteria::all()),
             'sektor' => collect(Sektor::all()),
-            'sifat' => collect(Sifat::all())
+            'sifat' => collect(Sifat::all()),
+            'provinsi' => collect(Provinsi::orderBy('name', 'asc')->get()),
+            'kabupaten' => collect(Kabupaten::orderBy('name', 'asc')->get()),
+            'kecamatan' => collect(Kecamatan::orderBy('name', 'asc')->get()),
         ]);
     }
 
@@ -110,9 +113,9 @@ class AuthController extends Controller
             'kriteria' => collect(Kriteria::all()),
             'sektor' => collect(Sektor::all()),
             'sifat' => collect(Sifat::all()),
-            'provinsi' => collect(Provinsi::all()),
-            'kabupaten' => collect(Kabupaten::all()),
-            'kecamatan' => collect(Kecamatan::all()),
+            'provinsi' => collect(Provinsi::orderBy('name', 'asc')->get()),
+            'kabupaten' => collect(Kabupaten::orderBy('name', 'asc')->get()),
+            'kecamatan' => collect(Kecamatan::orderBy('name', 'asc')->get()),
         ]);
     }
 

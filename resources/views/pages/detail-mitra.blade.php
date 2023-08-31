@@ -40,15 +40,15 @@
                     </tr>
                     <tr>
                         <td>Provinsi</td>
-                        <td>: {{$data['provinsi'] == null ? '' : $data['provinsi']['nama'] }}</td>
+                        <td>: {{$data['provinsi'] == null ? '' : $data['provinsi']['name'] }}</td>
                     </tr>
                     <tr>
                         <td>Kabupaten</td>
-                        <td>: {{$data['kabupaten'] == null ? '' : $data['kabupaten']['nama'] }}</td>
+                        <td>: {{$data['kabupaten'] == null ? '' : $data['kabupaten']['name'] }}</td>
                     </tr>
                     <tr>
                         <td>Kecamatan</td>
-                        <td>: {{$data['kecamatan'] == null ? '' : $data['kecamatan']['nama'] }}</td>
+                        <td>: {{$data['kecamatan'] == null ? '' : $data['kecamatan']['name'] }}</td>
                     </tr>
                     <tr>
                         <td>Alamat</td>

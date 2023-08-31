@@ -13,6 +13,7 @@
             <div class="container-fluid">
                 <form action="{{ route('pengajuan_moa_handler') }}" novalidate method="POST" enctype="multipart/form-data" id="formMoA">
                     @csrf
+                    <input type="hidden" name="mou_id" value="{{ $mou->id }}">
                     <div class="mb-3">
                         <label class="form-label">Nomor MoA <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" name="nomor_moa">

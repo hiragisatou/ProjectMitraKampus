@@ -9,7 +9,7 @@
                         <i class="fa-regular fa-circle-xmark"></i>
                     </h1>
                     <p class="text-center">{{ $message }}</p>
-                    <p class="text-center">Silahkan mengajukan MoU terlebih dahulu <a href="{{ route('pengajuan_mou') }}">disini</a>.</p>
+                    <p class="text-center">{{ $saran }}</p>
 
                 </div>
             </div>

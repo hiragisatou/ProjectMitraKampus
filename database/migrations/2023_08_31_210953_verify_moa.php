@@ -11,16 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('moa', function (Blueprint $table) {
+        Schema::create('verify_moa', function (Blueprint $table) {
             $table->id();
-            $table->string('nomor');
-            $table->string('judul');
-            $table->foreignId('mou_id')->nullable();
-            $table->foreignId('mitra_id');
-            $table->foreignId('jurusan_id');
-            $table->date('tgl_mulai');
-            $table->date('tgl_akhir')->nullable();
-            $table->string('moa_file');
+            $table->foreignId('moa_id');
+            $table->foreignId('admin_id');
+            $table->string('status');
+            $table->string('send_to');
+            $table->string('valid_moa_file')->nullable();
             $table->text('keterangan')->nullable();
             $table->timestamps();
         });
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('moa');
+        Schema::dropIfExists('verify_moa');
     }
 };

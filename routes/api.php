@@ -22,6 +22,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::controller(ApiController::class)->group(function () {
     Route::post('/email_check', 'checkEmail')->name('check_email_register');
-    Route::get('/select-alamat', 'selectAlamat')->name('select-alamat');
-    Route::get('/prodi-jurusan', 'dataProdiJurusan')->name('data-prodi-jurusan');
 });

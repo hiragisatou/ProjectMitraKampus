@@ -9,6 +9,7 @@ use App\Models\Sifat;
 use App\Models\Sektor;
 use App\Models\Jurusan;
 use App\Models\Kriteria;
+use App\Models\Role;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
@@ -180,7 +181,7 @@ class SettingController extends Controller
     public function indexUser()
     {
         return view('pages.setting.user', [
-        'data' => User::whereHas('role', fn (Builder $query) => $query->whereIn('name', ['jurusan', 'prodi']))->get(),
+        'data' => User::with('role')->whereHas('role', fn (Builder $query) => $query->with('roleable')->whereIn('name', ['jurusan', 'prodi']))->get(),
         'prodi' => collect(Prodi::all()),
         'jurusan' => collect(Jurusan::all()),
         ]);
@@ -194,14 +195,29 @@ class SettingController extends Controller
             $user = User::find($data['id']);
         } else {
             $user = new User;
+            $user->email = $data['username'];
         }
-        $user->name = $data['nama'];
-        $user->email = $data['username'];
-        $user->password = bcrypt($data['password']);
-        $user->prodi_id = $data['prodi'];
-        $user->role = 'prodi';
+        if ($data['password']) {
+            $user->password = bcrypt($data['password']);
+        }
+        if ($data['jenis_user'] == 'jurusan') {
+            $type = 'App\Models\Jurusan';
+        } elseif ($data['jenis_user'] == 'prodi') {
+            $type = 'App\Models\Prodi';
+        }
+        $user->name = $data['name'];
         $user->email_verified_at = now();
         $user->save();
+        if ($user->role != null) {
+            $id = $user->role->id;
+        } else {
+            $id = 0;
+        }
+        $user->role()->updateOrCreate(['id' => $id], [
+            'name' => $data['jenis_user'],
+            'roleable_id' => $data['role'],
+            'roleable_type' => $type
+        ]);
 
         return redirect(route('view_user'))->with('success', 'Data user berhasil disimpan.');
     }
@@ -209,6 +225,7 @@ class SettingController extends Controller
     //Delete Data User
     public function deleteUser(User $user)
     {
+        $user->role()->delete();
         $user->delete();
         return redirect(route('view_user'))->with('success', 'Data user berhasil dihapus.');
     }

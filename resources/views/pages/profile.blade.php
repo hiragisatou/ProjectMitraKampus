@@ -5,6 +5,9 @@
         <div class="card-body">
             <form method="POST" action="{{ route('profile_handler') }}" id="form_profile" novalidate>
                 @csrf
+                @isset($mitra)
+                    <input type="hidden" name="id" value="{{ $mitra['id'] }}">
+                @endisset
                 <div class="row row-cols-2 mb-4">
                     <div class="mb-3">
                         <label for="name" class="form-label">Nama Mitra <span class="text-danger">*</span></label>
@@ -131,26 +134,28 @@
     @if (url()->current() == route('edit_profile'))
         <script>
             var mitra = {{ Js::from($mitra) }};
-            $('select[name="provinsi"]').find('option[value="' + mitra.provinsi_id + '"]').attr('selected', 'true');
-            kab.filter(e => e.provinsi_id == $('select[name="provinsi"]').val()).forEach(element => {
-                $('select[name="kabupaten"]').append(new Option(element['name'], element['id']));
+            $(document).ready(function() {
+                $('select[name="provinsi"]').find('option[value="' + mitra.provinsi_id + '"]').attr('selected', 'true');
+                kab.filter(e => e.provinsi_id == $('select[name="provinsi"]').val()).forEach(element => {
+                    $('select[name="kabupaten"]').append(new Option(element['name'], element['id']));
+                });
+                $('select[name="kabupaten"]').find('option[value="' + mitra.kabupaten_id + '"]').attr('selected', 'true');
+                kec.filter(e => e.kabupaten_id == $('select[name="kabupaten"]').val()).forEach(element => {
+                    $('select[name="kecamatan"]').append(new Option(element['name'], element['id']));
+                });
+                $('select[name="kecamatan"]').find('option[value="' + mitra.kecamatan_id + '"]').attr('selected', 'true');
             });
-            $('select[name="kabupaten"]').find('option[value="' + mitra.kabupaten_id + '"]').attr('selected', 'true');
-            kec.filter(e => e.kabupaten_id == $('select[name="kabupaten"]').val()).forEach(element => {
-                $('select[name="kecamatan"]').append(new Option(element['name'], element['id']));
-            });
-            $('select[name="kecamatan"]').find('option[value="' + mitra.kecamatan_id + '"]').attr('selected', 'true');
         </script>
     @endif
     <script>
-        var prov, kab, kec;
-        $.getJSON("{{ route('select-alamat') }}", "",
-            function(data, textStatus, jqXHR) {
-                prov = data.provinsi;
-                kab = data.kabupaten;
-                kec = data.kecamatan;
-            }
-        );
+        var prov = {{ Js::from($provinsi) }};
+        var kab = {{ Js::from($kabupaten) }};
+        var kec = {{ Js::from($kecamatan) }};
+
+        prov.forEach(e => {
+            $('select[name="provinsi"]').append(new Option(e['name'], e['id']))
+        });
+
         if (window.location.href == {{ Js::from(route('add_profile')) }}) {
             $('aside').remove();
             $('select[name="kabupaten"]').attr('disabled', 'true');
@@ -158,16 +163,6 @@
         }
 
         $(document).ready(function() {
-            $('.select2').select2({
-                width: '100%',
-                theme: 'bootstrap-5',
-                placeholder: '-- Pilih salah satu --',
-            });
-
-            prov.forEach(e => {
-                $('select[name="provinsi"]').append(new Option(e['name'], e['id']))
-            });
-
             $('select[name="provinsi"]').change(function(e) {
                 if (this.value == '') {
                     $('select[name="kabupaten"]').children().remove().end();
@@ -259,6 +254,12 @@
                     }
                 }
             });
+            $('.select2').select2({
+                width: '100%',
+                theme: 'bootstrap-5',
+                placeholder: '-- Pilih salah satu --',
+            });
+
             $('select').on('change', e => {
                 $(e.target).removeClass('is-invalid')
                 $(e.target).addClass('is-valid');

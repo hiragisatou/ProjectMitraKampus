@@ -12,6 +12,9 @@ use App\Models\Kriteria;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Kabupaten;
+use App\Models\Kecamatan;
+use App\Models\Provinsi;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
@@ -106,7 +109,10 @@ class AuthController extends Controller
             'jenis' => collect(Jenis::all()),
             'kriteria' => collect(Kriteria::all()),
             'sektor' => collect(Sektor::all()),
-            'sifat' => collect(Sifat::all())
+            'sifat' => collect(Sifat::all()),
+            'provinsi' => collect(Provinsi::all()),
+            'kabupaten' => collect(Kabupaten::all()),
+            'kecamatan' => collect(Kecamatan::all()),
         ]);
     }
 
@@ -115,11 +121,15 @@ class AuthController extends Controller
     {
         $data = collect($request)->only(['nama', 'nib', 'kriteria_id', 'sektor_id', 'sifat_id', 'jenis_id', 'klasifikasi', 'jumlah_pegawai', 'url', 'email', 'alamat', 'no_telp', 'linkedin', 'instagram', 'facebook', 'twitter', 'tiktok', 'youtube']);
         $data = collect($request)->except(['_token', 'kabupaten', 'provinsi']);
-        $data['user_id'] = auth()->user()->id;
         $data['kecamatan_id'] = $request->kecamatan;
         $data['kabupaten_id'] = $request->kabupaten;
         $data['provinsi_id'] = $request->provinsi;
-        $mitra = Mitra::updateOrCreate(['user_id' => auth()->user()->id], $data->toArray());
+        if (isset($request->id)) {
+            $id = $request->id;
+        } else{
+            $id = 0;
+        }
+        $mitra = Mitra::updateOrCreate(['id' => $id], $data->toArray());
         Role::updateOrCreate(['user_id' => auth()->user()->id], ['name' => 'mitra', 'roleable_id' => $mitra->id, 'roleable_type' => 'App\Models\Mitra', 'user_id' => auth()->user()->id]);
         return redirect(route('dashboard'))->with('success', 'Data profil perusahaan berhasil disimpan.');
     }

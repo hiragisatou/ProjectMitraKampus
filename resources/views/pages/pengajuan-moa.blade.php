@@ -59,13 +59,8 @@
         </div>
     </div>
     <script>
-        var jurusan, prodi;
-        $.getJSON("{{ route('data-prodi-jurusan') }}", "",
-            function (data, textStatus, jqXHR) {
-                jurusan = data.jurusan;
-                prodi = data.prodi
-            }
-        );
+        var jurusan = {{ Js::from($jurusan) }};
+        var prodi = {{ Js::from($prodi) }};
         $('#prodi').select2({
             width: '100%',
             placeholder: '-- Pilih Program Studi --',

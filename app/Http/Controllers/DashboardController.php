@@ -7,6 +7,7 @@ use App\Models\Mou;
 use App\Models\Mitra;
 use App\Models\Jurusan;
 use App\Models\Kategori;
+use App\Models\Prodi;
 use App\Models\VerifyMou;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -36,12 +37,12 @@ class DashboardController extends Controller
         $data =  new Mou;
         $data->nomor = $request->nomor_mou;
         $data->judul = $request->judul;
-        $data->mitra_id = auth()->user()->mitra->id;
+        $data->mitra_id = auth()->user()->role->roleable->id;
         $data->jenis_kemitraan = $request->jenis_kemitraan;
         $data->ruang_lingkup = implode('+', $request->ruang_lingkup);
         $data->tgl_mulai = $request->tgl_mulai;
         $data->keterangan = $request->keterangan;
-        $data->mou_file = $request->file('mou')->storeAs('MoU', $id . '_MOU_' . $data->judul . '_' . auth()->user()->mitra->nama . '.pdf');
+        $data->mou_file = $request->file('mou')->storeAs('MoU', $id . '_MOU_' . $data->judul . '_' . auth()->user()->role->roleable->nama . '.pdf');
         $data->save();
         return redirect(route('view_list_mou'))->with('success', 'MoU berhasil diajukan.');
     }
@@ -49,7 +50,7 @@ class DashboardController extends Controller
     //List Pengajuan MoU Page
     public function viewListMou() {
         if (auth()->user()->role->name == 'mitra') {
-            $data = Mou::with(['mitra', 'verifymou'])->where('mitra_id', auth()->user()->mitra->id)->get();
+            $data = Mou::with(['mitra', 'verifymou'])->where('mitra_id', auth()->user()->role->roleable->id)->get();
         } else {
             $data = Mou::with(['mitra', 'verifymou'])->get();
         }
@@ -104,7 +105,11 @@ class DashboardController extends Controller
 
     //Pengajuan MoA Page
     public function viewMoA() {
-        return view('pages.pengajuan-moa', ['jurusan' => Jurusan::all(), 'kategori' => Kategori::all()]);
+        if (collect(auth()->user()->role->roleable)->has('mou')) {
+            return view('pages.pengajuan-moa_blank', ['message' => 'Anda belum pernah mengajukan MoU.', 'saran' => 'Ajukan MoU terlebih dahulu.']);
+        } else {
+            return view('pages.pengajuan-moa', ['jurusan' => Jurusan::all(), 'prodi' => Prodi::all(), 'kategori' => Kategori::all()]);
+        }
     }
 
     //Pengajuan MoA Handler

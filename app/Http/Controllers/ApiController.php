@@ -20,19 +20,4 @@ class ApiController extends Controller
             return 'false';
         }
     }
-
-    public function selectAlamat() {
-        return response()->json(collect([
-            'provinsi' => Provinsi::all(),
-            'kabupaten' => Kabupaten::all(),
-            'kecamatan' => Kecamatan::all()
-        ]));
-    }
-
-    public function dataProdiJurusan() {
-        return response()->json([
-            'jurusan' => Jurusan::all(),
-            'prodi' => Prodi::all()
-        ]);
-    }
 }

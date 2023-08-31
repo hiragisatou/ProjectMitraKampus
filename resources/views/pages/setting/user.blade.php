@@ -28,7 +28,7 @@
                             <td class="text-sm font-weight-bold mb-0">{{ $x->role->name }}</td>
                             <td class="text-sm font-weight-bold mb-0">
                                 <div class="d-flex">
-                                    <button type="button" class="btn bg-gradient-warning me-1 my-0 py-1 px-2" data-bs-toggle="modal" data-bs-target="#editModal" data-bs-all="{{ $x }}">
+                                    <button type="button" class="btn bg-gradient-warning me-1 my-0 py-1 px-2" data-bs-toggle="modal" data-bs-target="#editModal" data-bs-all="{{ $x }}" data-bs-role="{{ $x->role->roleable }}">
                                         <i class="fa-regular fa-pen-to-square"></i>
                                     </button>
                                     <button type="button" class="btn bg-gradient-danger m-0 py-1 px-2" data-bs-toggle="modal" data-bs-target="#modal-notification" data-bs-url="{{ route('delete_user', ['user' => $x->id]) }}" data-bs-name="{{ $x->name }}"><i class="fa-regular fa-trash-can"></i></button>
@@ -76,12 +76,16 @@
                             <input type="password" name="password" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label for="message-text" class="col-form-label">Program Studi</label>
-                            <select name="prodi" class="form-select">
-                                <option value="">-- Pilih Prodi --</option>
-                                @foreach ($prodi as $x)
-                                    <option value="{{ $x['id'] }}">{{ $x['name'] }}</option>
-                                @endforeach
+                            <label for="message-text" class="col-form-label">Jenis User</label>
+                            <select name="jenis_user" class="form-select">
+                                <option value="">-- Pilih Jenis User --</option>
+                                <option value="jurusan">Jurusan</option>
+                                <option value="prodi">Program Studi</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Jurusan / Prodi</label>
+                            <select name="role" class="form-select" disabled>
                             </select>
                         </div>
                     </div>
@@ -114,19 +118,23 @@
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="col-form-label">Username</label>
-                            <input type="text" name="username" class="form-control">
+                            <input type="text" name="username" class="form-control" disabled>
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="col-form-label">Password</label>
                             <input type="password" name="password" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label for="message-text" class="col-form-label">Program Studi</label>
-                            <select name="prodi" class="form-select">
-                                <option value="">-- Pilih Prodi --</option>
-                                @foreach ($prodi as $x)
-                                    <option value="{{ $x['id'] }}">{{ $x['name'] }}</option>
-                                @endforeach
+                            <label for="message-text" class="col-form-label">Jenis User</label>
+                            <select name="jenis_user" class="form-select">
+                                <option value="">-- Pilih Jenis User --</option>
+                                <option value="jurusan">Jurusan</option>
+                                <option value="prodi">Program Studi</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Jurusan / Prodi</label>
+                            <select name="role" class="form-select">
                             </select>
                         </div>
                     </div>
@@ -195,10 +203,13 @@
                 });
             },
         });
+        var j = {{ Js::from($jurusan) }};
+        var p = {{ Js::from($prodi) }};
+
         $(document).ready(function() {
-            $('#breadcrumb').empty();
-            $('#breadcrumb').append('<li class="breadcrumb-item text-sm text-dark" aria-current="page">Pengaturan</li>');
+            $('#breadcrumb').append('<li class="breadcrumb-item text-sm text-dark" aria-current="page"><span class="opacity-5 text-dark">Pengaturan</span></li>');
             $('#breadcrumb').append('<li class="breadcrumb-item text-sm text-dark active" aria-current="page">User</li>');
+
             $('td > select').addClass('form-select form-select-sm');
             $('tfoot > tr > td:first-child').empty();
             $('tfoot > tr > td:last-child').empty();
@@ -210,18 +221,62 @@
             $('#mytable_length > label').addClass('d-flex-middle');;
             $('select[name="mytable_length"]').addClass('w-50');
 
+            $('select[name="jenis_user"]').change(function(e) {
+                if (this.value == "") {
+                    $('select[name="role"]').attr('disabled', 'true');
+                    $('select[name="role"]').empty();
+                } else {
+                    $('select[name="role"]').removeAttr('disabled');
+                    if (this.value == 'jurusan') {
+                        $('select[name="role"]').empty();
+                        $('select[name="role"]').append(new Option('-- Pilih Jurusan --', ""));
+                        j.forEach(e => {
+                            $('select[name="role"]').append(new Option(e.nama, e.id));
+                        });
+                    } else {
+                        $('select[name="role"]').empty();
+                        $('select[name="role"]').append(new Option('-- Pilih Program Studi --', ""));
+                        p.forEach(e => {
+                            $('select[name="role"]').append(new Option(e.nama, e.id));
+                        });
+                    }
+                }
+            });
+
+            $('#addModal').on('show.bs.modal', event => {
+                if ($('#addModal').find('select[name="jenis_user"]').val() == "") {
+                    $('#addModal').find('select[name="role"]').empty();
+                    $('#addModal').find('select[name="role"]').attr('disabled', 'true');
+                }
+            });
             $('#editModal').on('show.bs.modal', event => {
                 $('#editModal').find('input[name="password"]').val('');
                 $('#editModal').find('input').removeClass('is-valid');
                 $('#editModal').find('.invalid-feedback').remove();
                 const button = event.relatedTarget
                 var data = JSON.parse(button.getAttribute('data-bs-all'));
+                var role = JSON.parse(button.getAttribute('data-bs-role'));
                 console.log(data);
-                $('#editModal').find('.modal-title').text('Edit ' + data['name']);
+                $('#editModal').find('.modal-title').text('Edit User' + data['name']);
                 $('#editModal').find('input[name="id"]').val(data['id']);
                 $('#editModal').find('input[name="name"]').val(data['name']);
                 $('#editModal').find('input[name="username"]').val(data['email']);
-                $('#editModal').find('option[value="' + data['prodi_id'] + '"]').attr('selected', 'true');
+                $('#editModal').find('select[name="jenis_user"]').find('option[value="' + data['role']['name'] + '"]').attr('selected', 'true');
+                if ($('#editModal').find('select[name="role"]').attr('disabled') !== undefined) {
+                    $('#editModal').find('select[name="role"]').removeAttr('disabled');
+                }
+                if (data['role']['name'] == 'jurusan') {
+                    $('#editModal').find('select[name="role"]').append(new Option('-- Pilih Jurusan --', ''));
+                    j.forEach(e => {
+                        $('#editModal').find('select[name="role"]').append(new Option(e.nama, e.id));
+                    });
+                } else {
+                    $('#editModal').find('select[name="role"]').append(new Option('-- Pilih Prodi --', ''));
+                    p.forEach(e => {
+                        $('#editModal').find('select[name="role"]').append(new Option(e.nama, e.id));
+                    });
+                }
+                $('#editModal').find('select[name="role"]').find('option[value="' + role.id + '"]').attr('selected', 'true');
             });
 
             $('#modal-notification').on('show.bs.modal', event => {
@@ -237,21 +292,40 @@
                 errorClass: "is-invalid",
                 rules: {
                     name: 'required',
-                    username: 'required',
+                    username: {
+                            required: true,
+                            remote: {
+                                url: checkMail,
+                                type: 'post',
+                                data: {
+                                    '_token': function() {
+                                        return $('input[name="_token"]').val();
+                                    },
+                                    'email': function() {
+                                        return $('#email').val();
+                                    }
+                                }
+                            }
+                        },
                     password: {
                         required: true,
                         minlength: 8
                     },
-                    prodi: 'required',
+                    jenis_user: 'required',
+                    role: 'required',
                 },
                 messages: {
                     name: 'Nama user wajib diisi.',
-                    username: 'Username wajib diisi.',
+                    username: {
+                        required: 'Username wajib diisi.',
+                        remote: 'Username sudah terpakai.'
+                    },
                     password: {
                         required: 'Password wajib diisi.',
                         minlength: 'Password minimal 8.'
                     },
-                    prodi: 'Prodi wajib diisi',
+                    jenis_user: 'Jenis User wajib diisi.',
+                    role: 'Program Studi / Jurusan wajib diisi.',
                 },
                 errorElement: "div",
                 errorPlacement: function(error, element) {
@@ -272,7 +346,8 @@
                     password: {
                         minlength: 8
                     },
-                    prodi: 'required',
+                    jenis_user: 'required',
+                    role: 'required',
                 },
                 messages: {
                     name: 'Nama user wajib diisi.',
@@ -280,7 +355,8 @@
                     password: {
                         minlength: 'Password minimal 8.'
                     },
-                    prodi: 'Prodi wajib diisi',
+                    jenis_user: 'Jenis User wajib diisi.',
+                    role: 'Program Studi / Jurusan wajib diisi.',
                 },
                 errorElement: "div",
                 errorPlacement: function(error, element) {

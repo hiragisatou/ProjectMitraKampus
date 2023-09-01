@@ -78,14 +78,14 @@
                         <td class="text-sm d-flex">:
                             <div class="row ms-1">
 								<div class="col">
-                                    <a class="btn btn-icon btn-sm btn-info m-0" type="button" target="_blank" href="{{ asset('files/' . $data['mou_file']) }}">
+                                    <a class="btn btn-icon btn-sm btn-info m-0" type="button" target="_blank" href="{{ asset('data/' . $data['mou_file']) }}">
 										<span class="btn-inner--icon"><i class="fa-solid fa-file-pen"></i></span>
 										<span class="btn-inner--text">Usulan MoU</span>
 									</a>
 								</div>
 								@if ($data['verifymou'] != null && $data['verifymou']['status'] == 'verify')
                                 <div class="col">
-                                    <a class="btn btn-icon btn-sm btn-success" type="button" target="_blank" href="{{ asset('files/' . $data['verifymou']['valid_mou_file']) }}">
+                                    <a class="btn btn-icon btn-sm btn-success" type="button" target="_blank" href="{{ asset('data/' . $data['verifymou']['valid_mou_file']) }}">
                                         <span class="btn-inner--icon"><i class="fa-solid fa-file-pen"></i></span>
                                         <span class="btn-inner--text">Valid MoU</span>
                                     </a>

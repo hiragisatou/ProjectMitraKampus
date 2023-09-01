@@ -49,7 +49,11 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Upload MoA <span class="text-danger">*</span></label>
-                        <input class="form-control" type="file" id="moa" name="moa" accept=".pdf">
+                        <input class="form-control" type="file" name="moa" accept=".pdf">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Keterangan <span class="text-danger">*</span></label>
+                        <textarea class="form-control" id="keterangan" rows="3" name="keterangan"></textarea>
                     </div>
                     <hr />
                     <div class="d-flex justify-content-end">
@@ -106,6 +110,7 @@
                         required: true
                     },
                     tgl_mulai: 'required',
+                    keterangan: 'required',
                     moa: {
                         required: true,
                         accept: 'pdf'
@@ -121,7 +126,8 @@
                     'prodi[]': {
                         required: "Program Studi wajib diisi."
                     },
-                    tgl_mulai: 'Tanggal mulai kerjasama wajib diisi',
+                    tgl_mulai: 'Tanggal mulai MoA wajib diisi',
+                    keterangan: 'Keterangan wajib diisi',
                     moa: {
                         required: 'MoU wajib diisi',
                         accept: 'Type file MoU harus PDF'

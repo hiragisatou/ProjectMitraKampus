@@ -15,7 +15,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="NIB" class="form-label">Nomor Induk Berusaha <span class="text-danger">*</span></label>
-                        <input type="number" class="form-control" id="nib" name="nib" value="@isset($mitra){{ $mitra['nib'] }}@endisset">
+                        <input type="text" class="form-control" id="nib" name="nib" value="@isset($mitra){{ $mitra['nib'] }}@endisset">
                     </div>
                     <div class="mb-3">
                         <label for="kriteria" class="form-label">Kriteria Mitra <span class="text-danger">*</span></label>

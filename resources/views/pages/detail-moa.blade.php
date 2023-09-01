@@ -84,14 +84,14 @@
                         <td class="text-sm d-flex">:
                             <div class="row ms-1">
 								<div class="col">
-                                    <a class="btn btn-icon btn-sm btn-info m-0" type="button" target="_blank" href="{{ asset('files/' . $data['moa_file']) }}">
+                                    <a class="btn btn-icon btn-sm btn-info m-0" type="button" target="_blank" href="{{ asset('data/' . $data['moa_file']) }}">
 										<span class="btn-inner--icon"><i class="fa-solid fa-file-pen"></i></span>
 										<span class="btn-inner--text">Usulan MoA</span>
 									</a>
 								</div>
 								@if ($data['verifymoa'] != null && $data['verifymoa']['status'] == 'verify')
                                 <div class="col">
-                                    <a class="btn btn-icon btn-sm btn-success" type="button" target="_blank" href="{{ asset('files/' . $data['verifymoa']['valid_mou_file']) }}">
+                                    <a class="btn btn-icon btn-sm btn-success" type="button" target="_blank" href="{{ asset('data/' . $data['verifymoa']['valid_mou_file']) }}">
                                         <span class="btn-inner--icon"><i class="fa-solid fa-file-pen"></i></span>
                                         <span class="btn-inner--text">Valid MoA</span>
                                     </a>

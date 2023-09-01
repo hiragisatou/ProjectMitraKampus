@@ -26,6 +26,7 @@
                                         $kategori[] = $k['nama'];
                                     }
                                     echo implode(', ', $kategori);
+                                    $kategori = null;
                                 @endphp
                             </td>
                             <td class="text-sm font-weight-bold mb-0 text-wrap" style="max-width: 25rem">
@@ -34,36 +35,35 @@
                                         $prodi[] = $p['nama'];
                                     }
                                     echo implode(', ', $prodi);
+                                    $prodi = null;
                                 @endphp
                             </td>
                             <td class="text-sm font-weight-bold mb-0">
                                 {{ $x['tgl_mulai'] }}
-                                {{ $x['tgl_berakhir'] == null ? '' : ' s/d ' . $x['tgl_berakhir'] }}
+                                {{ $x['tgl_akhir'] == null ? '' : ' s/d ' . $x['tgl_akhir'] }}
                             </td>
                             <td class="text-sm font-weight-bold mb-0">
-                                @if ($x['verifymou'] != null)
-                                    @if ($x['verifymou']['status'] == 'verify' && date_create($x['tgl_berakhir'])->modify('+1 day') < now())
+                                @if ($x['verifymoa'] != null)
+                                    @if ($x['verifymoa']['status'] == 'verify' && date_create($x['tgl_akhir'])->modify('+1 day') <= now())
                                         <span class="badge badge-sm bg-gradient-info">Berakhir</span>
+                                    @elseif ($x['verifymoa']['status'] == null)
+                                        <span class="badge badge-sm bg-gradient-warning">Diproses admin {{ $x->verifymoa->admin_type }}</span>
                                     @else
-                                        <span class="badge badge-sm {{ $x['verifymou']['status'] == 'verify' ? 'bg-gradient-success' : 'bg-gradient-danger' }}">{{ $x['verifymou']['status'] }}</span>
+                                        <span class="badge badge-sm {{ $x['verifymoa']['status'] == 'verify' ? 'bg-gradient-success' : 'bg-gradient-danger' }}">{{ $x['verifymoa']['status'] }}</span>
                                     @endif
                                 @else
-                                    <span class="badge badge-sm text-bg-secondary">Diproses</span>
+                                    <span class="badge badge-sm text-bg-secondary">Diproses admin pusat</span>
                                 @endif
                             </td>
                             <td class="text-sm font-weight-bold mb-0 align-items-center">
                                 <a href="{{ route('detail_moa', ['moa' => $x['id']]) }}" class="btn btn-outline-dark btn-sm py-1 px-2 m-0">
                                     <i class="fa-regular fa-eye"></i>
                                 </a>
-                                {{-- <form action="{{ route('detail_pengajuan', ['mou' => $x['id']]) }}" method="post" class="d-inline">
-									@method('delete')
-									@csrf
-									<button type="submit" class="btn btn-outline-danger btn-sm py-2 px-3 m-0">
-										<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512" class="icon-fa-svg">
-											<path d="M170.5 51.6L151.5 80h145l-19-28.4c-1.5-2.2-4-3.6-6.7-3.6H177.1c-2.7 0-5.2 1.3-6.7 3.6zm147-26.6L354.2 80H368h48 8c13.3 0 24 10.7 24 24s-10.7 24-24 24h-8V432c0 44.2-35.8 80-80 80H112c-44.2 0-80-35.8-80-80V128H24c-13.3 0-24-10.7-24-24S10.7 80 24 80h8H80 93.8l36.7-55.1C140.9 9.4 158.4 0 177.1 0h93.7c18.7 0 36.2 9.4 46.6 24.9zM80 128V432c0 17.7 14.3 32 32 32H336c17.7 0 32-14.3 32-32V128H80zm80 64V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16z" />
-										</svg>
-									</button>
-								</form> --}}
+                                @if ($x->verifymoa == null)
+                                    @canany(['admin', 'mitra'])
+                                        <button type="button" class="btn btn-outline-danger btn-sm py-1 px-2 m-0" data-bs-toggle="modal" data-bs-target="#modal-notification" data-bs-url="{{ route('delete_moa_handler', ['moa' => $x['id']]) }}" data-bs-name="{{ $x->judul }}"><i class="fa-regular fa-trash-can"></i></button>
+                                    @endcanany
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -80,6 +80,35 @@
                     </tr>
                 </tfoot>
             </table>
+        </div>
+    </div>
+
+    <!-- Delete Modal -->
+    <div class="modal fade" id="modal-notification" tabindex="-1" role="dialog" aria-labelledby="modal-notification" aria-hidden="true">
+        <div class="modal-dialog modal-danger modal-dialog-centered modal-" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="modal-title-notification">Your attention is required</h6>
+                    <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="py-3 text-center">
+                        <span class="" style="font-size: 6rem"><i class="fa-regular fa-bell"></i></span>
+                        <h4 class="text-gradient text-danger mt-4">Peringatan!</h4>
+                        <p>Apakah anda yakin menghapus data ?</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <form action="" method="post" class="m-0 p-0">
+                        @method('delete')
+                        @csrf
+                        <button type="submit" class="btn bg-gradient-danger">Ya, Saya yakin</button>
+                    </form>
+                    <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Batal</button>
+                </div>
+            </div>
         </div>
     </div>
     <script>
@@ -117,11 +146,15 @@
             $('td > select').addClass('form-select form-select-sm');
             $('tfoot > tr > td:first-child').empty();
             $('tfoot > tr > td:last-child').empty();
-            $('tfoot > tr > td:nth-child(5) > select').empty();
-            $('tfoot > tr > td:nth-child(5) > select').append(new Option("", ""));
-            $('tfoot > tr > td:nth-child(5) > select').append(new Option("Verify", "Verify"));
-            $('tfoot > tr > td:nth-child(5) > select').append(new Option("Tolak", "Tolak"));
-            $('tfoot > tr > td:nth-child(5) > select').append(new Option("Diproses", "Diproses"));
+            var status = [];
+            var x = $('tbody > tr > td:nth-last-child(2)').each(function(index) {
+                status[index] = $(this).children(0).text();
+            });
+            $('tfoot > tr > td:nth-last-child(2) > select').empty();
+            $('tfoot > tr > td:nth-last-child(2) > select').append(new Option("", ""));
+            [...new Set(status)].forEach(e => {
+                $('tfoot > tr > td:nth-last-child(2) > select').append(new Option(e, e));
+            });
 
             $('#list-moa_paginate > ul').addClass('m-0');
             $('#list-moa_paginate').addClass('d-flex justify-content-end')
@@ -129,6 +162,14 @@
             $('#list-moa_info').addClass('text-sm');
             $('#list-moa_length > label').addClass('d-flex-middle');;
             $('select[name="list-moa_length"]').addClass('w-50');
+
+            $('#modal-notification').on('show.bs.modal', event => {
+                const button = event.relatedTarget
+                var url = button.getAttribute('data-bs-url');
+                var name = button.getAttribute('data-bs-name');
+                $('#modal-notification').find('form').attr('action', url);
+                $('#modal-notification').find('p:first').text("Apakah anda yakin menghapus MoA " + name + " ?")
+            });
         });
         const targetNode = document.getElementsByClassName("pagination")[0];
 

@@ -16,4 +16,9 @@ class VerifyMoa extends Model
     {
         return $this->belongsTo(User::class, 'admin_id');
     }
+
+    public function moa(): BelongsTo
+    {
+        return $this->belongsTo(Moa::class, 'moa_id');
+    }
 }

@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('verify_moa', function (Blueprint $table) {
             $table->id();
             $table->foreignId('moa_id');
-            $table->foreignId('admin_id');
-            $table->string('status');
-            $table->string('send_to');
+            $table->foreignId('admin_id')->nullable();
+            $table->string('status')->nullable();
+            $table->string('admin_type')->nullable();
             $table->string('valid_moa_file')->nullable();
             $table->text('keterangan')->nullable();
             $table->timestamps();

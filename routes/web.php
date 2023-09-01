@@ -65,7 +65,11 @@ Route::middleware(['auth', 'verified', 'hasProfile'])->group(function () {
         Route::post('/pengajuan_mou', 'pengajuanMoU')->name('pengajuan_mou_handler');
         Route::post('/pengajuan_moa', 'pengajuanMoA')->name('pengajuan_moa_handler');
         Route::post('/verifyMoU', 'verificationMou')->name('verify_mou_handler');
+        Route::post('/forwardMoA', 'forwardMoa')->name('forward_moa_handler');
+        Route::post('/verifyMoA', 'verificationMoa')->name('verify_moa_handler');
+        Route::post('/tolakMoA', 'tolakMoa')->name('tolak_moa_handler');
         Route::delete('/delete_mou/{mou}', 'deleteMou')->name('delete_mou_handler');
+        Route::delete('/delete_moa/{moa}', 'deleteMoa')->name('delete_moa_handler');
     });
 
     Route::controller(SettingController::class)->group(function () {

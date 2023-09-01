@@ -225,8 +225,11 @@ class SettingController extends Controller
     //Delete Data User
     public function deleteUser(User $user)
     {
-        $user->role()->delete();
-        $user->delete();
-        return redirect(route('view_user'))->with('success', 'Data user berhasil dihapus.');
+        if (count($user->verifymoa) == 0 && count($user->verifymou) == 0) {
+            $user->role()->delete();
+            $user->delete();
+            return redirect(route('view_user'))->with('success', 'Data user berhasil dihapus.');
+        }
+        return redirect(route('view_user'))->with('error', 'Data user gagal dihapus karena sudah pernah melakukan verifikasi.');
     }
 }

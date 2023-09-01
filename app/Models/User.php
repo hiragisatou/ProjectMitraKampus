@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -48,5 +49,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function role(): HasOne
     {
         return $this->hasOne(Role::class, 'user_id');
+    }
+
+    public function verifymou(): HasMany
+    {
+        return $this->hasMany(VerifyMou::class, 'admin_id');
+    }
+
+    public function verifymoa(): HasMany
+    {
+        return $this->hasMany(VerifyMoa::class, 'admin_id');
     }
 }

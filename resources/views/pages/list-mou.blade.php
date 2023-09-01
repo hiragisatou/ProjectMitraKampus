@@ -41,15 +41,11 @@
                                 <a href="{{ route('detail_mou', ['mou' => $x['id']]) }}" class="btn btn-outline-dark btn-sm py-1 px-2 m-0">
                                     <i class="fa-regular fa-eye"></i>
                                 </a>
-                                @if ($x->verifymou == null)
-                                <form action="{{ route('delete_mou_handler', ['mou' => $x['id']]) }}" method="post" class="d-inline">
-                                    @method('delete')
-                                    @csrf
-                                    <button type="submit" class="btn btn-outline-danger btn-sm py-1 px-2 m-0">
-                                        <i class="fa-regular fa-trash-can"></i>
-                                    </button>
-                                </form>
-                                @endif
+                                @canany(['admin', 'mitra'])
+                                    @if ($x->verifymou == null)
+                                    <button type="button" class="btn btn-outline-danger btn-sm py-1 px-2 m-0" data-bs-toggle="modal" data-bs-target="#modal-notification" data-bs-url="{{ route('delete_mou_handler', ['mou' => $x['id']]) }}" data-bs-name="{{ $x->judul }}"><i class="fa-regular fa-trash-can"></i></button>
+                                    @endif
+                                @endcanany
                             </td>
                         </tr>
                     @endforeach
@@ -67,6 +63,34 @@
                     </tr>
                 </tfoot>
             </table>
+        </div>
+    </div>
+    <!-- Delete Modal -->
+    <div class="modal fade" id="modal-notification" tabindex="-1" role="dialog" aria-labelledby="modal-notification" aria-hidden="true">
+        <div class="modal-dialog modal-danger modal-dialog-centered modal-" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="modal-title-notification">Your attention is required</h6>
+                    <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="py-3 text-center">
+                        <span class="" style="font-size: 6rem"><i class="fa-regular fa-bell"></i></span>
+                        <h4 class="text-gradient text-danger mt-4">Peringatan!</h4>
+                        <p>Apakah anda yakin menghapus data ?</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <form action="" method="post" class="m-0 p-0">
+                        @method('delete')
+                        @csrf
+                        <button type="submit" class="btn bg-gradient-danger">Ya, Saya yakin</button>
+                    </form>
+                    <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Batal</button>
+                </div>
+            </div>
         </div>
     </div>
     <script>
@@ -104,11 +128,15 @@
             $('td > select').addClass('form-select form-select-sm');
             $('tfoot > tr > td:first-child').empty();
             $('tfoot > tr > td:last-child').empty();
-            $('tfoot > tr > td:nth-child(7) > select').empty();
-            $('tfoot > tr > td:nth-child(7) > select').append(new Option("", ""));
-            $('tfoot > tr > td:nth-child(7) > select').append(new Option("Verify", "Verify"));
-            $('tfoot > tr > td:nth-child(7) > select').append(new Option("Tolak", "Tolak"));
-            $('tfoot > tr > td:nth-child(7) > select').append(new Option("Diproses", "Diproses"));
+            var status = [];
+            var x = $('tbody > tr > td:nth-last-child(2)').each(function(index) {
+                status[index] = $(this).children(0).text();
+            });
+            $('tfoot > tr > td:nth-last-child(2) > select').empty();
+            $('tfoot > tr > td:nth-last-child(2) > select').append(new Option("", ""));
+            [...new Set(status)].forEach(e => {
+                $('tfoot > tr > td:nth-last-child(2) > select').append(new Option(e, e));
+            });
 
             $('#list-mou_paginate > ul').addClass('m-0');
             $('#list-mou_paginate').addClass('d-flex justify-content-end')
@@ -116,6 +144,14 @@
             $('#list-mou_info').addClass('text-sm');
             $('#list-mou_length > label').addClass('d-flex-middle');;
             $('select[name="list-mou_length"]').addClass('w-50');
+
+            $('#modal-notification').on('show.bs.modal', event => {
+                const button = event.relatedTarget
+                var url = button.getAttribute('data-bs-url');
+                var name = button.getAttribute('data-bs-name');
+                $('#modal-notification').find('form').attr('action', url);
+                $('#modal-notification').find('p:first').text("Apakah anda yakin menghapus MoU " + name + " ?")
+            });
         });
         const targetNode = document.getElementsByClassName("pagination")[0];
 

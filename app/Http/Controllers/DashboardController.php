@@ -8,6 +8,7 @@ use App\Models\Mitra;
 use App\Models\Prodi;
 use App\Models\Jurusan;
 use App\Models\Kategori;
+use App\Models\VerifyMoa;
 use App\Models\VerifyMou;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -24,7 +25,13 @@ class DashboardController extends Controller
     //Pengajuan MoU Page
     public function viewPengajuan()
     {
-        return view('pages.pengajuan-mou');
+        $this->authorize('mitra');
+        $mou = Mou::whereHas('verifyMou', fn (Builder $query) => $query->where('status', 'verify'))->where('mitra_id', auth()->user()->role->roleable->id)->get();
+        if (count($mou) == 0) {
+            return view('pages.pengajuan-mou');
+        } else {
+            return view('pages.pengajuan-mou_blank', ['message' => 'Anda sudah memiliki MoU yang sedang berlangsung dengan kami.']);
+        }
     }
 
     //Pengajuan MoU Handler
@@ -65,7 +72,7 @@ class DashboardController extends Controller
 
     //Delete MoU
     public function deleteMou(Mou $mou) {
-        if ($mou->verifymou != null) {
+        if (count($mou->verifymou) > 0) {
             return redirect(route('view_list_mou'))->with('error', 'Gagal! Mou sudah diverifikasi.');
         }
         Storage::delete($mou->mou_file);
@@ -106,6 +113,7 @@ class DashboardController extends Controller
 
     //Pengajuan MoA Page
     public function viewMoA() {
+        $this->authorize('mitra');
         $mou = Mou::whereHas('verifyMou', fn (Builder $query) => $query->where('status', 'verify'))->where('mitra_id', auth()->user()->role->roleable->id)->get();
         // dd(date_create($mou->last()->tgl_akhir));
         if (count($mou) == 0) {
@@ -147,15 +155,72 @@ class DashboardController extends Controller
         } else if (auth()->user()->role->name == 'jurusan') {
             $data = Moa::where('jurusan_id', auth()->user()->role->roleable->id)->get();
         } else if (auth()->user()->role->name == 'prodi') {
-            $data = Moa::where('jurusan_id', auth()->user()->role->roleable->id)->get();
+            $data = Moa::whereHas('prodi', fn (Builder $query) => $query->where('prodi_id', auth()->user()->role->roleable->id))->get();
         } else {
             $data = Moa::all();
         }
         return view('pages.list-moa', ['data' => collect($data->load(['mitra', 'kategori', 'verifymoa', 'prodi']))]);
     }
 
-    //Detail Pengajuan MoU Page
+    //Detail Pengajuan MoA Page
     public function viewDetailMoa(Moa $moa) {
-        return view('pages.detail-moa', ['data' => $moa->load(['mitra', 'verifymoa', 'kategori', 'prodi', 'jurusan'])]);
+        if (auth()->user()->role->roleable_type == 'App\Models\Jurusan') {
+            $admin_type = 'jurusan';
+        } else if(auth()->user()->role->roleable_type == 'App\Models\Prodi'){
+            $admin_type = 'prodi';
+        } else {
+            $admin_type = 'admin';
+        }
+        return view('pages.detail-moa', ['data' => $moa->load(['mitra', 'verifymoa', 'kategori', 'prodi', 'jurusan']), 'admin_type' => $admin_type]);
+    }
+
+    //Meneruskan Moa dari Admin pusat ke admin prodi / jurusan
+    public function forwardMoa(Request $request) {
+        $verify = new VerifyMoa;
+        $verify->moa_id = $request->moa_id;
+        if (count(Moa::find($request->moa_id)->prodi) == 1) {
+            $verify->admin_type = 'prodi';
+        } else {
+            $verify->admin_type = 'jurusan';
+        }
+        $verify->save();
+
+        return back()->with('success', 'Data MoA berhasil diteruskan.');
+    }
+
+    //Verify MoA oleh admin prodi / jurusan
+    public function verificationMoa(Request $request) {
+        $verify = VerifyMoa::find($request->verify_id);
+        $verify->status = $request->status;
+        $verify->admin_id = auth()->user()->id;
+        $verify->valid_moa_file = $request->file('valid_moa')->storeAs('Valid MoA', $verify->id . '_Verify MOA_' . $verify->moa->judul . '_' . $verify->moa->mitra->nama . '.pdf');
+        $verify->save();
+        $moa = Moa::find($verify->moa_id);
+        $moa->tgl_akhir = $request->tgl_akhir;
+        $moa->save();
+
+        return back()->with('success', 'Data MoA berhasil diverifikasi.');
+    }
+
+    //Tolak Moa oleh Admin pusat
+    public function tolakMoa(Request $request) {
+        $verify = new VerifyMoa;
+        $verify->status = $request->status;
+        $verify->keterangan = $request->keterangan;
+        $verify->admin_id = auth()->user()->id;
+        $verify->save();
+
+        return back()->with('success', 'Data MoA telah ditolak.');
+    }
+
+    //Delete Moa Handler
+    public function deleteMoa(Moa $moa) {
+        // dd($moa->verifymoa);
+        if ($moa->verifymoa == null) {
+            Storage::delete($moa->moa_file);
+            $moa->delete();
+            return redirect(route('view_list_moa'))->with('success', 'Berhasil! MoA sudah dihapus.');
+        }
+        return redirect(route('view_list_moa'))->with('error', 'Gagal! MoA sudah diverifikasi.');
     }
 }

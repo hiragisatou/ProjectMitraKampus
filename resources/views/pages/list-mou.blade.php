@@ -29,7 +29,7 @@
                             <td class="text-sm font-weight-bold mb-0">
                                 @if ($x['verifymou'] != null)
                                     @if ($x['verifymou']['status'] == 'verify' && date_create($x['tgl_akhir']) <= now())
-                                        <span class="badge badge-sm bg-gradient-info">Berakhir</span>
+                                        <span class="badge badge-sm bg-gradient-warning">Berakhir</span>
                                     @else
                                         <span class="badge badge-sm {{ $x['verifymou']['status'] == 'verify' ? 'bg-gradient-success' : 'bg-gradient-danger' }}">{{ $x['verifymou']['status'] }}</span>
                                     @endif

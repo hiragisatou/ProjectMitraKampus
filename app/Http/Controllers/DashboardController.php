@@ -117,7 +117,7 @@ class DashboardController extends Controller
         $mou = Mou::whereHas('verifyMou', fn (Builder $query) => $query->where('status', 'verify'))->where('mitra_id', auth()->user()->role->roleable->id)->get();
         // dd(date_create($mou->last()->tgl_akhir));
         if (count($mou) == 0) {
-            return view('pages.pengajuan-moa_blank', ['message' => 'Anda belum pernah mengajukan MoU.', 'saran' => 'Silahkan mengajukan MoU terlebih dahulu.']);
+            return view('pages.pengajuan-moa_blank', ['message' => 'Anda belum memiliki MoU / berkas kerjasama dengan kami.', 'saran' => 'Silahkan mengajukan MoU terlebih dahulu.']);
         } else {
             if (date_create($mou->last()->tgl_akhir) <= now()) {
                 return view('pages.pengajuan-moa_blank', ['message' => 'Masa berlaku MoU anda telah berakhir.', 'saran' => 'Silahkan ajukan MoU kembali.']);
@@ -215,7 +215,6 @@ class DashboardController extends Controller
 
     //Delete Moa Handler
     public function deleteMoa(Moa $moa) {
-        // dd($moa->verifymoa);
         if ($moa->verifymoa == null) {
             Storage::delete($moa->moa_file);
             $moa->delete();

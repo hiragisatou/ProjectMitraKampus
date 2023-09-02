@@ -45,9 +45,9 @@
                             <td class="text-sm font-weight-bold mb-0">
                                 @if ($x['verifymoa'] != null)
                                     @if ($x['verifymoa']['status'] == 'verify' && date_create($x['tgl_akhir'])->modify('+1 day') <= now())
-                                        <span class="badge badge-sm bg-gradient-info">Berakhir</span>
+                                        <span class="badge badge-sm bg-gradient-warning">Berakhir</span>
                                     @elseif ($x['verifymoa']['status'] == null)
-                                        <span class="badge badge-sm bg-gradient-warning">Diproses admin {{ $x->verifymoa->admin_type }}</span>
+                                        <span class="badge badge-sm bg-gradient-info">Diproses admin {{ $x->verifymoa->admin_type }}</span>
                                     @else
                                         <span class="badge badge-sm {{ $x['verifymoa']['status'] == 'verify' ? 'bg-gradient-success' : 'bg-gradient-danger' }}">{{ $x['verifymoa']['status'] }}</span>
                                     @endif

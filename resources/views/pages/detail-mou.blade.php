@@ -3,15 +3,18 @@
 @section('content')
     {{-- @dd($data) --}}
     @if ($data['verifymou'] != null)
-        @if ($data['verifymou']['status'] == 'verify')
-            <div class="alert alert-success font-weight-bold text-white" role="alert">
-                Disetujui
-            </div>
-        @endif
-        @if ($data['verifymou']['status'] == 'tolak')
-            <div class="alert alert-danger font-weight-bold text-white" role="alert">
-                Ditolak : {{ $data['verifymou']['keterangan'] }}
-            </div>
+        @if ($data['verifymoa']['status'] == 'verify' && date_create($x['tgl_akhir'])->modify('+1 day') <= now())
+        <div class="alert alert-warning font-weight-bold text-white" role="alert">
+            Berakhir
+        </div>
+        @elseif ($data['verifymou']['status'] == 'tolak')
+        <div class="alert alert-danger font-weight-bold text-white" role="alert">
+            Ditolak : {{ $data['verifymou']['keterangan'] }}
+        </div>
+        @else
+        <div class="alert alert-success font-weight-bold text-white" role="alert">
+            Disetujui
+        </div>
         @endif
     @endif
     <div class="card">

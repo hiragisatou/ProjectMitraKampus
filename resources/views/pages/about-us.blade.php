@@ -6,10 +6,10 @@
     <header class="py-5 bg-white">
         <div class="container px-5">
             <div class="row justify-content-center">
-                <div class="col-lg-8 col-xxl-6">
-                    <div class="text-center my-5">
-                        <h1 class="fw-bolder mb-3">Our mission is to make building websites easier for everyone.</h1>
-                        <p class="lead fw-normal text-muted mb-4">Start Bootstrap was built on the idea that quality, functional website templates and themes should be available to everyone. Use our open source, free products, or support us by purchasing one of our premium products or services.</p>
+                <div class="col-lg-10 col-xxl-11">
+                    <div class="my-5 text-center">
+                        <h1 class="fw-bolder mb-3 text-center">Tentang Kami.</h1>
+                        <p class="lead fw-normal text-muted mb-4">Selamat datang di halaman pengajuan Memorandum of Understanding (MoU) dan Memorandum of Agreement (MoA) antara Politeknik Negeri Bali dan berbagai mitra strategis kami, termasuk pemerintah dan Dunia Usaha Dunia Industri (DUDI). Kami di Politeknik Negeri Bali berkomitmen untuk membangun kemitraan yang kuat dan saling menguntungkan dengan berbagai pihak guna meningkatkan kualitas pendidikan, penelitian, dan pelayanan kepada masyarakat. Dengan MoU dan MoA, kami berharap dapat menciptakan kerangka kerja yang jelas dan saling menguntungkan bagi semua pihak yang terlibat, serta menjembatani kolaborasi yang efektif dalam berbagai bidang. Kami percaya bahwa kerjasama ini akan membawa manfaat besar bagi perkembangan dan kemajuan pendidikan tinggi di wilayah Bali dan sekitarnya. Terima kasih atas minat dan dukungan Anda dalam membangun masa depan yang lebih cerah bersama kami..</p>
                         <a class="btn btn-primary btn-lg" href="#scroll-target">Read our story</a>
                     </div>
                 </div>

@@ -15,7 +15,7 @@
                     <div class="info-box card">
                         <i class="bi bi-telephone"></i>
                         <h3>Telepon</h3>
-                        <p>+1 5589 55488 55</p>
+                        <p>+62 (0361) 701981</p>
                     </div>
                 </div>
                 <div class="col-lg-6">

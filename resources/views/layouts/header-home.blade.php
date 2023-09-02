@@ -10,9 +10,9 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mx-auto mb-2 mb-lg-0 justify-content-center">
                 <li><a href="{{ route('home') }}" class="nav-link px-2 {{ route('home') == url()->current() ? 'link-secondary' : 'link-body-emphasis' }}">Home</a></li>
+                <li><a href="{{ route('aboutUs') }}" class="nav-link px-2 {{ route('aboutUs') == url()->current() ? 'link-secondary' : 'link-body-emphasis' }}">Tentang Kami</a></li>
                 <li><a href="{{ route('contactUs') }}" class="nav-link px-2 {{ route('contactUs') == url()->current() ? 'link-secondary' : 'link-body-emphasis' }}">Kontak</a></li>
                 <li><a href="{{ route('FAQ') }}" class="nav-link px-2 {{ route('FAQ') == url()->current() ? 'link-secondary' : 'link-body-emphasis' }}">FAQ</a></li>
-                <li><a href="{{ route('aboutUs') }}" class="nav-link px-2 {{ route('aboutUs') == url()->current() ? 'link-secondary' : 'link-body-emphasis' }}">Tentang Kami</a></li>
             </ul>
             @guest
                 <div class="col-md-3 text-end">

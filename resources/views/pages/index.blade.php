@@ -2,58 +2,6 @@
 @section('title', 'Home')
 @section('content')
 
-    {{-- <!-- Header-->
- <header class="bg-dark py-5">
-    <div class="container px-5">
-        <div class="row gx-5 justify-content-center">
-            <div class="col-lg-6">
-                <div class="text-center my-5">
-                    <h1 class="display-5 fw-bolder text-white mb-2">PUSAT PENGEMBANGAN BISNIS DAN KERJASAMA</h1>
-                    <p class="lead text-white-50 mb-4">Tentukan langkah pertama menuju kemitraan yang luar biasa! Selamat datang di portal pendaftaran dan masuk Politeknik Negeri Bali untuk calon mitra terhormat. Di sini, kita memiliki peluang emas untuk merajut sinergi yang mengagumkan, membangun pondasi yang kokoh, dan bersama-sama mewujudkan visi serta misi kampus sekaligus perusahaan Anda. Mari bergandengan tangan dalam perjalanan menginspirasi dan memberi dukungan satu sama lain.</p>
-                    <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
-                        <a class="btn btn-primary btn-lg px-4 me-sm-3" href="{{ route('register') }}">Daftar</a>
-                        <a class="btn btn-outline-light btn-lg px-4" href="{{ route('login') }}">Masuk</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
-<!-- Features section-->
-<section class="py-5 bg-white" id="features">
-    <div class="container px-5 my-5">
-        <div class="row gx-5">
-            <div class="col-lg-4 mb-5 mb-lg-0">
-                <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-collection"></i></div>
-                <h2 class="h4 fw-bolder">Featured title</h2>
-                <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
-                <a class="text-decoration-none" href="#!">
-                    Call to action
-                    <i class="bi bi-arrow-right"></i>
-                </a>
-            </div>
-            <div class="col-lg-4 mb-5 mb-lg-0">
-                <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-building"></i></div>
-                <h2 class="h4 fw-bolder">Featured title</h2>
-                <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
-                <a class="text-decoration-none" href="#!">
-                    Call to action
-                    <i class="bi bi-arrow-right"></i>
-                </a>
-            </div>
-            <div class="col-lg-4">
-                <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-toggles2"></i></div>
-                <h2 class="h4 fw-bolder">Featured title</h2>
-                <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
-                <a class="text-decoration-none" href="#!">
-                    Call to action
-                    <i class="bi bi-arrow-right"></i>
-                </a>
-            </div>
-        </div>
-    </div>
-</section> --}}
-
     <!-- Header-->
     <header class="bg-dark py-5">
         <div class="container px-5">
@@ -105,28 +53,28 @@
         <div class="container px-5 my-5">
             <div class="row gx-5">
                 <div class="col-lg-4 mb-5 mb-lg-0">
-                    <h2 class="fw-bolder mb-0">A better way to start building.</h2>
+                    <h2 class="fw-bolder mb-0">4 langkah aktivitas kemitraan</h2>
                 </div>
                 <div class="col-lg-8">
                     <div class="row gx-5 row-cols-1 row-cols-md-2">
                         <div class="col mb-5 h-100">
-                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-collection"></i></div>
-                            <h2 class="h5">Featured title</h2>
+                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-1-circle"></i></div>
+                            <h2 class="h5">Ajukan MoU</h2>
                             <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more text.</p>
                         </div>
                         <div class="col mb-5 h-100">
-                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-building"></i></div>
-                            <h2 class="h5">Featured title</h2>
+                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-2-circle"></i></div>
+                            <h2 class="h5">Ajukan MoA</h2>
                             <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more text.</p>
                         </div>
                         <div class="col mb-5 mb-md-0 h-100">
-                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-toggles2"></i></div>
-                            <h2 class="h5">Featured title</h2>
+                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-3-circle"></i></div>
+                            <h2 class="h5">Laksanakan Kegiatan Bersama</h2>
                             <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more text.</p>
                         </div>
                         <div class="col h-100">
-                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-toggles2"></i></div>
-                            <h2 class="h5">Featured title</h2>
+                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-4-circle"></i></div>
+                            <h2 class="h5">Laporkan Kegiatan</h2>
                             <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more text.</p>
                         </div>
                     </div>
